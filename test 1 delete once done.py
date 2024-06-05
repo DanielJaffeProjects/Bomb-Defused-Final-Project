@@ -1,2 +1,0 @@
-print("helel")
-print("orange")
