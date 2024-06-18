@@ -283,26 +283,42 @@ class Button(PhaseThread):
         self._rgb[1].value = False if self._color == "G" else True
         self._rgb[2].value = False if self._color == "B" else True
         while (self._running):
+            #If I press the button and the color is green then add 10 seconds from the timer.
+            if self._pressed == True and self._rgb[1].value == True:
+                print("The superpower has been activated")
+                print(self._timer)
+                #Once the button is push a blue color shows up and a 10 second timer extension start
+                self._rgb[2].value = True
+                self._timer += 20
+                sleep(10)
+                #Timer button is uner cooldown for 60 seconds
+                self._rgb[0].value = True
+                sleep(60)
+                self._rgb[1].value = True
+            elif self._pressed == True and self._rgb[0].value == True:
+                print("You can't do that your superpower is under cooldown")
+            elif self._pressed == True  and self._rgb[2].value == True:
+                print("You are currently using the superpower")
             # get the pushbutton's state
-            self._value = self._component.value
-            # it is pressed
-            if (self._value):
-                # note it
-                self._pressed = True
-            # it is released
-            else:
-                # was it previously pressed?
-                if (self._pressed):
-                    # check the release parameters
-                    # for R, nothing else is needed
-                    # for G or B, a specific digit must be in the timer (sec) when released
-                    if (not self._target or self._target in self._timer._sec):
-                        self._defused = True
-                    else:
-                        self._failed = True
-                    # note that the pushbutton was released
-                    self._pressed = False
-            sleep(0.1)
+            # self._value = self._component.value
+            # # it is pressed
+            # if (self._value):
+            #     # note it
+            #     self._pressed = True
+            # # it is released
+            # else:
+            #     # was it previously pressed?
+            #     if (self._pressed):
+            #         # check the release parameters
+            #         # for R, nothing else is needed
+            #         # for G or B, a specific digit must be in the timer (sec) when released
+            #         if (not self._target or self._target in self._timer._sec):
+            #             self._defused = True
+            #         else:
+            #             self._failed = True
+            #         # note that the pushbutton was released
+            #         self._pressed = False
+            # sleep(0.1)
 
     # returns the pushbutton's state as a string
     def __str__(self):
@@ -328,7 +344,6 @@ class Toggles(PhaseThread):
                 toggle_list.append(toggle.value)
             print(toggle_list)
             # if phase active phase == 3 and button is pressed the toggle will be allowed to turn on to confirm the first phase has finished
-            if phase_active ==  3 and button._pressed and toggle_list[1] ==  True:
 
             # print("self.direction", x.direction)
                 # print("self.pull", x.pull)
