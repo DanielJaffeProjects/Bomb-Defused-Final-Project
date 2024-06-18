@@ -322,9 +322,10 @@ class Toggles(PhaseThread):
         global phase_active
 
         print("self.name", self.name)
-        print("self._component", self._component.value)
+        print("self._component", self._component)
         for x in self._component:
-            print("self._component", x.value)
+            print("self.direction", x.direction)
+            print("self.pull", x.pull)
 
         print("self._target", self._target)
         print("self._value", self._value)
