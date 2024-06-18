@@ -333,12 +333,38 @@ class Toggles(PhaseThread):
         super().__init__(name, component, target)
         self._button = button
     # runs the thread
+    # Transposition cipher encode function
+    #Used Chatgpt for this subroutine
+    def transposition_cipher_encode(self, message, column_order):
+        num_columns = len(column_order)
+        num_rows = (len(message) + num_columns - 1) // num_columns
+        matrix = [[''] * num_columns for _ in range(num_rows)]
+
+        idx = 0
+        for col in column_order:
+            for row in range(num_rows):
+                if idx < len(message):
+                    matrix[row][col] = message[idx]
+                    idx += 1
+
+        encoded_message = ''.join(''.join(row) for row in matrix)
+        return encoded_message
     def run(self):
         # TODO
-        global phase_active
-        while True:
-            # print("self.name", self.name)
-            # print("self._component", self._component)
+        encoded_message = "HELLO WORLD"
+        print(f"Encoded message: {encoded_message}")
+        #Used chatgpt for this subroutine
+        while self._running:
+            # Read the toggle positions and generate the column order
+            toggle_values = [int(toggle.value) for toggle in self._component]
+            #enumerate allows you to give both the item and the position of the item in the index
+            column_order = [idx for idx, value in enumerate(toggle_values) if value]
+
+            # Encode the message with the generated column order
+            encoded_message = self.transposition_cipher_encode(encoded_message, column_order)
+            print(f"Column Order: {column_order}, Encoded message: {encoded_message}")
+
+            sleep(1)
             toggle_list = []
             for toggle in self._component:
                 toggle_list.append(toggle.value)
