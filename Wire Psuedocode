@@ -1,0 +1,94 @@
+# Wire psuedocode
+# This code is meant to repesent logic and will be implemented with existing code
+# Initialization and Setup
+keys = load_keys()  # Load pre-saved keys
+current_key = random.choice(keys)  # Select a random key
+
+# Main loop for each phase (4 phases total)
+for phase in range(1, 5):
+    location = current_key[phase]["location"]
+    combinations = current_key[phase]["combinations"]
+    pattern = current_key[phase]["pattern"]
+    
+    # Extract letters from combinations
+    letters = []
+    for combo in combinations:
+        line_number = int(combo[0])
+        word_number = int(combo[1])
+        letter_index = int(combo[2])
+        
+        # Fetch the line, word, and letter
+        line = fetch_line_from_location(location, line_number)
+        word = fetch_word_from_line(line, word_number)
+        letter = fetch_letter_from_word(word, letter_index)
+        
+        letters.append(letter)
+    
+    # Calculate letter values
+    letter_values = [ord(letter) - ord('A') + 1 for letter in letters]
+    
+    # Apply the pattern to calculate the result
+    result = letter_values[0]
+    for i in range(1, len(letter_values)):
+        if pattern[i-1] == '+':
+            result += letter_values[i]
+        else:
+            result -= letter_values[i]
+    
+    # Ensure the result is between 0 and 31
+    result = result % 32
+    
+    # Convert result to binary (5-bit)
+    binary_result = format(result, '05b')
+    
+    # Wire configuration (connected = 1, disconnected = 0)
+    wire_config = [int(bit) for bit in binary_result]
+    
+    # Display wire configuration (for debugging)
+    print(f"Phase {phase} wire configuration: {wire_config}")
+    
+    # Wait for user to press button and validate
+    while not user_press_button():
+        pass  # Wait for the user to press the button
+    
+    # Check if the wire configuration is correct
+    if validate_wire_config(wire_config, phase):
+        prompt_user_to_flip_toggle()
+    else:
+        print("Incorrect configuration, please try again.")
+        break  # Exit the loop and end the program
+
+# Function definitions (for example purposes)
+def load_keys():
+    # Load and return pre-saved keys
+    key_1 = {
+        1: [1, 0, 1, 1, 0],
+        2: [0, 1, 0, 1, 1],
+        3: [1, 1, 0, 0, 1],
+        4: [0, 0, 1, 1, 0]
+    }
+    return wire_config == correct_configs[phase]
+
+def fetch_line_from_location(location, line_number):
+    # Return the specified line from the given location
+    pass
+
+def fetch_word_from_line(line, word_number):
+    # Return the specified word from the given line
+    pass
+
+def fetch_letter_from_word(word, letter_index):
+    # Return the specified letter from the given word
+    pass
+
+def user_press_button():
+    # Return True if the user has pressed the button
+    pass
+
+def validate_wire_config(wire_config, phase):
+    # Return True if the wire configuration is correct for the given phase
+    pass
+
+def prompt_user_to_flip_toggle():
+    # Prompt the user to flip the toggle switch
+    pass

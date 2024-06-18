@@ -286,16 +286,6 @@ class Button(PhaseThread):
             # get the pushbutton's state
             self._value = self._component.value
             # it is pressed
-            #Code used for the button to change color if button is clicked otherwise it is green
-            # if self._pressed:
-            #     #If pressed and if teh phase is correctly deactivated turn to blue otherwise turn to red
-            #     if self._value == False:
-            #         self._rbg[0].value = True
-            #     elif self._value == True:
-            #         self._rbg[2].value = True
-            #else:
-            #   self._rbg[1].value = True
-
             if (self._value):
                 # note it
                 self._pressed = True
@@ -331,18 +321,13 @@ class Toggles(PhaseThread):
         # TODO
         global phase_active
         while True:
-            # if phase active phase == 3 and button is pressed the toggle will be allowed to turn on to confirm the first phase has finished
-            # if phase_active == 3:
             # print("self.name", self.name)
             # print("self._component", self._component)
-            toggle_list = []
-            for toggle in self._component:
-                toggle_list.append(toggle)
-            print(toggle_list)
+            for x in self._component:
                 # print("self.direction", x.direction)
                 # print("self.pull", x.pull)
-                # print("self.value", x.value, end = "")
-
+                print("self.value", x.value, end = "")
+            print()
 
             # print("self._target", self._target)
             # print("self._value", self._value)
