@@ -234,17 +234,21 @@ class Wires(PhaseThread):
     # runs the thread
     def run(self):
         # TODO
+
         self._running = True
-        while (self._running):
-            if self._component.pressed_wires:
-                while (self._component.pressed_wires):
-                    key = self._component.pressed_wires[0]
-                    print(key)
-            if self._value == self._target:
-                self._defused = True
-            #The combination for the wires is incorrect so their a phase failed so (strike)
-            elif (self._value != self._target):
-                self._failed = True
+        # while (self._running):
+        #     if self._component.pressed_wires:
+        #         while (self._component.pressed_wires):
+        #             key = self._component.pressed_wires[0]
+        #             print(key)
+        #     if Button._pressed == True:
+        #         if self._value == self._target:
+        #         self._defused = True
+        #     else:
+        #         return "You need to press button to check if it correct"
+        #     #The combination for the wires is incorrect so their a phase failed so (strike)
+        #     elif (self._value != self._target):
+        #         self._failed = True
         pass
 
     # returns the jumper wires state as a string
@@ -253,6 +257,7 @@ class Wires(PhaseThread):
             return "DEFUSED"
         else:
             # TODO
+            return self._value
             pass
 
 # the pushbutton phase
@@ -314,6 +319,12 @@ class Toggles(PhaseThread):
     # runs the thread
     def run(self):
         # TODO
+        global phase_active
+        print(self.name,self._component, self._target, self._value, self._running, self._defused)
+        # # if phase active phase == 3 and button is pressed the toggle will be allowed to turn on to confirm the first phase has finished
+        # if phase_active == 3 and Button._pressed:
+        #     #Toggle one is allowed to be flipped
+        #     if toggle1
         pass
 
     # returns the toggle switches state as a string

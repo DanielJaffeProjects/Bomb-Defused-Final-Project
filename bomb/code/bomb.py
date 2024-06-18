@@ -1,7 +1,7 @@
 #################################
 # CSC 102 Defuse the Bomb Project
 # Main program
-# Team: 
+# Team: Daniel Jaffe and Jordano Liberato
 #################################
 
 # import the configs
