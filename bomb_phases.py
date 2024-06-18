@@ -313,21 +313,24 @@ class Button(PhaseThread):
 
 # the toggle switches phase
 class Toggles(PhaseThread):
-    def __init__(self, component, target, name="Toggles"):
+    def __init__(self, component, target, button, name="Toggles"):
         super().__init__(name, component, target)
-
+        self._button = button
     # runs the thread
     def run(self):
         # TODO
         global phase_active
-        # while True:
+        while True:
             # print("self.name", self.name)
             # print("self._component", self._component)
-        toggle_list = []
-        for toggle in self._component:
-            toggle_list.append(toggle.value)
-        print(toggle_list)
-                # print("self.direction", x.direction)
+            toggle_list = []
+            for toggle in self._component:
+                toggle_list.append(toggle.value)
+            print(toggle_list)
+            # if phase active phase == 3 and button is pressed the toggle will be allowed to turn on to confirm the first phase has finished
+            if phase_active ==  3 and button._pressed and toggle_list[1] ==  True:
+
+            # print("self.direction", x.direction)
                 # print("self.pull", x.pull)
                 # print("self.value", x.value, end = "")
 
