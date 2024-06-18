@@ -323,11 +323,13 @@ class Toggles(PhaseThread):
         while True:
             # print("self.name", self.name)
             # print("self._component", self._component)
-            for x in self._component:
+            toggle_list = []
+            for toggle in self._component.value:
+                toggle_list.append(toggle)
+            print(toggle_list)
                 # print("self.direction", x.direction)
                 # print("self.pull", x.pull)
-                print("self.value", x.value, end = "")
-            print()
+                # print("self.value", x.value, end = "")
 
             # print("self._target", self._target)
             # print("self._value", self._value)
