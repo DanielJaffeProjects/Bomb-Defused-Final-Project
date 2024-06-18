@@ -320,13 +320,13 @@ class Toggles(PhaseThread):
     def run(self):
         # TODO
         global phase_active
-        while True:
+        # while True:
             # print("self.name", self.name)
             # print("self._component", self._component)
-            toggle_list = []
-            for toggle in self._component:
-                toggle_list.append(toggle.value)
-            print(toggle_list)
+        toggle_list = []
+        for toggle in self._component:
+            toggle_list.append(toggle.value)
+        print(toggle_list)
                 # print("self.direction", x.direction)
                 # print("self.pull", x.pull)
                 # print("self.value", x.value, end = "")
