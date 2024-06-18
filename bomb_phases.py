@@ -320,18 +320,19 @@ class Toggles(PhaseThread):
     def run(self):
         # TODO
         global phase_active
+        while True:
+            # print("self.name", self.name)
+            # print("self._component", self._component)
+            for x in self._component:
+                # print("self.direction", x.direction)
+                # print("self.pull", x.pull)
+                print("self.value", x.value, end = "")
+            print()
 
-        print("self.name", self.name)
-        print("self._component", self._component)
-        for x in self._component:
-            print("self.direction", x.direction)
-            print("self.pull", x.pull)
-            print("self.direction", x.value)
-
-        print("self._target", self._target)
-        print("self._value", self._value)
-        print("self._running",self._running)
-        print("self._defused", self._defused)
+            # print("self._target", self._target)
+            # print("self._value", self._value)
+            # print("self._running",self._running)
+            # print("self._defused", self._defused)
         # # if phase active phase == 3 and button is pressed the toggle will be allowed to turn on to confirm the first phase has finished
         # if phase_active == 3 and Button._pressed:
         #     #Toggle one is allowed to be flipped
