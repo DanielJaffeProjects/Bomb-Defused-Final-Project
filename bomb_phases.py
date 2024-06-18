@@ -329,47 +329,53 @@ class Button(PhaseThread):
 
 # the toggle switches phase
 class Toggles(PhaseThread):
-    def __init__(self, component, target, button, name="Toggles"):
+    def __init__(self, component, target, name="Toggles"):
         super().__init__(name, component, target)
-        self._button = button
-    # runs the thread
-    # Transposition cipher encode function
-    #Used Chatgpt for this subroutine
-    def transposition_cipher_encode(self, message, column_order):
-        num_columns = len(column_order)
-        num_rows = (len(message) + num_columns - 1) // num_columns
-        matrix = [[''] * num_columns for _ in range(num_rows)]
+        self._question = "What is my name?"
+        self._options = ["A) Daniel", "B)","C)","D)"]
+        self._correct_answer ="B"
 
-        idx = 0
-        for col in column_order:
-            for row in range(num_rows):
-                if idx < len(message):
-                    matrix[row][col] = message[idx]
-                    idx += 1
-
-        encoded_message = ''.join(''.join(row) for row in matrix)
-        return encoded_message
     def run(self):
         # TODO
-        encoded_message = "HELLO WORLD"
-        print(f"Encoded message: {encoded_message}")
-        #Used chatgpt for this subroutine
+        self._running = True
         while self._running:
-            # Read the toggle positions and generate the column order
-            toggle_values = [int(toggle.value) for toggle in self._component]
-            #enumerate allows you to give both the item and the position of the item in the index
-            column_order = [idx for idx, value in enumerate(toggle_values) if value]
+            # Display the question and options
+            print(self._question)
+            for option in self._options:
+                print(option)
 
-            # Encode the message with the generated column order
-            encoded_message = self.transposition_cipher_encode(encoded_message, column_order)
-            print(f"Column Order: {column_order}, Encoded message: {encoded_message}")
+            #ChatGPT helped me with lines 348 to 359
+            # Check the toggle positions
+            toggle_values = [toggle.value for toggle in self._component]
+            answer_selected = self.get_selected_answer(toggle_values)
 
+            # Check if the selected answer is correct
+            if answer_selected == self.correct_answer:
+                self._defused = True
+                print("You have defused the bomb safely!")
+            elif answer_selected:
+                self._failed = True
+                print("Incorrect answer! You have lost!")
             sleep(1)
-            toggle_list = []
-            for toggle in self._component:
-                toggle_list.append(toggle.value)
-            print(toggle_list)
-            # if phase active phase == 3 and button is pressed the toggle will be allowed to turn on to confirm the first phase has finished
+
+
+
+    def get_selected_answer(self):
+        # Put the toggles in a list
+        toggle_list = []
+        for toggle in self._component:
+            toggle_list.append(toggle.value)
+        print(toggle_list)
+
+        #Checks which toggles are True and then outputs the letter that corresponds with each toggle
+        if toggle_list[0] == True:
+            return "A"
+        if toggle_list[1] == True:
+            return "B"
+        if toggle_list[2] == True:
+            return "C"
+        if toggle_list[3] == True :
+            return ("D")
 
             # print("self.direction", x.direction)
                 # print("self.pull", x.pull)
@@ -379,10 +385,6 @@ class Toggles(PhaseThread):
             # print("self._value", self._value)
             # print("self._running",self._running)
             # print("self._defused", self._defused)
-        # # if phase active phase == 3 and button is pressed the toggle will be allowed to turn on to confirm the first phase has finished
-        # if phase_active == 3 and Button._pressed:
-        #     #Toggle one is allowed to be flipped
-        #     if toggle1
         pass
 
     # returns the toggle switches state as a string
