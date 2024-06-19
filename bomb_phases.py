@@ -289,8 +289,6 @@ class Button(PhaseThread):
         while (self._running):
             # get the pushbutton's state
             self._value = self._component.value
-            print("color1", self._color)
-            print("timer", self._timer, type(self._timer))
             print(self._running)
             #Color starts on green
             self._rgb[0].value = True
@@ -308,14 +306,11 @@ class Button(PhaseThread):
                     self._rgb[0].value = True
                     self._rgb[1].value = True
                     self._rgb[2].value = False
-                    print("color2", self._color)
-                    COUNTDOWN += 10
                     sleep(10)
                     # Timer button is under cooldown for 60 seconds and color changes to red
                     self._rgb[0].value = True
                     self._rgb[1].value = True
                     self._rgb[2].value = False
-                    print("color3", self._color)
                     sleep(60)
                     self._pressed = False
 
