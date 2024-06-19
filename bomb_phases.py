@@ -302,7 +302,7 @@ class Button(PhaseThread):
         #     elif self._pressed == True  and self._rgb[2].value == True:
         #         print("You are currently using the superpower")
         #     # get the pushbutton's state
-        for i in range (0, 50):
+        while (self._running):
             self._value = self._component.value
             print("value", self._value)
             print("rgb", self._rgb)
