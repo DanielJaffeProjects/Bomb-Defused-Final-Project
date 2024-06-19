@@ -275,6 +275,8 @@ class Button(PhaseThread):
         # we need to know about the timer (7-segment display) to be able to determine correct pushbutton releases in some cases
         self._timer = timer
 
+    #Used chatgpt to set color
+
     # runs the thread
     def run(self):
         self._running = True
@@ -303,25 +305,18 @@ class Button(PhaseThread):
         #         print("You are currently using the superpower")
         #     # get the pushbutton's state
         while (self._running):
+            #Check pushbuttons state
             self._value = self._component.value
-            print("value", self._value)
-            print("rgb", self._rgb)
-            print("color", self._color)
-            self._color = "R"
-            print("color", self._color)
-            sleep(2)
-            self._color = "B"
 
-            print("color", self._color)
+            if self._pressed == True:
+                self._rgb[0].value = False
+                self._rgb[1].value = True
+                self._rgb[2].value = True
+                print("color", self._color)
+                print("rgb", self._rgb)
+                print("value", self._value)
 
-            sleep(2)
 
-            self._color = "G"
-            print("color", self._color)
-
-            sleep(2)
-            print("pressed", self._pressed)
-            sleep(2)
             # it is pressed
             # if (self._value):
             #     # note it
