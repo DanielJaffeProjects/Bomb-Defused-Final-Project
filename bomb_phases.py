@@ -307,7 +307,7 @@ class Button(PhaseThread):
         while (self._running):
             #Check pushbuttons state
             self._value = self._component.value
-
+            print(self._pressed)
             if self._pressed == True:
                 self._rgb[0].value = False
                 self._rgb[1].value = True
