@@ -329,56 +329,55 @@ class Button(PhaseThread):
 class Toggles(PhaseThread):
     def __init__(self, component, target, name="Toggles"):
         super().__init__(name, component, target)
-    #     self._question = "What is my name?"
-    #     self._options = ["A) Daniel", "B)","C)","D)"]
-    #     self._correct_answer ="B"
-    #
-    # def run(self):
-    # Need to be done
-    #     self._running = True
-    #     while self._running:
-    #         # Display the question and options
-    #         print(self._question)
-    #         for option in self._options:
-    #             print(option)
-    #
-    #         #ChatGPT helped me with lines 348 to 359
-    #         # Check the toggle positions
-    #         toggle_values = [toggle.value for toggle in self._component]
-    #         answer_selected = self.get_selected_answer(toggle_values)
-    #
-    #         # Check if the selected answer is correct
-    #         if answer_selected == self.correct_answer:
-    #             self._defused = True
-    #             print("You have defused the bomb safely!")
-    #         elif answer_selected:
-    #             self._failed = True
-    #             print("Incorrect answer! You have lost!")
-    #         sleep(1)
-    #
-    #
-    #
-    # def get_selected_answer(self):
-    #     # Put the toggles in a list
-    #     toggle_list = []
-    #     for toggle in self._component:
-    #         toggle_list.append(toggle.value)
-    #     print(toggle_list)
-    #
-    #     #Checks which toggles are True and then outputs the letter that corresponds with each toggle
-    #     if toggle_list[0] == True:
-    #         return "A"
-    #     if toggle_list[1] == True:
-    #         return "B"
-    #     if toggle_list[2] == True:
-    #         return "C"
-    #     if toggle_list[3] == True :
-    #         return ("D")
+        self._question = "What is my name?"
+        self._options = ["A) Daniel", "B)","C)","D)"]
+        self._correct_answer ="B"
+
+    def run(self):
+        self._running = True
+        while self._running:
+            # Display the question and options
+            print(self._question)
+            for option in self._options:
+                print(option)
+
+            #ChatGPT helped me with lines 348 to 359
+            # Check the toggle positions
+            toggle_values = [toggle.value for toggle in self._component]
+            answer_selected = self.get_selected_answer(toggle_values)
+
+            # Check if the selected answer is correct
+            if answer_selected == self.correct_answer:
+                self._defused = True
+                print("You have defused the bomb safely!")
+            elif answer_selected:
+                self._failed = True
+                print("Incorrect answer! You have lost!")
+            sleep(1)
+
+
+
+    def get_selected_answer(self):
+        # Put the toggles in a list
+        toggle_list = []
+        for toggle in self._component:
+            toggle_list.append(toggle.value)
+        print(toggle_list)
+
+        #Checks which toggles are True and then outputs the letter that corresponds with each toggle
+        if toggle_list[0] == True:
+            return "A"
+        if toggle_list[1] == True:
+            return "B"
+        if toggle_list[2] == True:
+            return "C"
+        if toggle_list[3] == True :
+            return ("D")
 
             # print("self.direction", x.direction)
-                # print("self.pull", x.pull)
-                # print("self.value", x.value, end = "")
-
+            # print("self.pull", x.pull)
+            # print("self.value", x.value, end = "")
+            #
             # print("self._target", self._target)
             # print("self._value", self._value)
             # print("self._running",self._running)
