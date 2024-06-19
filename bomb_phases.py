@@ -278,7 +278,6 @@ class Button(PhaseThread):
 
     # runs the thread
     def run(self):
-        global COUNTDOWN
         self._running = True
         # set the RGB LED color
         self._rgb[0].value = False if self._color == "R" else True
