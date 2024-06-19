@@ -283,42 +283,49 @@ class Button(PhaseThread):
         self._rgb[1].value = False if self._color == "G" else True
         self._rgb[2].value = False if self._color == "B" else True
         while (self._running):
-            #If I press the button and the color is green then add 10 seconds from the timer.
-            if self._pressed == True and self._rgb[1].value == True:
-                print("The superpower has been activated")
-                print(self._timer)
-                #Once the button is push a blue color shows up and a 10 second timer extension start
-                self._rgb[2].value = True
-                self._timer += 20
-                sleep(10)
-                #Timer button is uner cooldown for 60 seconds
-                self._rgb[0].value = True
-                sleep(60)
-                self._rgb[1].value = True
-            elif self._pressed == True and self._rgb[0].value == True:
-                print("You can't do that your superpower is under cooldown")
-            elif self._pressed == True  and self._rgb[2].value == True:
-                print("You are currently using the superpower")
-            # get the pushbutton's state
-            # self._value = self._component.value
-            # # it is pressed
-            # if (self._value):
-            #     # note it
-            #     self._pressed = True
-            # # it is released
-            # else:
-            #     # was it previously pressed?
-            #     if (self._pressed):
-            #         # check the release parameters
-            #         # for R, nothing else is needed
-            #         # for G or B, a specific digit must be in the timer (sec) when released
-            #         if (not self._target or self._target in self._timer._sec):
-            #             self._defused = True
-            #         else:
-            #             self._failed = True
-            #         # note that the pushbutton was released
-            #         self._pressed = False
-            # sleep(0.1)
+        #     print(self._running)
+        #     #If I press the button and the color is green then add 10 seconds from the timer.
+        #     if self._pressed == True and self._rgb[1].value == True:
+        #         print("The superpower has been activated")
+        #         print(self._timer)
+        #         #Once the button is push a blue color shows up and a 10 second timer extension start
+        #         self._rgb[2].value = True
+        #         self._timer += 20
+        #         sleep(10)
+        #         #Timer button is uner cooldown for 60 seconds
+        #         self._rgb[0].value = True
+        #         sleep(60)
+        #         self._rgb[1].value = True
+        #     elif self._pressed == True and self._rgb[0].value == True:
+        #         print("You can't do that your superpower is under cooldown")
+        #     elif self._pressed == True  and self._rgb[2].value == True:
+        #         print("You are currently using the superpower")
+        #     # get the pushbutton's state
+            self._value = self._component.value
+            print("value", self._value)
+            print("rgb", self._rgb)
+            print("color", self._color)
+            print("timer", self._timer)
+            print("pressed", self._pressed)
+            print("component", self._component)
+            # it is pressed
+            if (self._value):
+                # note it
+                self._pressed = True
+            # it is released
+            else:
+                # was it previously pressed?
+                if (self._pressed):
+                    # check the release parameters
+                    # for R, nothing else is needed
+                    # for G or B, a specific digit must be in the timer (sec) when released
+                    if (not self._target or self._target in self._timer._sec):
+                        self._defused = True
+                    else:
+                        self._failed = True
+                    # note that the pushbutton was released
+                    self._pressed = False
+            sleep(0.1)
 
     # returns the pushbutton's state as a string
     def __str__(self):
@@ -336,46 +343,46 @@ class Toggles(PhaseThread):
         self._correct_answer ="B"
 
     def run(self):
-        # TODO
-        self._running = True
-        while self._running:
-            # Display the question and options
-            print(self._question)
-            for option in self._options:
-                print(option)
-
-            #ChatGPT helped me with lines 348 to 359
-            # Check the toggle positions
-            toggle_values = [toggle.value for toggle in self._component]
-            answer_selected = self.get_selected_answer(toggle_values)
-
-            # Check if the selected answer is correct
-            if answer_selected == self.correct_answer:
-                self._defused = True
-                print("You have defused the bomb safely!")
-            elif answer_selected:
-                self._failed = True
-                print("Incorrect answer! You have lost!")
-            sleep(1)
-
-
-
-    def get_selected_answer(self):
-        # Put the toggles in a list
-        toggle_list = []
-        for toggle in self._component:
-            toggle_list.append(toggle.value)
-        print(toggle_list)
-
-        #Checks which toggles are True and then outputs the letter that corresponds with each toggle
-        if toggle_list[0] == True:
-            return "A"
-        if toggle_list[1] == True:
-            return "B"
-        if toggle_list[2] == True:
-            return "C"
-        if toggle_list[3] == True :
-            return ("D")
+    #
+    #     self._running = True
+    #     while self._running:
+    #         # Display the question and options
+    #         print(self._question)
+    #         for option in self._options:
+    #             print(option)
+    #
+    #         #ChatGPT helped me with lines 348 to 359
+    #         # Check the toggle positions
+    #         toggle_values = [toggle.value for toggle in self._component]
+    #         answer_selected = self.get_selected_answer(toggle_values)
+    #
+    #         # Check if the selected answer is correct
+    #         if answer_selected == self.correct_answer:
+    #             self._defused = True
+    #             print("You have defused the bomb safely!")
+    #         elif answer_selected:
+    #             self._failed = True
+    #             print("Incorrect answer! You have lost!")
+    #         sleep(1)
+    #
+    #
+    #
+    # def get_selected_answer(self):
+    #     # Put the toggles in a list
+    #     toggle_list = []
+    #     for toggle in self._component:
+    #         toggle_list.append(toggle.value)
+    #     print(toggle_list)
+    #
+    #     #Checks which toggles are True and then outputs the letter that corresponds with each toggle
+    #     if toggle_list[0] == True:
+    #         return "A"
+    #     if toggle_list[1] == True:
+    #         return "B"
+    #     if toggle_list[2] == True:
+    #         return "C"
+    #     if toggle_list[3] == True :
+    #         return ("D")
 
             # print("self.direction", x.direction)
                 # print("self.pull", x.pull)
