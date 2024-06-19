@@ -341,13 +341,11 @@ class Toggles(PhaseThread):
             for option in self._options:
                 print(option)
 
-            #ChatGPT helped me with lines 348 to 359
-            # Check the toggle positions
-            toggle_values = [toggle.value for toggle in self._component]
-            answer_selected = self.get_selected_answer(toggle_values)
+            #ChatGPT helped me with lines 345 to 354
+            answer_selected = self.get_selected_answer()
 
             # Check if the selected answer is correct
-            if answer_selected == self.correct_answer:
+            if answer_selected == self._correct_answer:
                 self._defused = True
                 print("You have defused the bomb safely!")
             elif answer_selected:
