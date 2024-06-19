@@ -277,9 +277,9 @@ class Button(PhaseThread):
 
     #Freezes the timer for 10 seconds
     def Freeze(self):
-        self._timer.sleep(10)
+        Timer._paused = True
         sleep(10)
-
+        Timer._pause = False
     # runs the thread
     def run(self):
         global COUNTDOWN
@@ -296,7 +296,6 @@ class Button(PhaseThread):
             self._rgb[0].value = True
             self._rgb[1].value = False
             self._rgb[2].value = True
-
             if (self._value):
                 # note it
                 self._pressed = True
