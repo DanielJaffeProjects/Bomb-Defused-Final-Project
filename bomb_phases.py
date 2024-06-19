@@ -309,8 +309,6 @@ class Button(PhaseThread):
 
 
             #Check pushbuttons state
-            self._value = self.check_button_state()  # Check the state of the button (pressed or released)
-
             if self._value:  # If the button is pressed
                 print("self._pressed", self._pressed)
                 print("self._value", self._value)
