@@ -306,14 +306,14 @@ class Button(PhaseThread):
                     self._rgb[0].value = True
                     self._rgb[1].value = True
                     self._rgb[2].value = False
-                    self._pressed = False
                     sleep(10)
                     # Timer button is under cooldown for 60 seconds and color changes to red
-                    self._rgb[0].value = True
+                    self._rgb[0].value = False
                     self._rgb[1].value = True
-                    self._rgb[2].value = False
+                    self._rgb[2].value = True
                     sleep(60)
-            #
+                    self._pressed = False
+
             # elif self._pressed == True and self._rgb[0].value == True:
             #     print("You can't do that your superpower is under cooldown")
             # elif self._pressed == True  and self._rgb[2].value == True:
