@@ -278,8 +278,8 @@ class Button(PhaseThread):
     #Used chatgpt to set color
     def set_color(self, color):
         self._rgb[0].value = color == "R"
-        self._rgb[1].value = color == "B"
-        self._rgb[2].value = color == "G"
+        self._rgb[1].value = color == "G"
+        self._rgb[2].value = color == "B"
 
     # runs the thread
     def run(self):
@@ -315,7 +315,9 @@ class Button(PhaseThread):
             if self._value == True:
                 self._pressed = True
                 self.set_color("B")
-            else:
+                print("color", self._color)
+
+            elif self._value == False:
                 self.set_color("R")
                 sleep(2)
                 print("color", self._color)
