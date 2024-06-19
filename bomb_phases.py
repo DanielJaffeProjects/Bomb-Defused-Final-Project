@@ -1,7 +1,7 @@
 #################################
 # CSC 102 Defuse the Bomb Project
 # GUI and Phase class definitions
-# Team: 
+# Team: Daniel Jaffe and Jordano Liberato
 #################################
 
 # import the configs
@@ -275,8 +275,10 @@ class Button(PhaseThread):
         # we need to know about the timer (7-segment display) to be able to determine correct pushbutton releases in some cases
         self._timer = timer
 
-    #Used chatgpt to set color
-
+    #Freezes the timer for 10 seconds
+    def Freeze(self):
+        self._timer.sleep(10)
+        sleep(10)
 
     # runs the thread
     def run(self):
@@ -306,7 +308,8 @@ class Button(PhaseThread):
                     self._rgb[0].value = True
                     self._rgb[1].value = True
                     self._rgb[2].value = False
-                    sleep(10)
+                    #Freezes time for 10 seconds
+                    self.Freeze()
                     # Timer button is under cooldown for 60 seconds and color changes to red
                     self._rgb[0].value = False
                     self._rgb[1].value = True
@@ -314,11 +317,6 @@ class Button(PhaseThread):
                     sleep(60)
                     self._pressed = False
 
-            # elif self._pressed == True and self._rgb[0].value == True:
-            #     print("You can't do that your superpower is under cooldown")
-            # elif self._pressed == True  and self._rgb[2].value == True:
-            #     print("You are currently using the superpower")
-            # # get the pushbutton's state
 
     # returns the pushbutton's state as a string
     def __str__(self):
