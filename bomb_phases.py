@@ -286,7 +286,7 @@ class Button(PhaseThread):
         self._running = True
         # set the RGB LED color
 
-        while (self._running):
+        # while (self._running):
         #     print(self._running)
         #     #If I press the button and the color is green then add 10 seconds from the timer.
         #     if self._pressed == True and self._rgb[1].value == True:
@@ -305,32 +305,22 @@ class Button(PhaseThread):
         #     elif self._pressed == True  and self._rgb[2].value == True:
         #         print("You are currently using the superpower")
         #     # get the pushbutton's state
+        while self._running:
+            self._value = self._component.value  # Read the current state of the button
 
-
-
-            #Check pushbuttons state
             if self._value:  # If the button is pressed
                 self._pressed = True
-                print("self._pressed", self._pressed)
-                print("self._value", self._value)
-                self.set_color('R')  # Set LED color to red
-                print("color", self._color)
-
+                self.set_color("R")  # Set LED color to red
                 sleep(2)
-                self.set_color('B')  # Set LED color to blue after 2 seconds
-                print("color", self._color)
-
+                self.set_color("B")  # Set LED color to blue after 2 seconds
                 sleep(2)
-                self.set_color('G')  # Set LED color to green after another 2 seconds
-                print("color", self._color)
-
+                self.set_color("G")  # Set LED color to green after another 2 seconds
                 sleep(2)
-
             else:  # If the button is released
-                self.set_color('R')  # Set LED color to red (default color when released)
+                self.set_color("R")  # Set LED color to red (default color when released)
                 sleep(0.1)  # Small delay to avoid high CPU usage
 
-            # it is pressed
+            # # it is pressed
             # if (self._value):
             #     # note it
             #     self._pressed = True
