@@ -288,8 +288,8 @@ class Button(PhaseThread):
         while (self._running):
             # get the pushbutton's state
             self._value = self._component.value
-            print("timer", type(self._timer))
-            print("self._color", self._color)
+
+            print(self._running)
             #Color starts on green
             self._rgb[0].value = True
             self._rgb[1].value = False
@@ -300,25 +300,47 @@ class Button(PhaseThread):
                 self._pressed = True
                 # it is released
             else:
+                print("color1", self._color)
                 # was it previously pressed?
                 if (self._pressed):
                     # Once the button is push a blue color shows up and a 10 second timer extension start
                     self._rgb[0].value = True
                     self._rgb[1].value = True
                     self._rgb[2].value = False
-                    print("self._color2", self._color)
+                    print("color2", self._color)
                     sleep(10)
                     # Timer button is under cooldown for 60 seconds and color changes to red
-                    self._rgb[0].value = False
+                    self._rgb[0].value = True
                     self._rgb[1].value = True
-                    self._rgb[2].value = True
-                    print("self._color3", self._color)
+                    self._rgb[2].value = False
                     sleep(60)
                     self._pressed = False
 
+            #
+            # elif self._pressed == True and self._rgb[0].value == True:
+            #     print("You can't do that your superpower is under cooldown")
+            # elif self._pressed == True  and self._rgb[2].value == True:
+            #     print("You are currently using the superpower")
+            # # get the pushbutton's state
 
-
-
+        # # it is pressed
+            # if (self._value):
+            #     # note it
+            #     self._pressed = True
+            # # it is released
+            # else:
+            #     # was it previously pressed?
+            #     if (self._pressed):
+            #         # check the release parameters
+            #         # for R, nothing else is needed
+            #         # for G or B, a specific digit must be in the timer (sec) when released
+            #         if (not self._target or self._target in self._timer._sec):
+            #             self._defused = True
+            #         else:
+            #             self._failed = True
+            #         # note that the pushbutton was released
+            #         self._pressed = False
+            # sleep(.1)
 
     # returns the pushbutton's state as a string
     def __str__(self):
