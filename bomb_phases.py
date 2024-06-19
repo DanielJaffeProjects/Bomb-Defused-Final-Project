@@ -315,7 +315,7 @@ class Button(PhaseThread):
             if (self._value):
                 # note it
                 self._pressed = True
-                self._color = "B"
+                self._rgb[0].value = True
             # it is released
             else:
                 # was it previously pressed?
