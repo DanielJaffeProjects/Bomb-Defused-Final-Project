@@ -308,28 +308,28 @@ class Button(PhaseThread):
             print("value", self._value)
             print("rgb", self._rgb)
             print("color", self._color)
+            self._rgb[0] = True
             print("timer", self._timer)
             print("pressed", self._pressed)
             print("component", self._component)
             # it is pressed
-            if (self._value):
-                # note it
-                self._pressed = True
-            # it is released
-            else:
-                # was it previously pressed?
-                if (self._pressed):
-                    self._rgb[0].value = True
-                    # check the release parameters
-                    # for R, nothing else is needed
-                    # for G or B, a specific digit must be in the timer (sec) when released
-                    if (not self._target or self._target in self._timer._sec):
-                        self._defused = True
-                    else:
-                        self._failed = True
-                    # note that the pushbutton was released
-                    self._pressed = False
-            sleep(.1)
+            # if (self._value):
+            #     # note it
+            #     self._pressed = True
+            # # it is released
+            # else:
+            #     # was it previously pressed?
+            #     if (self._pressed):
+            #         # check the release parameters
+            #         # for R, nothing else is needed
+            #         # for G or B, a specific digit must be in the timer (sec) when released
+            #         if (not self._target or self._target in self._timer._sec):
+            #             self._defused = True
+            #         else:
+            #             self._failed = True
+            #         # note that the pushbutton was released
+            #         self._pressed = False
+            # sleep(.1)
 
     # returns the pushbutton's state as a string
     def __str__(self):
