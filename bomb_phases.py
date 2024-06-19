@@ -234,21 +234,6 @@ class Wires(PhaseThread):
     # runs the thread
     def run(self):
         # TODO
-
-        self._running = True
-        # while (self._running):
-        #     if self._component.pressed_wires:
-        #         while (self._component.pressed_wires):
-        #             key = self._component.pressed_wires[0]
-        #             print(key)
-        #     if Button._pressed == True:
-        #         if self._value == self._target:
-        #         self._defused = True
-        #     else:
-        #         return "You need to press button to check if it correct"
-        #     #The combination for the wires is incorrect so their a phase failed so (strike)
-        #     elif (self._value != self._target):
-        #         self._failed = True
         pass
 
     # returns the jumper wires state as a string
