@@ -307,7 +307,6 @@ class Button(PhaseThread):
                     self._rgb[1].value = True
                     self._rgb[2].value = False
                     print("self._color2", self._color)
-
                     sleep(10)
                     # Timer button is under cooldown for 60 seconds and color changes to red
                     self._rgb[0].value = False
