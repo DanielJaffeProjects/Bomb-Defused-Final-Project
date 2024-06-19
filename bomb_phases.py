@@ -287,7 +287,7 @@ class Button(PhaseThread):
         self._rgb[1].value = False if self._color == "G" else True
         self._rgb[2].value = False if self._color == "B" else True
         while (self._running):
-            print("COUNTDOWN", COUNTDOWN)
+            print("self._timer", self._timer)
             # get the pushbutton's state
             self._value = self._component.value
             #Color starts on green
