@@ -316,9 +316,9 @@ class Button(PhaseThread):
                 print ("color1", self._color)
                 # was it previously pressed?
                 if (self._pressed):
-                    self._rgb[0].value = False
-                    self._rgb[1].value = False
-                    self._rgb[2].value = True
+                    self._rgb[0].value = True
+                    self._rgb[1].value = True
+                    self._rgb[2].value = False
                     print("color2", self._color)
                     self._pressed = False
             sleep(0.1)
