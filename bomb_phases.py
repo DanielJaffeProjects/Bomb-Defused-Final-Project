@@ -306,14 +306,13 @@ class Button(PhaseThread):
                     self._rgb[0].value = True
                     self._rgb[1].value = True
                     self._rgb[2].value = False
+                    self._pressed = False
                     sleep(10)
                     # Timer button is under cooldown for 60 seconds and color changes to red
                     self._rgb[0].value = True
                     self._rgb[1].value = True
                     self._rgb[2].value = False
                     sleep(60)
-                    self._pressed = False
-
             #
             # elif self._pressed == True and self._rgb[0].value == True:
             #     print("You can't do that your superpower is under cooldown")
@@ -321,31 +320,12 @@ class Button(PhaseThread):
             #     print("You are currently using the superpower")
             # # get the pushbutton's state
 
-        # # it is pressed
-            # if (self._value):
-            #     # note it
-            #     self._pressed = True
-            # # it is released
-            # else:
-            #     # was it previously pressed?
-            #     if (self._pressed):
-            #         # check the release parameters
-            #         # for R, nothing else is needed
-            #         # for G or B, a specific digit must be in the timer (sec) when released
-            #         if (not self._target or self._target in self._timer._sec):
-            #             self._defused = True
-            #         else:
-            #             self._failed = True
-            #         # note that the pushbutton was released
-            #         self._pressed = False
-            # sleep(.1)
-
     # returns the pushbutton's state as a string
     def __str__(self):
         if (self._defused):
             return "DEFUSED"
         else:
-            return str("Pressed" if self._value else "Released")
+            return ("You have won the game jedi!")
 
 # the toggle switches phase
 class Toggles(PhaseThread):
