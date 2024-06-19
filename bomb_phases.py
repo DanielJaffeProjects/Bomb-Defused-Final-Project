@@ -276,14 +276,15 @@ class Button(PhaseThread):
         self._timer = timer
 
     #Used chatgpt to set color
+    def set_color(self, color):
+        self._rgb[0].value = color == "R"
+        self._rgb[1].value = color == "G"
+        self._rgb[2].value = color == "B"
 
     # runs the thread
     def run(self):
         self._running = True
         # set the RGB LED color
-        self._rgb[0].value = False if self._color == "R" else True
-        self._rgb[1].value = False if self._color == "G" else True
-        self._rgb[2].value = False if self._color == "B" else True
 
         # while (self._running):
         #     print(self._running)
@@ -304,18 +305,25 @@ class Button(PhaseThread):
         #     elif self._pressed == True  and self._rgb[2].value == True:
         #         print("You are currently using the superpower")
         #     # get the pushbutton's state
-        while (self._running):
+        i =0
+        while (i<100):
             #Check pushbuttons state
             self._value = self._component.value
+
             print(self._pressed)
-            if self._pressed == True:
-                self._rgb[0].value = False
-                self._rgb[1].value = True
-                self._rgb[2].value = True
+            print(self._value)
+            if self._value == True:
+                self._pressed = True
+                self.set_color("R")
+                sleep(2)
+                self.set_color("G")
+                sleep(2)
+                self.set_color("B")
                 print("color", self._color)
                 print("rgb", self._rgb)
                 print("value", self._value)
-
+            i += 1
+            sleep(0.1)
 
             # it is pressed
             # if (self._value):
