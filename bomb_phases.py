@@ -329,7 +329,7 @@ class Toggles(PhaseThread):
     def __init__(self, component, target, name="Toggles"):
         super().__init__(name, component, target)
         self._question = "What is my name?"
-        self._options = ["A) Daniel", "B)","C)","D)"]
+        self._options = ["A) ", "B)","C)","D)"]
         self._correct_answer ="B"
 
     def run(self):
