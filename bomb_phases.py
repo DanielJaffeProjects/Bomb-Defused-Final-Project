@@ -338,6 +338,7 @@ class Toggles(PhaseThread):
         while self._running:
             # Display the question and options
             print(self._question)
+            print(self._correct_answer)
             for option in self._options:
                 print(option)
 
@@ -354,7 +355,7 @@ class Toggles(PhaseThread):
                 self._failed = True
                 print("Incorrect answer! You have lost!")
             sleep(1)
-
+            self._running = False
 
 
     def get_selected_answer(self):
