@@ -313,8 +313,11 @@ class Button(PhaseThread):
                 self._pressed = True
             # it is released
             else:
+                print ("color1", self._color)
                 # was it previously pressed?
                 if (self._pressed):
+                    print("color2", self._color)
+
                     # check the release parameters
                     # for R, nothing else is needed
                     # for G or B, a specific digit must be in the timer (sec) when released
