@@ -309,7 +309,7 @@ class Button(PhaseThread):
 
 
             #Check pushbuttons state
-            if self._value:  # If the button is pressed
+            if self._value == True:  # If the button is pressed
                 print("self._pressed", self._pressed)
                 print("self._value", self._value)
                 self.set_color('R')  # Set LED color to red
