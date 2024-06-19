@@ -286,7 +286,7 @@ class Button(PhaseThread):
         self._running = True
         # set the RGB LED color
 
-        # while (self._running):
+        while (self._running):
         #     print(self._running)
         #     #If I press the button and the color is green then add 10 seconds from the timer.
         #     if self._pressed == True and self._rgb[1].value == True:
@@ -305,26 +305,31 @@ class Button(PhaseThread):
         #     elif self._pressed == True  and self._rgb[2].value == True:
         #         print("You are currently using the superpower")
         #     # get the pushbutton's state
-        i =0
-        while (i<100):
+
+
+
             #Check pushbuttons state
-            self._value = self._component.value
+            self._value = self.check_button_state()  # Check the state of the button (pressed or released)
 
-            print("self._pressed", self._pressed)
-            print("self._value", self._value)
-            if self._value == True:
-                self._pressed = True
-                self.set_color("B")
+            if self._value:  # If the button is pressed
+                print("self._pressed", self._pressed)
+                print("self._value", self._value)
+                self.set_color('R')  # Set LED color to red
                 print("color", self._color)
 
-            elif self._value == False:
-                self.set_color("R")
                 sleep(2)
+                self.set_color('B')  # Set LED color to blue after 2 seconds
                 print("color", self._color)
-                print("rgb", self._rgb)
-                print("value", self._value)
-            i += 1
-            sleep(0.1)
+
+                sleep(2)
+                self.set_color('G')  # Set LED color to green after another 2 seconds
+                print("color", self._color)
+
+                sleep(2)
+
+            else:  # If the button is released
+                self.set_color('R')  # Set LED color to red (default color when released)
+                sleep(0.1)  # Small delay to avoid high CPU usage
 
             # it is pressed
             # if (self._value):
