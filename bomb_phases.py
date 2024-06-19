@@ -283,9 +283,7 @@ class Button(PhaseThread):
         self._rgb[1].value = False if self._color == "G" else True
         self._rgb[2].value = False if self._color == "B" else True
 
-        i =0
-        while (i < 100):
-            i += 1
+        # while (self._running):
         #     print(self._running)
         #     #If I press the button and the color is green then add 10 seconds from the timer.
         #     if self._pressed == True and self._rgb[1].value == True:
@@ -304,12 +302,12 @@ class Button(PhaseThread):
         #     elif self._pressed == True  and self._rgb[2].value == True:
         #         print("You are currently using the superpower")
         #     # get the pushbutton's state
+        for i in range (0, 50):
             self._value = self._component.value
             print("value", self._value)
             print("rgb", self._rgb)
             print("color", self._color)
-            self._rgb[0] = False if self._color == "R" else True
-
+            self._rgb[0] = True
             print("color", self._color)
             sleep(2)
             self._rgb[1] = True
@@ -322,6 +320,7 @@ class Button(PhaseThread):
 
             sleep(2)
             print("pressed", self._pressed)
+            sleep(2)
             # it is pressed
             # if (self._value):
             #     # note it
