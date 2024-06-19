@@ -309,10 +309,11 @@ class Button(PhaseThread):
             print("rgb", self._rgb)
             print("color", self._color)
             self._rgb[0] = True
-            sleep(.1)
+            sleep(2)
             self._rgb[1] = True
-            sleep(.1)
+            sleep(2)
             self._rgb[2] = True
+            sleep(2)
             print("timer", self._timer)
             print("pressed", self._pressed)
             print("component", self._component)
