@@ -307,19 +307,16 @@ class Button(PhaseThread):
             print("value", self._value)
             print("rgb", self._rgb)
             print("color", self._color)
-            self._rgb[0] = True
-            self._rgb[1] = False
-            self._rgb[2] = False
+            self._color = "R"
             print("color", self._color)
             sleep(2)
-            self._rgb[0] = False
-            self._rgb[1] = True
-            self._rgb[2] = False
+            self._color = "B"
+
             print("color", self._color)
 
             sleep(2)
 
-            self._rgb[2] = True
+            self._color = "G"
             print("color", self._color)
 
             sleep(2)
