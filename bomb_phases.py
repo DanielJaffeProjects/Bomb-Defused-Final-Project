@@ -308,7 +308,8 @@ class Button(PhaseThread):
                     self._rgb[1].value = True
                     self._rgb[2].value = False
                     #Freezes time for 10 seconds
-                    Timer.Freeze(10)
+                    self._timer.pause()
+                    sleep(10)
                     # Timer button is under cooldown for 60 seconds and color changes to red
                     self._rgb[0].value = False
                     self._rgb[1].value = True
@@ -341,16 +342,16 @@ class Toggles(PhaseThread):
             for option in self._options:
                 print(option)
 
-            #ChatGPT helped me with lines 345 to 354
             answer_selected = self.get_selected_answer()
 
             # Check if the selected answer is correct
+            #If answer is correct you have won the game
             if answer_selected == self._correct_answer:
                 self._defused = True
                 print("You have defused the bomb safely!")
-            elif answer_selected:
+            #If answer is incorrect you have lost the game you are only given one chance since you have 3 strikes on self.failed
+            elif answer_selected != self._correct_answer:
                 self._failed = True
-                print("Incorrect answer! You have lost!")
             sleep(1)
             self._running = False
 
@@ -370,7 +371,7 @@ class Toggles(PhaseThread):
         if toggle_list[2] == True:
             return "C"
         if toggle_list[3] == True :
-            return ("D")
+            return "D"
 
             # print("self.direction", x.direction)
             # print("self.pull", x.pull)
