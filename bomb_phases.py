@@ -308,10 +308,9 @@ class Button(PhaseThread):
             print("value", self._value)
             print("rgb", self._rgb)
             print("color", self._color)
-            self._rgb[0] = True
+            self._rgb[0] = False
             print("color", self._color)
             sleep(2)
-            print("color", self._color)
             self._rgb[1] = True
             print("color", self._color)
 
@@ -321,9 +320,7 @@ class Button(PhaseThread):
             print("color", self._color)
 
             sleep(2)
-            print("timer", self._timer)
             print("pressed", self._pressed)
-            print("component", self._component)
             # it is pressed
             # if (self._value):
             #     # note it
