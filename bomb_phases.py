@@ -310,15 +310,13 @@ class Button(PhaseThread):
             #Check pushbuttons state
             self._value = self._component.value
 
-            print(self._pressed)
-            print(self._value)
+            print("self._pressed", self._pressed)
+            print("self._value", self._value)
             if self._value == True:
                 self._pressed = True
-                self.set_color("R")
-                sleep(2)
-                self.set_color("G")
-                sleep(2)
                 self.set_color("B")
+            else:
+                self.set_color("R")
                 sleep(2)
                 print("color", self._color)
                 print("rgb", self._rgb)
