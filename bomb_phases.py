@@ -285,46 +285,43 @@ class Button(PhaseThread):
         self._rgb[0].value = False if self._color == "R" else True
         self._rgb[1].value = False if self._color == "G" else True
         self._rgb[2].value = False if self._color == "B" else True
-        # while (self._running):
-        #     print(self._running)
-        #     #If I press the button and the color is green then add 10 seconds from the timer.
-        #     if self._pressed == True and self._rgb[1].value == True:
-        #         print("The superpower has been activated")
-        #         print(self._timer)
-        #         #Once the button is push a blue color shows up and a 10 second timer extension start
-        #         self._rgb[2].value = True
-        #         self._timer += 20
-        #         sleep(10)
-        #         #Timer button is uner cooldown for 60 seconds
-        #         self._rgb[0].value = True
-        #         sleep(60)
-        #         self._rgb[1].value = True
-        #     elif self._pressed == True and self._rgb[0].value == True:
-        #         print("You can't do that your superpower is under cooldown")
-        #     elif self._pressed == True  and self._rgb[2].value == True:
-        #         print("You are currently using the superpower")
-        #     # get the pushbutton's state
-        while self._running:
+        while (self._running):
             # get the pushbutton's state
             self._value = self._component.value
-            # it is pressed
+
+            print(self._running)
+            #Color starts on green
             self._rgb[0].value = True
             self._rgb[1].value = False
             self._rgb[2].value = True
+
             if (self._value):
                 # note it
                 self._pressed = True
-            # it is released
+                # it is released
             else:
-                print ("color1", self._color)
+                print("color1", self._color)
                 # was it previously pressed?
                 if (self._pressed):
+                    # Once the button is push a blue color shows up and a 10 second timer extension start
                     self._rgb[0].value = True
                     self._rgb[1].value = True
                     self._rgb[2].value = False
                     print("color2", self._color)
+                    sleep(10)
+                    # Timer button is under cooldown for 60 seconds and color changes to red
+                    self._rgb[0].value = True
+                    self._rgb[1].value = True
+                    self._rgb[2].value = False
+                    sleep(60)
                     self._pressed = False
-            sleep(2)
+
+            #
+            # elif self._pressed == True and self._rgb[0].value == True:
+            #     print("You can't do that your superpower is under cooldown")
+            # elif self._pressed == True  and self._rgb[2].value == True:
+            #     print("You are currently using the superpower")
+            # # get the pushbutton's state
 
         # # it is pressed
             # if (self._value):
