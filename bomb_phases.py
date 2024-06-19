@@ -343,7 +343,7 @@ class Toggles(PhaseThread):
         self._correct_answer ="B"
 
     def run(self):
-    #
+    # Need to be done
     #     self._running = True
     #     while self._running:
     #         # Display the question and options
