@@ -154,6 +154,11 @@ class Timer(PhaseThread):
         # by default, each tick is 1 second
         self._interval = 1
 
+    #Freezes the timer for for a certain amount of time
+    def Freeze(self,time_frozen):
+        self._paused = True
+        sleep(time_frozen)
+        self._pause = False
     # runs the thread
     def run(self):
         self._running = True
@@ -275,11 +280,7 @@ class Button(PhaseThread):
         # we need to know about the timer (7-segment display) to be able to determine correct pushbutton releases in some cases
         self._timer = timer
 
-    #Freezes the timer for 10 seconds
-    def Freeze(self):
-        Timer._paused = True
-        sleep(10)
-        Timer._pause = False
+
     # runs the thread
     def run(self):
         global COUNTDOWN
@@ -308,7 +309,7 @@ class Button(PhaseThread):
                     self._rgb[1].value = True
                     self._rgb[2].value = False
                     #Freezes time for 10 seconds
-                    self.Freeze()
+                    Timer.Freeze(10)
                     # Timer button is under cooldown for 60 seconds and color changes to red
                     self._rgb[0].value = False
                     self._rgb[1].value = True
