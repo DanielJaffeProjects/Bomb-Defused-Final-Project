@@ -276,16 +276,15 @@ class Button(PhaseThread):
         self._timer = timer
 
     #Used chatgpt to set color
-    def set_color(self, color):
-        self._rgb[0].value = color == "R"
-        self._rgb[1].value = color == "G"
-        self._rgb[2].value = color == "B"
+
 
     # runs the thread
     def run(self):
         self._running = True
         # set the RGB LED color
-
+        self._rgb[0].value = False if self._color == "R" else True
+        self._rgb[1].value = False if self._color == "G" else True
+        self._rgb[2].value = False if self._color == "B" else True
         # while (self._running):
         #     print(self._running)
         #     #If I press the button and the color is green then add 10 seconds from the timer.
@@ -306,21 +305,28 @@ class Button(PhaseThread):
         #         print("You are currently using the superpower")
         #     # get the pushbutton's state
         while self._running:
-            self._value = self._component.value  # Read the current state of the button
-
-            if self._value:  # If the button is pressed
+            # get the pushbutton's state
+            self._value = self._component.value
+            # it is pressed
+            if (self._value):
+                # note it
                 self._pressed = True
-                self.set_color("R")  # Set LED color to red
-                sleep(2)
-                self.set_color("B")  # Set LED color to blue after 2 seconds
-                sleep(2)
-                self.set_color("G")  # Set LED color to green after another 2 seconds
-                sleep(2)
-            else:  # If the button is released
-                self.set_color("R")  # Set LED color to red (default color when released)
-                sleep(0.1)  # Small delay to avoid high CPU usage
+            # it is released
+            else:
+                # was it previously pressed?
+                if (self._pressed):
+                    # check the release parameters
+                    # for R, nothing else is needed
+                    # for G or B, a specific digit must be in the timer (sec) when released
+                    if (not self._target or self._target in self._timer._sec):
+                        self._defused = True
+                    else:
+                        self._failed = True
+                    # note that the pushbutton was released
+                    self._pressed = False
+            sleep(0.1)
 
-            # # it is pressed
+        # # it is pressed
             # if (self._value):
             #     # note it
             #     self._pressed = True
