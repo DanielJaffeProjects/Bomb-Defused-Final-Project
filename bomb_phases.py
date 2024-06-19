@@ -319,6 +319,7 @@ class Button(PhaseThread):
                 self.set_color("G")
                 sleep(2)
                 self.set_color("B")
+                sleep(2)
                 print("color", self._color)
                 print("rgb", self._rgb)
                 print("value", self._value)
