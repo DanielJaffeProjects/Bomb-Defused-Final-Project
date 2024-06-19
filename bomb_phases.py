@@ -306,7 +306,7 @@ class Button(PhaseThread):
                     self._timer.pause()
                     sleep(10)
                     #resumes the timer
-                    self._timer.resume()
+                    self._timer.pause()
                     # Timer button is under cooldown for 60 seconds and color changes to red
                     self._rgb[0].value = False
                     self._rgb[1].value = True
