@@ -282,6 +282,12 @@ class Button(PhaseThread):
         self._rgb[0].value = False if self._color == "R" else True
         self._rgb[1].value = False if self._color == "G" else True
         self._rgb[2].value = False if self._color == "B" else True
+        print("value", self._value)
+        print("rgb", self._rgb)
+        print("color", self._color)
+        print("timer", self._timer)
+        print("pressed", self._pressed)
+        print("component", self._component)
         while (self._running):
         #     print(self._running)
         #     #If I press the button and the color is green then add 10 seconds from the timer.
@@ -302,12 +308,7 @@ class Button(PhaseThread):
         #         print("You are currently using the superpower")
         #     # get the pushbutton's state
             self._value = self._component.value
-            print("value", self._value)
-            print("rgb", self._rgb)
-            print("color", self._color)
-            print("timer", self._timer)
-            print("pressed", self._pressed)
-            print("component", self._component)
+
             # it is pressed
             if (self._value):
                 # note it
@@ -338,11 +339,11 @@ class Button(PhaseThread):
 class Toggles(PhaseThread):
     def __init__(self, component, target, name="Toggles"):
         super().__init__(name, component, target)
-        self._question = "What is my name?"
-        self._options = ["A) Daniel", "B)","C)","D)"]
-        self._correct_answer ="B"
-
-    def run(self):
+    #     self._question = "What is my name?"
+    #     self._options = ["A) Daniel", "B)","C)","D)"]
+    #     self._correct_answer ="B"
+    #
+    # def run(self):
     # Need to be done
     #     self._running = True
     #     while self._running:
