@@ -282,6 +282,7 @@ class Button(PhaseThread):
     def run(self):
         global COUNTDOWN
         self._running = True
+        print ("COUNTDOWN", COUNTDOWN)
         # set the RGB LED color
         self._rgb[0].value = False if self._color == "R" else True
         self._rgb[1].value = False if self._color == "G" else True
@@ -305,7 +306,6 @@ class Button(PhaseThread):
                     self._rgb[0].value = True
                     self._rgb[1].value = True
                     self._rgb[2].value = False
-                    COUNTDOWN += 10
                     sleep(10)
                     # Timer button is under cooldown for 60 seconds and color changes to red
                     self._rgb[0].value = False
