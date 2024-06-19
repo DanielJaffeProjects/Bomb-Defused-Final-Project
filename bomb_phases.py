@@ -308,6 +308,7 @@ class Button(PhaseThread):
             # get the pushbutton's state
             self._value = self._component.value
             # it is pressed
+            self._rgb[1].value = True
             if (self._value):
                 # note it
                 self._pressed = True
@@ -321,7 +322,7 @@ class Button(PhaseThread):
                     self._rgb[2].value = False
                     print("color2", self._color)
                     self._pressed = False
-            sleep(0.1)
+            sleep(2)
 
         # # it is pressed
             # if (self._value):
