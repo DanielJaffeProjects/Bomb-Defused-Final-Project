@@ -13,7 +13,7 @@ from threading import Thread
 from time import sleep
 import os
 import sys
-
+from random import *
 
 #########
 # classes
@@ -195,13 +195,12 @@ class Timer(PhaseThread):
         return f"{self._min}:{self._sec}"
 
 
-'''
 # the keypad phase
 class Keypad(PhaseThread):
     def __init__(self, component, target, name="Keypad"):
         super().__init__(name, component, target)
         # Generate eight random 4-digit binary numbers
-        self._binary_numbers = [format(random.randint(0, 15), '04b') for _ in range(8)]
+        self._binary_numbers = [format(randint(0, 15), '04b') for _ in range(8)]
 
     def run(self):
         self._running = True
@@ -229,11 +228,6 @@ class Keypad(PhaseThread):
                 self._running = False
 
             sleep(1)
-
-        def transition_to_next_phase(self):
-        # Start the next phase (you need to implement this logic)
-        # For demonstration, assume we have a method to start the next phase
-        self._next_phase.start()
 
     def __str__(self):
         return "Keypad Phase"
@@ -269,67 +263,6 @@ class Wires(PhaseThread):
             return "DEFUSED"
         else:
             return "Incorrect wires disconnected. BOOM!"
-    '''
-
-
-# the keypad phase
-class Keypad(PhaseThread):
-    def __init__(self, component, target, name="Keypad"):
-        super().__init__(name, component, target)
-        # the default value is an empty string
-        self._value = ""
-
-    # runs the thread
-    def run(self):
-        self._running = True
-        while (self._running):
-            # process keys when keypad key(s) are pressed
-            if (self._component.pressed_keys):
-                # debounce
-                while (self._component.pressed_keys):
-                    try:
-                        # just grab the first key pressed if more than one were pressed
-                        key = self._component.pressed_keys[0]
-                    except:
-                        key = ""
-                    sleep(0.1)
-                # log the key
-                self._value += str(key)
-                # the combination is correct -> phase defused
-                if (self._value == self._target):
-                    self._defused = True
-                # the combination is incorrect -> phase failed (strike)
-                elif (self._value != self._target[0:len(self._value)]):
-                    self._failed = True
-            sleep(0.1)
-
-    # returns the keypad combination as a string
-    def __str__(self):
-        if (self._defused):
-            return "DEFUSED"
-        else:
-            return self._value
-
-
-# the jumper wires phase
-class Wires(PhaseThread):
-    def __init__(self, component, target, name="Wires"):
-        super().__init__(name, component, target)
-
-    # runs the thread
-    def run(self):
-        # TODO
-        pass
-
-    # returns the jumper wires state as a string
-    def __str__(self):
-        if (self._defused):
-            return "DEFUSED"
-        else:
-            # TODO
-            return self._value
-            pass
-
 
 # the pushbutton phase
 class Button(PhaseThread):
