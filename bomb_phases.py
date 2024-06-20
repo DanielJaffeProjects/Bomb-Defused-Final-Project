@@ -330,20 +330,32 @@ class Button(PhaseThread):
 class Toggles(PhaseThread):
     def __init__(self, component, target, name="Toggles"):
         super().__init__(name, component, target)
-        self._question = "What is my name?"
-        self._options = ["A)", "B)", "C)", "D)"]
-        self._correct_answer = "B"
-        self._display_text_toggle =""
+        # List of questions with their options and correct answers
+        self._questions = [
+            ("Convert the binary number 11010101101010100101011010101010 to decimal.",
+             {"A": "65536", "B": "87381", "C": "44543", "D": "43887402"}, "D"),("Convert the 16-bit binary number 0110010100100111 to its two's complement representation.",
+             {"A": "0110010100100111", "B": "1001101011011001", "C": "1001101011010111", "D": "0110010100101001"}, "C"),("Convert the hexadecimal number 0x1A2F4C7E to binary.",
+             {"A": "00011010001011110100110001111110", "B": "00011010001011110100110000011110",
+              "C": "00011010001011110010110000011110", "D": "00011010001011110100110000111110"}, "A")
+        ]
+
+        # Choose a random question
+        self._current_question = choice(self._questions)
+        self._question = self._current_question[0]
+        self._options = self._current_question[1]
+        self._correct_answer = self._current_question[2]
+
+        self._display_text_toggle = ""
 
     def run(self):
         self._running = True
-        i = 0
         while self._running:
             # Display the question and options together
-            self._display_text_toggle = self._question + "\n" + "\n".join(self._options)
-
+            #Got from ChatGPT
+            self._display_text_toggle = "{}\n{}".format(self._question, "\n".join(self._options))
+            print(self._display_text_toggle)
+            #Get the answer the user selected
             answer_selected = self.get_selected_answer()
-            print(answer_selected == self._correct_answer,answer_selected, i,)
 
             # Check if the selected answer is correct
             # If answer is correct you have won the game
@@ -355,7 +367,6 @@ class Toggles(PhaseThread):
             # If answer is incorrect you have lost the game you are only given one chance since you have 3 strikes on self.failed
             else:
                 self._failed = True
-            i += 1
 
     def get_selected_answer(self):
         # Put the toggles in a list
