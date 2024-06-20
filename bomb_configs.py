@@ -10,8 +10,8 @@ RPi = True           # is this running on the RPi?
 ANIMATE = False       # animate the LCD text?
 SHOW_BUTTONS = False # show the Pause and Quit buttons on the main LCD GUI?
 COUNTDOWN = 300      # the initial bomb countdown value (seconds)
-NUM_STRIKES = 5      # the total strikes allowed before the bomb "explodes"
-NUM_PHASES = 4       # the total number of initial active bomb phases
+NUM_STRIKES = 1      # the total strikes allowed before the bomb "explodes"
+NUM_PHASES = 3     # the total number of initial active bomb phases
 
 # imports
 from random import randint, shuffle, choice

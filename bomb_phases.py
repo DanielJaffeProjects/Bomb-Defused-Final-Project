@@ -21,7 +21,7 @@ from random import *
 # the LCD display GUI
 class Lcd(Frame):
     def __init__(self, window):
-        super().__init__(window, bg="yellow")
+        super().__init__(window, bg="black")
         # make the GUI fullscreen
         window.attributes("-fullscreen", False)
         # we need to know about the timer (7-segment display) to be able to pause/unpause it
@@ -334,6 +334,7 @@ class Toggles(PhaseThread):
         self._options = ["A) ", "B)", "C)", "D)"]
         self._correct_answer = "B"
 
+
     def run(self):
         self._running = True
         while self._running:
@@ -379,14 +380,14 @@ class Toggles(PhaseThread):
             # print("self._target", self._target)
             # print("self._value", self._value)
             # print("self._running",self._running)
-            # print("self._defused", self._defused)
         pass
 
     # returns the toggle switches state as a string
     def __str__(self):
         if (self._defused):
             return "DEFUSED"
-        else:
+        elif self._failed:
             return "failed"
-            # TODO
+        else:
+            return self._question
 
