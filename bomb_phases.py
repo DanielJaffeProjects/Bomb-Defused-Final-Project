@@ -387,12 +387,12 @@ class Button(PhaseThread):
     def __str__(self):
         print(self._rgb[0].value, self._rgb[1].value, self._rgb[2].value)
 
-        if (self._rgb[0] == False):
+        if (not self._rgb[0].value):
             return ("You are now on cooldown!")
-        elif (self._rgb[2] == False):
+        elif (not self._rgb[2].value):
             return ("Time freeze is now active!")
-        else:
-            return "Your time freeze now online!"
+        elif (not self._rgb[1].value):
+            return "Your time freeze now usable!"
 
 
 # the toggle switches phase
