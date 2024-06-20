@@ -229,11 +229,6 @@ class Keypad(PhaseThread):
 
             sleep(1)
 
-        def transition_to_next_phase(self):
-        # Start the next phase (you need to implement this logic)
-        # For demonstration, assume we have a method to start the next phase
-        self._next_phase.start()
-
     def __str__(self):
         return "Keypad Phase"
 
