@@ -367,23 +367,20 @@ class Toggles(PhaseThread):
         print(toggle_list)
 
         # Checks which toggles are True and then outputs the letter that corresponds with each toggle
-        if toggle_list[0] == True:
+        if toggle_list[0] == True and toggle_list[1] == False and toggle_list[2] == False and toggle_list[3] == False:
             return "A"
-        if toggle_list[1] == True:
+        elif toggle_list[1] == True and toggle_list[0] == False and toggle_list[2] == False and toggle_list[3] == False:
             return "B"
-        if toggle_list[2] == True:
+        elif toggle_list[2] == True and toggle_list[0] == False and toggle_list[1] == False and toggle_list[3] == False:
             return "C"
-        if toggle_list[3] == True:
+        elif toggle_list[3] == True and toggle_list[0] == False and toggle_list[2] == False and toggle_list[1] == False:
             return "D"
-        if toggle_list[0] == False and toggle_list[1] == False and toggle_list[2] == False and toggle_list[3] == False:
+        elif toggle_list[0] == False and toggle_list[1] == False and toggle_list[2] == False and toggle_list[3] == False:
             return False
-            # print("self.direction", x.direction)
-            # print("self.pull", x.pull)
-            # print("self.value", x.value, end = "")
-            #
-            # print("self._target", self._target)
-            # print("self._value", self._value)
-            # print("self._running",self._running)
+        else:
+            #This returns F for failed which will never equal the correct answer and will fail the program
+            # This makes it were you can't have more than one toggle on at the same time or you fail
+            return "F"
         pass
 
     # returns the toggle switches state as a string
