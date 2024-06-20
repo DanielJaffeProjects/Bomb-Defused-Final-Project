@@ -331,9 +331,8 @@ class Toggles(PhaseThread):
     def __init__(self, component, target, name="Toggles"):
         super().__init__(name, component, target)
         self._question = "What is my name?"
-        self._options = ["A) ", "B)", "C)", "D)"]
+        self._options = ["A)", "B)", "C)", "D)"]
         self._correct_answer = "B"
-        self._new_option = ""
 
     def run(self):
         self._running = True
@@ -341,9 +340,7 @@ class Toggles(PhaseThread):
             # Display the question and options
             print(self._question)
             print(self._correct_answer)
-            for option in self._options:
-                self._new_option += option
-            print(self._new_option)
+
 
             answer_selected = self.get_selected_answer()
 
@@ -390,6 +387,6 @@ class Toggles(PhaseThread):
         elif self._failed:
             return "failed"
         else:
-            return self._question
+            return self._question + "\n" + self._options
 
 
