@@ -349,14 +349,13 @@ class Toggles(PhaseThread):
             if answer_selected == self._correct_answer:
                 self._defused = True
                 self._running = False
-            #If all the toggles then the toggles should continue to run
+            #If all the toggles are off then the toggles should continue to run
             elif answer_selected == "All False":
                 self._running = True
             # If answer is incorrect you have lost the game you are only given one chance since you have 3 strikes on self.failed
             else:
                 self._failed = True
                 self._running = False
-            sleep(1)
             i += 1
 
     def get_selected_answer(self):
