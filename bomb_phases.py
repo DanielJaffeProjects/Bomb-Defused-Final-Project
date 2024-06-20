@@ -200,7 +200,7 @@ class Keypad(PhaseThread):
     def __init__(self, component, target, name="Keypad"):
         super().__init__(name, component, target)
         # Generate eight random 4-digit binary numbers
-        self._binary_numbers = [format(randint(0, 15), '04b') for _ in range(8)]
+        self._binary_numbers = [format(randint(0, 15), '04b') for _ in range(16)]
 
     def run(self):
         self._running = True
