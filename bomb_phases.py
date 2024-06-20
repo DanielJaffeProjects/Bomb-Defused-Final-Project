@@ -14,6 +14,7 @@ from time import sleep
 import os
 import sys
 
+
 #########
 # classes
 #########
@@ -63,10 +64,12 @@ class Lcd(Frame):
         self._lstrikes.grid(row=5, column=2, sticky=W)
         if (SHOW_BUTTONS):
             # the pause button (pauses the timer)
-            self._bpause = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 18), text="Pause", anchor=CENTER, command=self.pause)
+            self._bpause = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 18), text="Pause",
+                                          anchor=CENTER, command=self.pause)
             self._bpause.grid(row=6, column=0, pady=40)
             # the quit button
-            self._bquit = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 18), text="Quit", anchor=CENTER, command=self.quit)
+            self._bquit = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 18), text="Quit",
+                                         anchor=CENTER, command=self.quit)
             self._bquit.grid(row=6, column=2, pady=40)
 
     # lets us pause/unpause the timer (7-segment display)
@@ -98,10 +101,12 @@ class Lcd(Frame):
 
         # reconfigure the GUI
         # the retry button
-        self._bretry = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 18), text="Retry", anchor=CENTER, command=self.retry)
+        self._bretry = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 18), text="Retry", anchor=CENTER,
+                                      command=self.retry)
         self._bretry.grid(row=1, column=0, pady=40)
         # the quit button
-        self._bquit = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 18), text="Quit", anchor=CENTER, command=self.quit)
+        self._bquit = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 18), text="Quit", anchor=CENTER,
+                                     command=self.quit)
         self._bquit.grid(row=1, column=2, pady=40)
 
     # re-attempts the bomb (after an explosion or a successful defusion)
@@ -123,6 +128,7 @@ class Lcd(Frame):
         # exit the application
         exit(0)
 
+
 # template (superclass) for various bomb components/phases
 class PhaseThread(Thread):
     def __init__(self, name, component=None, target=None):
@@ -139,6 +145,7 @@ class PhaseThread(Thread):
         self._value = None
         # phase threads are either running or not
         self._running = False
+
 
 # the timer phase
 class Timer(PhaseThread):
@@ -186,6 +193,8 @@ class Timer(PhaseThread):
     # returns the timer as a string (mm:ss)
     def __str__(self):
         return f"{self._min}:{self._sec}"
+
+
 '''
 # the keypad phase
 class Keypad(PhaseThread):
@@ -261,6 +270,8 @@ class Wires(PhaseThread):
         else:
             return "Incorrect wires disconnected. BOOM!"
     '''
+
+
 # the keypad phase
 class Keypad(PhaseThread):
     def __init__(self, component, target, name="Keypad"):
@@ -299,11 +310,11 @@ class Keypad(PhaseThread):
         else:
             return self._value
 
+
 # the jumper wires phase
 class Wires(PhaseThread):
     def __init__(self, component, target, name="Wires"):
         super().__init__(name, component, target)
-
 
     # runs the thread
     def run(self):
@@ -318,6 +329,7 @@ class Wires(PhaseThread):
             # TODO
             return self._value
             pass
+
 
 # the pushbutton phase
 class Button(PhaseThread):
@@ -334,7 +346,6 @@ class Button(PhaseThread):
         # we need to know about the timer (7-segment display) to be able to determine correct pushbutton releases in some cases
         self._timer = timer
 
-
     # runs the thread
     def run(self):
         self._running = True
@@ -345,7 +356,7 @@ class Button(PhaseThread):
         while (self._running):
             # get the pushbutton's state
             self._value = self._component.value
-            #Color starts on green
+            # Color starts on green
             self._rgb[0].value = True
             self._rgb[1].value = False
             self._rgb[2].value = True
@@ -360,10 +371,10 @@ class Button(PhaseThread):
                     self._rgb[0].value = True
                     self._rgb[1].value = True
                     self._rgb[2].value = False
-                    #Freezes time for 10 seconds
+                    # Freezes time for 10 seconds
                     self._timer.pause()
                     sleep(10)
-                    #resumes the timer
+                    # resumes the timer
                     self._timer.pause()
                     # Timer button is under cooldown for 60 seconds and color changes to red
                     self._rgb[0].value = False
@@ -372,23 +383,23 @@ class Button(PhaseThread):
                     sleep(60)
                     self._pressed = False
 
-
     # returns the pushbutton's state as a string
     def __str__(self):
         if (self._rgb[1] == False):
             return "You are now able to use your time freeze superpower!"
-        elif(self._rgb[2] == False):
+        elif (self._rgb[2] == False):
             return ("Time freeze is now active!")
-        elif(self._rgb[0] == False):
+        elif (self._rgb[0] == False):
             return ("You are now on cooldown!")
+
 
 # the toggle switches phase
 class Toggles(PhaseThread):
     def __init__(self, component, target, name="Toggles"):
         super().__init__(name, component, target)
         self._question = "What is my name?"
-        self._options = ["A) ", "B)","C)","D)"]
-        self._correct_answer ="B"
+        self._options = ["A) ", "B)", "C)", "D)"]
+        self._correct_answer = "B"
 
     def run(self):
         self._running = True
@@ -402,16 +413,15 @@ class Toggles(PhaseThread):
             answer_selected = self.get_selected_answer()
 
             # Check if the selected answer is correct
-            #If answer is correct you have won the game
+            # If answer is correct you have won the game
             if answer_selected == self._correct_answer:
                 self._defused = True
                 print("You have defused the bomb safely!")
-            #If answer is incorrect you have lost the game you are only given one chance since you have 3 strikes on self.failed
+            # If answer is incorrect you have lost the game you are only given one chance since you have 3 strikes on self.failed
             elif answer_selected != self._correct_answer:
                 self._failed = True
             sleep(1)
             self._running = False
-
 
     def get_selected_answer(self):
         # Put the toggles in a list
@@ -420,14 +430,14 @@ class Toggles(PhaseThread):
             toggle_list.append(toggle.value)
         print(toggle_list)
 
-        #Checks which toggles are True and then outputs the letter that corresponds with each toggle
+        # Checks which toggles are True and then outputs the letter that corresponds with each toggle
         if toggle_list[0] == True:
             return "A"
         if toggle_list[1] == True:
             return "B"
         if toggle_list[2] == True:
             return "C"
-        if toggle_list[3] == True :
+        if toggle_list[3] == True:
             return "D"
 
             # print("self.direction", x.direction)
