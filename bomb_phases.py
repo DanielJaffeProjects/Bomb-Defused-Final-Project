@@ -385,12 +385,12 @@ class Button(PhaseThread):
 
     # returns the pushbutton's state as a string
     def __str__(self):
-        if (self._rgb[1] == False):
-            return "You are now able to use your time freeze superpower!"
+        if (self._rgb[0] == False):
+            return ("You are now on cooldown!")
         elif (self._rgb[2] == False):
             return ("Time freeze is now active!")
         else:
-            return ("You are now on cooldown!")
+            return "You are now able to use your time freeze superpower!"
 
 
 # the toggle switches phase
