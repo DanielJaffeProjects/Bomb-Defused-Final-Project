@@ -350,8 +350,8 @@ class Toggles(PhaseThread):
             # If answer is correct you have won the game
             if answer_selected == self._correct_answer:
                 self._defused = True
-            elif answer_selected == False:
-                self._failed = False
+            elif answer_selected == "All False":
+                self._question = self._question
             # If answer is incorrect you have lost the game you are only given one chance since you have 3 strikes on self.failed
             else:
                 self._failed = True
@@ -376,7 +376,7 @@ class Toggles(PhaseThread):
         elif toggle_list[3] == True and toggle_list[0] == False and toggle_list[2] == False and toggle_list[1] == False:
             return "D"
         elif toggle_list[0] == False and toggle_list[1] == False and toggle_list[2] == False and toggle_list[3] == False:
-            return False
+            return "All False"
         else:
             #This returns F for failed which will never equal the correct answer and will fail the program
             # This makes it were you can't have more than one toggle on at the same time or you fail
