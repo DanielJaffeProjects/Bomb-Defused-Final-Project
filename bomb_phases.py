@@ -220,7 +220,7 @@ class Keypad(PhaseThread):
             user_input = self._component  # Replace this with actual user input
 
             # Check if the user input matches the target hexadecimal
-            if user_input.upper() == target_hex:
+            if user_input == target_hex:
                 self._defused = True
                 self._running = False
             else:
