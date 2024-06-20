@@ -186,7 +186,81 @@ class Timer(PhaseThread):
     # returns the timer as a string (mm:ss)
     def __str__(self):
         return f"{self._min}:{self._sec}"
+'''
+# the keypad phase
+class Keypad(PhaseThread):
+    def __init__(self, component, target, name="Keypad"):
+        super().__init__(name, component, target)
+        # Generate eight random 4-digit binary numbers
+        self._binary_numbers = [format(random.randint(0, 15), '04b') for _ in range(8)]
 
+    def run(self):
+        self._running = True
+        while self._running:
+            # Display the current binary number to the GUI
+            current_binary = self._binary_numbers[0]
+            # Here's where you would update the GUI to display the current binary number
+            print(f"Current binary number: {current_binary}")
+
+            # Check if the target hexadecimal number is input correctly
+            # For simplicity, let's say the target is the hexadecimal representation of the first binary number
+            target_hex = format(int(current_binary, 2), 'X')
+
+            # You would typically wait for user input here to get the translated hexadecimal value
+            # For demonstration, let's assume the user inputs a hexadecimal value
+            # Simulate user input
+            user_input = '1'  # Replace this with actual user input
+
+            # Check if the user input matches the target hexadecimal
+            if user_input.upper() == target_hex:
+                self._defused = True
+                self._running = False
+            else:
+                self._failed = True
+                self._running = False
+
+            sleep(1)
+
+        def transition_to_next_phase(self):
+        # Start the next phase (you need to implement this logic)
+        # For demonstration, assume we have a method to start the next phase
+        self._next_phase.start()
+
+    def __str__(self):
+        return "Keypad Phase"
+
+# the jumper wires phase
+class Wires(PhaseThread):
+    def __init__(self, component, target, name="Wires"):
+        super().__init__(name, component, target)
+        # Initialize the binary target number (24 in this case, which is 11000 in binary)
+        self._binary_target = 24
+
+    def run(self):
+        self._running = True
+        while self._running:
+            # Get the state of each wire (True for connected, False for disconnected)
+            wire_states = [wire.value for wire in self._component]
+
+            # Convert the current wire state to a binary number (e.g., [True, True, False, False, False] -> 11000 -> 24)
+            current_value = sum([2**i for i, wire in enumerate(wire_states[::-1]) if wire])
+
+            # Check if the current value matches the target binary number
+            if current_value == self._binary_target:
+                self._defused = True
+                self._running = False
+            else:
+                self._failed = True
+                self._running = False
+
+            sleep(1)
+
+    def __str__(self):
+        if self._defused:
+            return "DEFUSED"
+        else:
+            return "Incorrect wires disconnected. BOOM!"
+    '''
 # the keypad phase
 class Keypad(PhaseThread):
     def __init__(self, component, target, name="Keypad"):
