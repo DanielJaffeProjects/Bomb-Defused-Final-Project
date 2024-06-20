@@ -350,9 +350,12 @@ class Toggles(PhaseThread):
             # If answer is correct you have won the game
             if answer_selected == self._correct_answer:
                 self._defused = True
+            elif answer_selected == False:
+                continue
             # If answer is incorrect you have lost the game you are only given one chance since you have 3 strikes on self.failed
-            elif answer_selected != self._correct_answer:
+            else:
                 self._failed = True
+
             sleep(1)
             self._running = False
 
@@ -372,7 +375,8 @@ class Toggles(PhaseThread):
             return "C"
         if toggle_list[3] == True:
             return "D"
-        return None
+        if toggle_list[0] == False or toggle_list[1] == False or toggle_list[2] == False or toggle_list[3] == False:
+            return False
             # print("self.direction", x.direction)
             # print("self.pull", x.pull)
             # print("self.value", x.value, end = "")
