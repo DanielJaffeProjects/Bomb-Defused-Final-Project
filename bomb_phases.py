@@ -278,7 +278,8 @@ class Button(PhaseThread):
         self._color = color
         # we need to know about the timer (7-segment display) to be able to determine correct pushbutton releases in some cases
         self._timer = timer
-
+        #The amount of time the superpower freezes the timer
+        self._time_frozen = 0
     # runs the thread
     def run(self):
         self._running = True
@@ -287,6 +288,8 @@ class Button(PhaseThread):
         self._rgb[1].value = False if self._color == "G" else True
         self._rgb[2].value = False if self._color == "B" else True
         while (self._running):
+            #Time frozen for a random amout of time either 10 20 or 30 seconds
+            self._time_frozen = choice([10,20,30])
             # get the pushbutton's state
             self._value = self._component.value
             # Color starts on green
@@ -306,7 +309,7 @@ class Button(PhaseThread):
                     self._rgb[2].value = False
                     # Freezes time for 10 seconds
                     self._timer.pause()
-                    sleep(10)
+                    sleep(self._time_frozen)
                     # resumes the timer
                     self._timer.pause()
                     # Timer button is under cooldown for 60 seconds and color changes to red
@@ -321,7 +324,7 @@ class Button(PhaseThread):
         if (not self._rgb[0].value):
             return ("You are now on cooldown!")
         elif (not self._rgb[2].value):
-            return ("Time freeze is now active!")
+            return (f"Time freeze is now active for {self._time_frozen} seconds!")
         elif (not self._rgb[1].value):
             return "Your time freeze now usable!"
 
