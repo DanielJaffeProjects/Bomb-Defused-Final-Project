@@ -349,7 +349,7 @@ class Toggles(PhaseThread):
             # If answer is correct you have won the game
             if answer_selected == self._correct_answer:
                 self._defused = True
-                self._running = False
+                # self._running = False
             #If all the toggles are off then the toggles should continue to run
             elif answer_selected == "All False":
                 self._running = True
