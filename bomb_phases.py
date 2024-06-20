@@ -333,7 +333,7 @@ class Toggles(PhaseThread):
         self._question = "What is my name?"
         self._options = ["A) ", "B)", "C)", "D)"]
         self._correct_answer = "B"
-
+        self._new_option = ""
 
     def run(self):
         self._running = True
@@ -342,7 +342,7 @@ class Toggles(PhaseThread):
             print(self._question)
             print(self._correct_answer)
             for option in self._options:
-                print(option)
+                self._new_option += option
 
             answer_selected = self.get_selected_answer()
 
@@ -367,19 +367,18 @@ class Toggles(PhaseThread):
         print(toggle_list)
 
         # Checks which toggles are True and then outputs the letter that corresponds with each toggle
-        if toggle_list[0] == True and toggle_list[1] == False and toggle_list[2] == False and toggle_list[3] == False:
+        if toggle_list == [True, False, False, False]:
             return "A"
-        elif toggle_list[1] == True and toggle_list[0] == False and toggle_list[2] == False and toggle_list[3] == False:
+        elif toggle_list == [False, True, False, False]:
             return "B"
-        elif toggle_list[2] == True and toggle_list[0] == False and toggle_list[1] == False and toggle_list[3] == False:
+        elif toggle_list == [False, False, True, False]:
             return "C"
-        elif toggle_list[3] == True and toggle_list[0] == False and toggle_list[2] == False and toggle_list[1] == False:
+        elif toggle_list == [False, False, False, True]:
             return "D"
-        elif toggle_list[0] == False and toggle_list[1] == False and toggle_list[2] == False and toggle_list[3] == False:
+        elif toggle_list == [False, False, False, False]:
             return "All False"
         else:
-            #This returns F for failed which will never equal the correct answer and will fail the program
-            # This makes it were you can't have more than one toggle on at the same time or you fail
+            # Return F for failed if more than one toggle is on
             return "F"
         pass
 
@@ -390,5 +389,6 @@ class Toggles(PhaseThread):
         elif self._failed:
             return "failed"
         else:
-            return self._question
+            return self._question  + "\n" + self._new_option
+
 
