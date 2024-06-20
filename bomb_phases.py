@@ -13,7 +13,7 @@ from threading import Thread
 from time import sleep
 import os
 import sys
-from random import randint 
+from random import *
 
 #########
 # classes
