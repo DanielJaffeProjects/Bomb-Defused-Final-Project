@@ -375,7 +375,7 @@ class Toggles(PhaseThread):
             return "C"
         if toggle_list[3] == True:
             return "D"
-        if toggle_list[0] == False or toggle_list[1] == False or toggle_list[2] == False or toggle_list[3] == False:
+        if toggle_list[0] == False and toggle_list[1] == False and toggle_list[2] == False and toggle_list[3] == False:
             return False
             # print("self.direction", x.direction)
             # print("self.pull", x.pull)
