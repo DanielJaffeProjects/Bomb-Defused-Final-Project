@@ -350,14 +350,14 @@ class Toggles(PhaseThread):
             # If answer is correct you have won the game
             if answer_selected == self._correct_answer:
                 self._defused = True
+                self._running = False
             elif answer_selected == "All False":
                 self._question = self._question
             # If answer is incorrect you have lost the game you are only given one chance since you have 3 strikes on self.failed
             else:
                 self._failed = True
-
+                self._running = False
             sleep(1)
-            self._running = False
 
     def get_selected_answer(self):
         # Put the toggles in a list
