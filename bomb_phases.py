@@ -338,13 +338,11 @@ class Toggles(PhaseThread):
     def run(self):
         self._running = True
         while self._running:
-            # Display the question and options
-            print(self._question)
-            print(self._correct_answer)
+            # Display the question and options together
             self._display_text_toggle = self._question + "\n" + "\n".join(self._options)
 
             answer_selected = self.get_selected_answer()
-
+            print(answer_selected)
             # Check if the selected answer is correct
             # If answer is correct you have won the game
             if answer_selected == self._correct_answer:
