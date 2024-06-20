@@ -351,7 +351,7 @@ class Toggles(PhaseThread):
             if answer_selected == self._correct_answer:
                 self._defused = True
             elif answer_selected == False:
-                continue
+                self._failed = False
             # If answer is incorrect you have lost the game you are only given one chance since you have 3 strikes on self.failed
             else:
                 self._failed = True
