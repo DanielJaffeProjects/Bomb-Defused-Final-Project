@@ -333,10 +333,11 @@ class Toggles(PhaseThread):
         # List of questions with their options and correct answers
         self._questions = [
             ("Convert the binary number 11010101101010100101011010101010 to decimal.",
-             {"A": "65536", "B": "87381", "C": "44543", "D": "43887402"}, "D"),("Convert the 16-bit binary number 0110010100100111 to its two's complement representation.",
-             {"A": "0110010100100111", "B": "1001101011011001", "C": "1001101011010111", "D": "0110010100101001"}, "C"),("Convert the hexadecimal number 0x1A2F4C7E to binary.",
-             {"A": "00011010001011110100110001111110", "B": "00011010001011110100110000011110",
-              "C": "00011010001011110010110000011110", "D": "00011010001011110100110000111110"}, "A")
+             {"A": "65536", "B": "3584710314", "C": "3560384384", "D": "43887402"}, "C"),("Convert the hexadecimal number AB23FE97 to decimal",
+     {"A": "2871262871", "B": "2871263271", "C": "2823262871", "D": "2871262886"}, "A"),
+    ("Convert the hexadecimal number 0x1A2F4C7E to binary.",
+     {"A": "00011010001011110100110001111110", "B": "10101111010000100101001110111110",
+      "C": "00011010001011110010110000011110", "D": "00011010001011110100110000111110"}, "B")
         ]
 
         # Choose a random question
