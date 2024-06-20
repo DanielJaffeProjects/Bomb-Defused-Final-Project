@@ -333,6 +333,7 @@ class Toggles(PhaseThread):
         self._question = "What is my name?"
         self._options = ["A)", "B)", "C)", "D)"]
         self._correct_answer = "B"
+        self._display_text_toggle =""
 
     def run(self):
         self._running = True
@@ -340,7 +341,7 @@ class Toggles(PhaseThread):
             # Display the question and options
             print(self._question)
             print(self._correct_answer)
-
+            self._display_text_toggle = self._question + "\n" + "\n".join(self._options)
 
             answer_selected = self.get_selected_answer()
 
@@ -387,6 +388,6 @@ class Toggles(PhaseThread):
         elif self._failed:
             return "failed"
         else:
-            return self._question + "\n" + self._options
+            return self._display_text_toggle
 
 
