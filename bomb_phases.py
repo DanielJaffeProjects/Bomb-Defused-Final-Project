@@ -301,10 +301,12 @@ class Button(PhaseThread):
 
     # returns the pushbutton's state as a string
     def __str__(self):
-        if (self._defused):
-            return "DEFUSED"
-        else:
-            return ("You have won the game jedi!")
+        if (self._rgb[1] == False):
+            return "You are now able to use your time freeze superpower!"
+        elif(self._rgb[2] == False):
+            return ("Time freeze is now active!")
+        elif(self._rgb[0] == False):
+            return ("You are now on cooldown!")
 
 # the toggle switches phase
 class Toggles(PhaseThread):
