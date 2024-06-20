@@ -1,5 +1,1 @@
-# TestGIT
-#Hello where to 
-testestetat
-afa
-fae
+#Final Bomb project for CSC 102
