@@ -401,7 +401,8 @@ class Toggles(PhaseThread):
     #     self._options = ["A) ", "B)", "C)", "D)"]
     #     self._correct_answer = "B"
     #
-    # def run(self):
+    def run(self):
+        pass
     #     self._running = True
     #     while self._running:
     #         # Display the question and options
