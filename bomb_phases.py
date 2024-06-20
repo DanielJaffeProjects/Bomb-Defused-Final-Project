@@ -387,6 +387,6 @@ class Toggles(PhaseThread):
         if (self._defused):
             return "DEFUSED"
         else:
-            return "test"
+            return "failed"
             # TODO
 
