@@ -385,8 +385,6 @@ class Button(PhaseThread):
 
     # returns the pushbutton's state as a string
     def __str__(self):
-        print(self._rgb[0].value, self._rgb[1].value, self._rgb[2].value)
-
         if (not self._rgb[0].value):
             return ("You are now on cooldown!")
         elif (not self._rgb[2].value):
