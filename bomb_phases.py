@@ -217,10 +217,10 @@ class Keypad(PhaseThread):
             # You would typically wait for user input here to get the translated hexadecimal value
             # For demonstration, let's assume the user inputs a hexadecimal value
             # Simulate user input
-            user_input = '1'  # Replace this with actual user input
+            user_input = self._component  # Replace this with actual user input
 
             # Check if the user input matches the target hexadecimal
-            if user_input.upper() == target_hex:
+            if user_input == target_hex:
                 self._defused = True
                 self._running = False
             else:
