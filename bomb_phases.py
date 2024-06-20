@@ -390,6 +390,6 @@ class Toggles(PhaseThread):
         elif self._failed:
             return "failed"
         else:
-            return self._question + self._new_option
+            return self._question
 
 
