@@ -343,7 +343,8 @@ class Toggles(PhaseThread):
             self._display_text_toggle = self._question + "\n" + "\n".join(self._options)
 
             answer_selected = self.get_selected_answer()
-            print(answer_selected, i)
+            print(answer_selected == self._correct_answer,answer_selected, i,)
+
             # Check if the selected answer is correct
             # If answer is correct you have won the game
             if answer_selected == self._correct_answer:
