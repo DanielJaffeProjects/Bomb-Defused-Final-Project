@@ -397,58 +397,58 @@ class Button(PhaseThread):
 class Toggles(PhaseThread):
     def __init__(self, component, target, name="Toggles"):
         super().__init__(name, component, target)
-        self._question = "What is my name?"
-        self._options = ["A) ", "B)", "C)", "D)"]
-        self._correct_answer = "B"
-
-    def run(self):
-        self._running = True
-        while self._running:
-            # Display the question and options
-            print(self._question)
-            print(self._correct_answer)
-            for option in self._options:
-                print(option)
-
-            answer_selected = self.get_selected_answer()
-
-            # Check if the selected answer is correct
-            # If answer is correct you have won the game
-            if answer_selected == self._correct_answer:
-                self._defused = True
-                print("You have defused the bomb safely!")
-            # If answer is incorrect you have lost the game you are only given one chance since you have 3 strikes on self.failed
-            elif answer_selected != self._correct_answer:
-                self._failed = True
-            sleep(1)
-            self._running = False
-
-    def get_selected_answer(self):
-        # Put the toggles in a list
-        toggle_list = []
-        for toggle in self._component:
-            toggle_list.append(toggle.value)
-        print(toggle_list)
-
-        # Checks which toggles are True and then outputs the letter that corresponds with each toggle
-        if toggle_list[0] == True:
-            return "A"
-        if toggle_list[1] == True:
-            return "B"
-        if toggle_list[2] == True:
-            return "C"
-        if toggle_list[3] == True:
-            return "D"
-
-            # print("self.direction", x.direction)
-            # print("self.pull", x.pull)
-            # print("self.value", x.value, end = "")
-            #
-            # print("self._target", self._target)
-            # print("self._value", self._value)
-            # print("self._running",self._running)
-            # print("self._defused", self._defused)
-        pass
+    #     self._question = "What is my name?"
+    #     self._options = ["A) ", "B)", "C)", "D)"]
+    #     self._correct_answer = "B"
+    #
+    # def run(self):
+    #     self._running = True
+    #     while self._running:
+    #         # Display the question and options
+    #         print(self._question)
+    #         print(self._correct_answer)
+    #         for option in self._options:
+    #             print(option)
+    #
+    #         answer_selected = self.get_selected_answer()
+    #
+    #         # Check if the selected answer is correct
+    #         # If answer is correct you have won the game
+    #         if answer_selected == self._correct_answer:
+    #             self._defused = True
+    #             print("You have defused the bomb safely!")
+    #         # If answer is incorrect you have lost the game you are only given one chance since you have 3 strikes on self.failed
+    #         elif answer_selected != self._correct_answer:
+    #             self._failed = True
+    #         sleep(1)
+    #         self._running = False
+    #
+    # def get_selected_answer(self):
+    #     # Put the toggles in a list
+    #     toggle_list = []
+    #     for toggle in self._component:
+    #         toggle_list.append(toggle.value)
+    #     print(toggle_list)
+    #
+    #     # Checks which toggles are True and then outputs the letter that corresponds with each toggle
+    #     if toggle_list[0] == True:
+    #         return "A"
+    #     if toggle_list[1] == True:
+    #         return "B"
+    #     if toggle_list[2] == True:
+    #         return "C"
+    #     if toggle_list[3] == True:
+    #         return "D"
+    #
+    #         # print("self.direction", x.direction)
+    #         # print("self.pull", x.pull)
+    #         # print("self.value", x.value, end = "")
+    #         #
+    #         # print("self._target", self._target)
+    #         # print("self._value", self._value)
+    #         # print("self._running",self._running)
+    #         # print("self._defused", self._defused)
+    #     pass
 
     # returns the toggle switches state as a string
     def __str__(self):
