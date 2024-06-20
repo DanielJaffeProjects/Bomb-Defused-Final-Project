@@ -416,7 +416,6 @@ class Toggles(PhaseThread):
             # If answer is correct you have won the game
             if answer_selected == self._correct_answer:
                 self._defused = True
-                print("You have defused the bomb safely!")
             # If answer is incorrect you have lost the game you are only given one chance since you have 3 strikes on self.failed
             elif answer_selected != self._correct_answer:
                 self._failed = True
@@ -455,5 +454,6 @@ class Toggles(PhaseThread):
         if (self._defused):
             return "DEFUSED"
         else:
+            return "test"
             # TODO
-            pass
+
