@@ -343,6 +343,7 @@ class Toggles(PhaseThread):
             print(self._correct_answer)
             for option in self._options:
                 self._new_option += option
+            print(self._new_option)
 
             answer_selected = self.get_selected_answer()
 
@@ -389,6 +390,6 @@ class Toggles(PhaseThread):
         elif self._failed:
             return "failed"
         else:
-            return self._question  + "\n" + self._new_option
+            return self._question + self._new_option
 
 
