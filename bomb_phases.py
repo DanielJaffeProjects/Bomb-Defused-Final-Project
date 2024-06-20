@@ -389,7 +389,7 @@ class Button(PhaseThread):
             return "You are now able to use your time freeze superpower!"
         elif (self._rgb[2] == False):
             return ("Time freeze is now active!")
-        elif (self._rgb[0] == False):
+        else:
             return ("You are now on cooldown!")
 
 
