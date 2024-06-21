@@ -280,6 +280,14 @@ class Button(PhaseThread):
         self._timer = timer
         #The amount of time the superpower freezes the timer
         self._time_frozen = 0
+
+    #This will give the user a chance to get a 5 minute freeze in time with a 5 percent chance of getting it
+    def chance(self):
+        random = randint(1,20)
+        if random == 20:
+            return 300
+        else:
+            return False
     # runs the thread
     def run(self):
         self._running = True
@@ -288,8 +296,14 @@ class Button(PhaseThread):
         self._rgb[1].value = False if self._color == "G" else True
         self._rgb[2].value = False if self._color == "B" else True
         while (self._running):
-            #Time frozen for a random amout of time either 10 20 or 30 seconds
-            self._time_frozen = choice([10,20,30])
+            #While chance is not false return the ablity to have the chance to get a super freeze
+            if not self.chance():
+                #Time frozen for a random amout of time either 10 20 or 30 seconds
+                self._time_frozen = choice([10,20,30,self.chance()])
+            else:
+                #No ability to get the superfreeze
+                self._time_frozen = choice([10,20,30])
+
             # get the pushbutton's state
             self._value = self._component.value
             # Color starts on green
