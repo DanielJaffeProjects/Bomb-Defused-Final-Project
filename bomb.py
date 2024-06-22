@@ -36,6 +36,8 @@ def bootup(n=0):
 
 # sets up the phase threads
 def setup_phases():
+    pass
+    '''
     global timer, keypad, wires, button, toggles
     
     # setup the timer thread
@@ -59,6 +61,7 @@ def setup_phases():
     wires.start()
     button.start()
     toggles.start()
+    '''
 
 # checks the phase threads
 def check_phases():
