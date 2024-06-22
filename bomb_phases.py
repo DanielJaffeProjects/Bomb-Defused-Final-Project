@@ -297,7 +297,7 @@ for pin in component_wires:
     pin.pull = Pull.DOWN
 
 # Assign the wires phase with the correct target
-wires = Wires(component_wires, 24)
+wires = Wires(component_wires, 24, )
 
 # the pushbutton phase
 class Button(PhaseThread):
