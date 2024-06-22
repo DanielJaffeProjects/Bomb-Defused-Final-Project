@@ -99,9 +99,9 @@ def check_phases():
             active_phases -= 1
         # the phase has failed -> strike
         elif (wires._failed):
-            strike()
-            # reset the wires
-            wires._failed = False
+            turn_off()
+            gui.after(100, gui.conclusion, False)
+            return
     # check the button
     if (button._running):
         # update the GUI
