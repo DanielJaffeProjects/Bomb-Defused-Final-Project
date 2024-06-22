@@ -238,25 +238,24 @@ class Keypad(PhaseThread):
 class Wires(PhaseThread):
     def __init__(self, component, target, name="Wires"):
         super().__init__(name, component, target)
-        # Initialize the binary target number (24 in this case, which is 11000 in binary)
-        self._binary_target = 24
 
     def run(self):
         self._running = True
         while self._running:
-            # Get the state of each wire (True for connected, False for disconnected)
-            wire_states = [wire.value for wire in self._component]
+            # Check the state of each wire and form a binary number
+            wire_state = 0
+            for i, pin in enumerate(self._component):
+                if pin.value:
+                    wire_state |= (1 << (4 - i))  # Convert pin states to a binary number
 
-            # Convert the current wire state to a binary number (e.g., [True, True, False, False, False] -> 11000 -> 24)
-            current_value = sum([2 ** i for i, wire in enumerate(wire_states[::-1]) if wire])
-
-            # Check if the current value matches the target binary number
-            if current_value == self._binary_target:
+            # Compare the binary number to the target
+            if wire_state == self._target:
                 self._defused = True
-                self._running = False
             else:
                 self._failed = True
-                self._running = False
+
+            # Update the GUI with the current wire state (binary number)
+            gui._lwires["text"] = f"Wires: {bin(wire_state)[2:].zfill(5)}"
 
             sleep(1)
 
@@ -264,8 +263,23 @@ class Wires(PhaseThread):
         if self._defused:
             return "DEFUSED"
         else:
-            return "Incorrect wires disconnected. BOOM!"
+            wire_state = 0
+            for i, pin in enumerate(self._component):
+                if pin.value:
+                    wire_state |= (1 << (4 - i))
+            return bin(wire_state)[2:].zfill(5)
 
+# Example target value for the puzzle (24 in binary is 11000)
+wires_target = 24  # This would be set in bomb_configs or dynamically generated
+
+# In bomb_configs or the main script, ensure the wires target is correctly assigned
+component_wires = [DigitalInOut(board.D14), DigitalInOut(board.D15), DigitalInOut(board.D18), DigitalInOut(board.D23), DigitalInOut(board.D24)]
+for pin in component_wires:
+    pin.direction = Direction.INPUT
+    pin.pull = Pull.DOWN
+
+# Assign the wires phase with the correct target
+wires = Wires(component_wires, 24)
 
 # the pushbutton phase
 class Button(PhaseThread):
