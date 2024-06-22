@@ -252,7 +252,8 @@ class Keypad(PhaseThread):
         self._running = True
         while self._running:
             # Display binary numbers on GUI
-            self._gui._lkeypad["text"] = f"Binary numbers: {' '.join(self._binary_numbers)}"
+            global gui
+            gui._lkeypad["text"] = f"Binary numbers: {' '.join(self._binary_numbers)}"
 
             # Simulate user input for testing
             user_input = input("Enter the hexadecimal values: ")
