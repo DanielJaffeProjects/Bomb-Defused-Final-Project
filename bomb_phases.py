@@ -32,6 +32,29 @@ class Lcd(Frame):
         # setup the initial "boot" GUI
         self.setupBoot()
 
+        # New changes start here
+         # Initialize the phases
+        self.timer = Timer(component_7seg, COUNTDOWN)
+        self.keypad = Keypad(component_keypad, keypad_target, self)
+        self.wires = Wires(component_wires, wires_target, self)
+        self.button = Button(component_button_state, component_button_RGB, button_target, button_color, self.timer)
+        self.toggles = Toggles(component_toggles, toggles_target, self)
+
+        # Set the timer and button in the GUI
+        self.setTimer(self.timer)
+        self.setButton(self.button)
+
+        # Start the phases
+        self.start_phases()
+
+    def start_phases(self):
+        self.timer.start()
+        self.keypad.start()
+        self.wires.start()
+        self.button.start()
+        self.toggles.start()
+    # New code ends here
+
     # sets up the LCD "boot" GUI
     def setupBoot(self):
         # set column weights
@@ -253,7 +276,7 @@ class Keypad(PhaseThread):
 
 # the jumper wires phase
 class Wires(PhaseThread):
-    def __init__(self, component, target, gui, name="Wires"):
+    def __init__(self, component, target, name="Wires"):
         super().__init__(name, component, target)
         self._gui = gui
 
@@ -273,6 +296,7 @@ class Wires(PhaseThread):
                 self._failed = True
 
             # Update the GUI with the current wire state (binary number)
+            global gui
             gui._lwires["text"] = f"Wires: {bin(wire_state)[2:].zfill(5)}"
 
             sleep(1)
