@@ -67,7 +67,7 @@ def setup_phases():
 def check_phases():
     global active_phases
     if gui.timer._running:
-        gui._ltimer["text"] = f"Time left: {timer}"
+        gui._ltimer["text"] = f"Time left: {gui.timer}"
     else:
         # the countdown has expired -> explode!
         # turn off the bomb and render the conclusion GUI
@@ -78,7 +78,7 @@ def check_phases():
     # check the keypad
     if gui.keypad._running:
         # update the GUI
-        gui._lkeypad["text"] = f"Combination: {keypad}"
+        gui._lkeypad["text"] = f"Combination: {gui.keypad}"
         # the phase is defused -> stop the thread
         if gui.keypad._defused:
             keypad._running = False
@@ -91,7 +91,7 @@ def check_phases():
     # check the wires
     if gui.wires._running:
         # update the GUI
-        gui._lwires["text"] = f"Wires: {wires}"
+        gui._lwires["text"] = f"Wires: {gui.wires}"
         # the phase is defused -> stop the thread
         if gui.wires._defused:
             gui.wires._running = False
@@ -104,7 +104,7 @@ def check_phases():
     # check the button
     if gui.button._running:
         # update the GUI
-        gui._lbutton["text"] = f"Button: {button}"
+        gui._lbutton["text"] = f"Button: {gui.button}"
         # the phase is defused -> stop the thread
         if gui.button._defused:
             gui.button._running = False
@@ -117,7 +117,7 @@ def check_phases():
     # check the toggles
     if gui.toggles._running:
         # update the GUI
-        gui._ltoggles["text"] = f"Toggles: {toggles}"
+        gui._ltoggles["text"] = f"Toggles: {gui.toggles}"
         # the phase is defused -> stop the thread
         if gui.toggles._defused:
             gui.toggles._running = False
