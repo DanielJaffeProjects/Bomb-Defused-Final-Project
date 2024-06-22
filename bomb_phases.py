@@ -228,9 +228,6 @@ class Keypad(PhaseThread):
     def run(self):
         self._running = True
         while self._running:
-            def run(self):
-        self._running = True
-        while self._running:
             # Display binary numbers on GUI
             gui._lkeypad["text"] = f"Binary numbers: {' '.join(self._binary_numbers)}"
 
