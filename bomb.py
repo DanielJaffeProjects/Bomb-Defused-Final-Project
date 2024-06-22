@@ -65,6 +65,7 @@ def setup_phases():
 
 # checks the phase threads
 def check_phases():
+    global gui
     global active_phases
     if gui.timer._running:
         gui._ltimer["text"] = f"Time left: {gui.timer}"
