@@ -215,6 +215,7 @@ class Timer(PhaseThread):
 class Keypad(PhaseThread):
     def __init__(self, component, target, name="Keypad"):
         super().__init__(name, component, target)
+        self._gui = gui
         self._value = ""
         self._binary_numbers = self.generate_binary_numbers()
         self._hex_values =[self.binary_to_hex(b) for b in self._binary_numbers]
@@ -229,7 +230,7 @@ class Keypad(PhaseThread):
         self._running = True
         while self._running:
             # Display binary numbers on GUI
-            gui._lkeypad["text"] = f"Binary numbers: {' '.join(self._binary_numbers)}"
+            self._gui._lkeypad["text"] = f"Binary numbers: {' '.join(self._binary_numbers)}"
 
             # Simulate user input for testing
             user_input = input("Enter the hexadecimal values: ")
@@ -254,6 +255,7 @@ class Keypad(PhaseThread):
 class Wires(PhaseThread):
     def __init__(self, component, target, name="Wires"):
         super().__init__(name, component, target)
+        self._gui = gui
 
     def run(self):
         self._running = True
