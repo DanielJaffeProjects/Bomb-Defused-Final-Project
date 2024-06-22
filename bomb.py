@@ -84,7 +84,7 @@ def check_phases():
             keypad._running = False
             active_phases -= 1
         # the phase has failed -> strike
-         elif (keypad._failed):
+        elif (keypad._failed):
             turn_off()
             gui.after(100, gui.conclusion, False)
             return
