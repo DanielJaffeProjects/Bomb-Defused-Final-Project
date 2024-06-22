@@ -15,6 +15,7 @@ import os
 import sys
 from random import *
 
+
 #########
 # classes
 #########
@@ -232,6 +233,7 @@ class Keypad(PhaseThread):
     def __str__(self):
         return "Keypad Phase"
 
+
 # the jumper wires phase
 class Wires(PhaseThread):
     def __init__(self, component, target, name="Wires"):
@@ -246,7 +248,7 @@ class Wires(PhaseThread):
             wire_states = [wire.value for wire in self._component]
 
             # Convert the current wire state to a binary number (e.g., [True, True, False, False, False] -> 11000 -> 24)
-            current_value = sum([2**i for i, wire in enumerate(wire_states[::-1]) if wire])
+            current_value = sum([2 ** i for i, wire in enumerate(wire_states[::-1]) if wire])
 
             # Check if the current value matches the target binary number
             if current_value == self._binary_target:
@@ -264,6 +266,7 @@ class Wires(PhaseThread):
         else:
             return "Incorrect wires disconnected. BOOM!"
 
+
 # the pushbutton phase
 class Button(PhaseThread):
     def __init__(self, component_state, component_rgb, target, color, timer, name="Button"):
@@ -278,16 +281,17 @@ class Button(PhaseThread):
         self._color = color
         # we need to know about the timer (7-segment display) to be able to determine correct pushbutton releases in some cases
         self._timer = timer
-        #The amount of time the superpower freezes the timer
+        # The amount of time the superpower freezes the timer
         self._time_frozen = 0
 
-    #This will give the user a chance to get a 5 minute freeze in time with a 5 percent chance of getting it
+    # This will give the user a chance to get a 5 minute freeze in time with a 5 percent chance of getting it
     def chance(self):
-        random = randint(1,500)
+        random = randint(1, 500)
         if random == 50:
             return 300
         else:
             return False
+
     # runs the thread
     def run(self):
         self._running = True
@@ -296,13 +300,13 @@ class Button(PhaseThread):
         self._rgb[1].value = False if self._color == "G" else True
         self._rgb[2].value = False if self._color == "B" else True
         while (self._running):
-            #While chance is not false return the ablity to have the chance to get a super freeze
+            # While chance is not false return the ablity to have the chance to get a super freeze
             if self.chance() == 300:
-                #Time frozen for a random amout of time either 10 20 or 30 seconds
+                # Time frozen for a random amout of time either 10 20 or 30 seconds
                 self._time_frozen = self.chance()
             else:
-                #No ability to get the superfreeze
-                self._time_frozen = choice([10,20,30])
+                # No ability to get the superfreeze
+                self._time_frozen = choice([10, 20, 30])
 
             # get the pushbutton's state
             self._value = self._component.value
@@ -417,5 +421,3 @@ class Toggles(PhaseThread):
     #         return "failed"
     #     else:
     #         return self._display_text_toggle
-
-
