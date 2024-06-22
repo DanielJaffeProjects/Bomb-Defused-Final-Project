@@ -381,8 +381,9 @@ class Button(PhaseThread):
 
 # the toggle switches phase
 class Toggles(PhaseThread):
-    def __init__(self, component, target, name="Toggles"):
+    def __init__(self, component, target, gui, name="Toggles"):
         super().__init__(name, component, target)
+        self._gui = gui
         # List of questions with their options and correct answers
         self._questions = [
             ("Convert the binary number 11010101101010100101011010101010 to decimal.",
