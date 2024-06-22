@@ -249,10 +249,10 @@ class Keypad(PhaseThread):
         return format(int(binary_str, 2), 'X')
 
     def run(self):
+        global gui
         self._running = True
         while self._running:
             # Display binary numbers on GUI
-            global gui
             gui._lkeypad["text"] = f"Binary numbers: {' '.join(self._binary_numbers)}"
 
             # Simulate user input for testing
@@ -281,6 +281,7 @@ class Wires(PhaseThread):
 
     def run(self):
         self._running = True
+        global gui
         while self._running:
             # Check the state of each wire and form a binary number
             wire_state = 0
@@ -295,7 +296,6 @@ class Wires(PhaseThread):
                 self._failed = True
 
             # Update the GUI with the current wire state (binary number)
-            global gui
             gui._lwires["text"] = f"Wires: {bin(wire_state)[2:].zfill(5)}"
 
             sleep(1)
