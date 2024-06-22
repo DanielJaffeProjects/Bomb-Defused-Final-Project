@@ -408,7 +408,6 @@ class Toggles(PhaseThread):
             # Display the question and options together
             #Got from ChatGPT
             self._display_text_toggle = "{}\n{}".format(self._question, "\n".join(self._options))
-            print(self._display_text_toggle)
             #Get the answer the user selected
             answer_selected = self.get_selected_answer()
 
