@@ -424,7 +424,6 @@ class Toggles(PhaseThread):
         toggle_list = []
         for toggle in self._component:
             toggle_list.append(toggle.value)
-        print(toggle_list)
 
         # Checks which toggles are True and then outputs the letter that corresponds with each toggle
         if toggle_list == [True, False, False, False]:
