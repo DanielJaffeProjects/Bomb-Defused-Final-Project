@@ -352,72 +352,72 @@ class Toggles(PhaseThread):
     def __init__(self, component, target, name="Toggles"):
         super().__init__(name, component, target)
         # List of questions with their options and correct answers
-    #     self._questions = [
-    #         ("Convert the binary number 11010101101010100101011010101010 to decimal.",
-    #          {"A": "65536", "B": "3584710314", "C": "3560384384", "D": "43887402"}, "C"),("Convert the hexadecimal number AB23FE97 to decimal",
-    #  {"A": "2871262871", "B": "2871263271", "C": "2823262871", "D": "2871262886"}, "A"),
-    # ("Convert the hexadecimal number 0x1A2F4C7E to binary.",
-    #  {"A": "00011010001011110100110001111110", "B": "10101111010000100101001110111110",
-    #   "C": "00011010001011110010110000011110", "D": "00011010001011110100110000111110"}, "B")
-    #     ]
-    #
-    #     # Choose a random question
-    #     self._current_question = choice(self._questions)
-    #     self._question = self._current_question[0]
-    #     self._options = self._current_question[1]
-    #     self._correct_answer = self._current_question[2]
-    #
-    #     self._display_text_toggle = ""
-    #
-    # def run(self):
-    #     self._running = True
-    #     while self._running:
-    #         # Display the question and options together
-    #         #Got from ChatGPT
-    #         self._display_text_toggle = "{}\n{}".format(self._question, "\n".join(self._options))
-    #         print(self._display_text_toggle)
-    #         #Get the answer the user selected
-    #         answer_selected = self.get_selected_answer()
-    #
-    #         # Check if the selected answer is correct
-    #         # If answer is correct you have won the game
-    #         if answer_selected == self._correct_answer:
-    #             self._defused = True
-    #         #If all the toggles are off then the toggles should continue to run
-    #         elif answer_selected == "All False":
-    #             self._running = True
-    #         # If answer is incorrect you have lost the game you are only given one chance since you have 3 strikes on self.failed
-    #         else:
-    #             self._failed = True
-    #
-    # def get_selected_answer(self):
-    #     # Put the toggles in a list
-    #     toggle_list = []
-    #     for toggle in self._component:
-    #         toggle_list.append(toggle.value)
-    #     print(toggle_list)
-    #
-    #     # Checks which toggles are True and then outputs the letter that corresponds with each toggle
-    #     if toggle_list == [True, False, False, False]:
-    #         return "A"
-    #     elif toggle_list == [False, True, False, False]:
-    #         return "B"
-    #     elif toggle_list == [False, False, True, False]:
-    #         return "C"
-    #     elif toggle_list == [False, False, False, True]:
-    #         return "D"
-    #     elif toggle_list == [False, False, False, False]:
-    #         return "All False"
-    #     else:
-    #         # Return F for failed if more than one toggle is on
-    #         return "F"
-    #     pass
-    #
-    # # returns the toggle switches state as a string
-    # def __str__(self):
-    #     if (self._defused):
-    #         return "DEFUSED"
-    #     elif self._failed:
-    #         return "failed"
-    #     else:
-    #         return self._display_text_toggle
+        self._questions = [
+            ("Convert the binary number 11010101101010100101011010101010 to decimal.",
+             {"A": "65536", "B": "3584710314", "C": "3560384384", "D": "43887402"}, "C"),("Convert the hexadecimal number AB23FE97 to decimal",
+     {"A": "2871262871", "B": "2871263271", "C": "2823262871", "D": "2871262886"}, "A"),
+    ("Convert the hexadecimal number 0x1A2F4C7E to binary.",
+     {"A": "00011010001011110100110001111110", "B": "10101111010000100101001110111110",
+      "C": "00011010001011110010110000011110", "D": "00011010001011110100110000111110"}, "B")
+        ]
+
+        # Choose a random question
+        self._current_question = choice(self._questions)
+        self._question = self._current_question[0]
+        self._options = self._current_question[1]
+        self._correct_answer = self._current_question[2]
+
+        self._display_text_toggle = ""
+
+    def run(self):
+        self._running = True
+        while self._running:
+            # Display the question and options together
+            #Got from ChatGPT
+            self._display_text_toggle = "{}\n{}".format(self._question, "\n".join(self._options))
+            print(self._display_text_toggle)
+            #Get the answer the user selected
+            answer_selected = self.get_selected_answer()
+
+            # Check if the selected answer is correct
+            # If answer is correct you have won the game
+            if answer_selected == self._correct_answer:
+                self._defused = True
+            #If all the toggles are off then the toggles should continue to run
+            elif answer_selected == "All False":
+                self._running = True
+            # If answer is incorrect you have lost the game you are only given one chance since you have 3 strikes on self.failed
+            else:
+                self._failed = True
+
+    def get_selected_answer(self):
+        # Put the toggles in a list
+        toggle_list = []
+        for toggle in self._component:
+            toggle_list.append(toggle.value)
+        print(toggle_list)
+
+        # Checks which toggles are True and then outputs the letter that corresponds with each toggle
+        if toggle_list == [True, False, False, False]:
+            return "A"
+        elif toggle_list == [False, True, False, False]:
+            return "B"
+        elif toggle_list == [False, False, True, False]:
+            return "C"
+        elif toggle_list == [False, False, False, True]:
+            return "D"
+        elif toggle_list == [False, False, False, False]:
+            return "All False"
+        else:
+            # Return F for failed if more than one toggle is on
+            return "F"
+        pass
+
+    # returns the toggle switches state as a string
+    def __str__(self):
+        if (self._defused):
+            return "DEFUSED"
+        elif self._failed:
+            return "failed"
+        else:
+            return self._display_text_toggle
