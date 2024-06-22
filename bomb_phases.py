@@ -200,38 +200,42 @@ class Timer(PhaseThread):
 class Keypad(PhaseThread):
     def __init__(self, component, target, name="Keypad"):
         super().__init__(name, component, target)
-        # Generate eight random 4-digit binary numbers
-        self._binary_numbers = [format(randint(0, 30), '04b') for _ in range(8)]
+        self._value = ""
+        self._binary_numbers = self.generate_binary_numbers()
+        self._hex_values =[self.binary_to_hex(b) for b in self._binary_numbers]
+
+    def generate_binary_numbers(self):
+        return [format(randint(0, 15), '04b') for _ in range(8)]
+
+    def binary_to_hex(self, binary_str):
+        return format(int(binary_str, 2), 'X')
 
     def run(self):
         self._running = True
         while self._running:
-            # Display the current binary number to the GUI
-            current_binary = self._binary_numbers[0]
-            # Here's where you would update the GUI to display the current binary number
-            print(f"Current binary number: {current_binary}")
+            def run(self):
+        self._running = True
+        while self._running:
+            # Display binary numbers on GUI
+            gui._lkeypad["text"] = f"Binary numbers: {' '.join(self._binary_numbers)}"
 
-            # Check if the target hexadecimal number is input correctly
-            # For simplicity, let's say the target is the hexadecimal representation of the first binary number
-            target_hex = format(int(current_binary, 2), 'X')
+            # Simulate user input for testing
+            user_input = input("Enter the hexadecimal values: ")
 
-            # You would typically wait for user input here to get the translated hexadecimal value
-            # For demonstration, let's assume the user inputs a hexadecimal value
-            # Simulate user input
-            user_input = self._component  # Replace this with actual user input
-
-            # Check if the user input matches the target hexadecimal
-            if user_input == target_hex:
+            # Check if user input matches the correct hexadecimal values
+            if user_input.replace(' ', '').upper() == ''.join(self._hex_values):
                 self._defused = True
-                self._running = False
             else:
                 self._failed = True
-                self._running = False
 
+            # Delay to prevent rapid looping
             sleep(1)
 
     def __str__(self):
-        return "Keypad Phase"
+        if self._defused:
+            return "DEFUSED"
+        else:
+            return self._value
 
 
 # the jumper wires phase
