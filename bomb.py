@@ -51,7 +51,7 @@ def setup_phases():
     # bind the pushbutton to the LCD GUI so that its LED can be turned off when we quit
     gui.setButton(button)
     # setup the toggle switches thread
-    toggles = Toggles(component_toggles, toggles_target)
+    toggles = Toggles(component_toggles, toggles_target, gui)
 
     # start the phase threads
     timer.start()
