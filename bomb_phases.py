@@ -244,7 +244,7 @@ class Wires(PhaseThread):
             else:
                 self._failed = True
             # Update the GUI with the current wire state (binary number)
-            gui._lwires["text"] = f"Wires: {bin(wire_state)[2:].zfill(5)}"
+            self.update_gui(f"Wires: {bin(wire_state)[2:].zfill(5)}")
             sleep(1)
     def __str__(self):
         if self._defused:
