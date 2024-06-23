@@ -3,7 +3,6 @@
 # GUI and Phase class definitions
 # Team: Daniel Jaffe and Jordano Liberato
 #################################
-
 # import the configs
 from bomb_configs import *
 # other imports
@@ -14,8 +13,6 @@ from time import sleep
 import os
 import sys
 from random import *
-
-
 #########
 # classes
 #########
@@ -31,30 +28,6 @@ class Lcd(Frame):
         self._button = None
         # setup the initial "boot" GUI
         self.setupBoot()
-
-        # New changes start here
-         # Initialize the phases
-        self.timer = Timer(component_7seg, COUNTDOWN)
-        self.keypad = Keypad(component_keypad, keypad_target, self)
-        self.wires = Wires(component_wires, wires_target, self)
-        self.button = Button(component_button_state, component_button_RGB, button_target, button_color, self.timer)
-        self.toggles = Toggles(component_toggles, toggles_target, self)
-
-        # Set the timer and button in the GUI
-        self.setTimer(self.timer)
-        self.setButton(self.button)
-
-        # Start the phases
-        self.start_phases()
-
-    def start_phases(self):
-        self.timer.start()
-        self.keypad.start()
-        self.wires.start()
-        self.button.start()
-        self.toggles.start()
-    # New code ends here
-
     # sets up the LCD "boot" GUI
     def setupBoot(self):
         # set column weights
@@ -65,7 +38,6 @@ class Lcd(Frame):
         self._lscroll = Label(self, bg="black", fg="white", font=("Courier New", 14), text="", justify=LEFT)
         self._lscroll.grid(row=0, column=0, columnspan=3, sticky=W)
         self.pack(fill=BOTH, expand=True)
-
     # sets up the LCD GUI
     def setup(self):
         # the timer
@@ -95,35 +67,28 @@ class Lcd(Frame):
             self._bquit = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 18), text="Quit",
                                          anchor=CENTER, command=self.quit)
             self._bquit.grid(row=6, column=2, pady=40)
-
     # Add entry widget for hexadecimal input
         self._hex_entry = Entry(self, bg="black", fg="#00ff00", font=("Courier New", 18))
         self._hex_entry.grid(row=6, column=1, sticky=W)
-
         # Add submit button for hexadecimal input
         self._bsubmit = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 18), text="Submit", anchor=CENTER, command=self.submit_hex)
         self._bsubmit.grid(row=6, column=1, pady=40, padx=10)
-
     def submit_hex(self):
         hex_input = self._hex_entry.get().replace(' ', '').upper()
-        if hex_input == ''.join(self.keypad._hex_values):
-            self.keypad._defused = True
+        if hex_input == ''.join(keypad._hex_values):
+            keypad._defused = True
         else:
-            self.keypad._failed = True
-
+            keypad._failed = True
     # lets us pause/unpause the timer (7-segment display)
     def setTimer(self, timer):
         self._timer = timer
-
     # lets us turn off the pushbutton's RGB LED
     def setButton(self, button):
         self._button = button
-
     # pauses the timer
     def pause(self):
         if (RPi):
             self._timer.pause()
-
     # setup the conclusion GUI (explosion/defusion)
     def conclusion(self, success=False):
         # destroy/clear widgets that are no longer needed
@@ -137,7 +102,6 @@ class Lcd(Frame):
         if (SHOW_BUTTONS):
             self._bpause.destroy()
             self._bquit.destroy()
-
         # reconfigure the GUI
         # the retry button
         self._bretry = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 18), text="Retry", anchor=CENTER,
@@ -147,13 +111,11 @@ class Lcd(Frame):
         self._bquit = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 18), text="Quit", anchor=CENTER,
                                      command=self.quit)
         self._bquit.grid(row=1, column=2, pady=40)
-
     # re-attempts the bomb (after an explosion or a successful defusion)
     def retry(self):
         # re-launch the program (and exit this one)
         os.execv(sys.executable, ["python3"] + [sys.argv[0]])
         exit(0)
-
     # quits the GUI, resetting some components
     def quit(self):
         if (RPi):
@@ -166,8 +128,6 @@ class Lcd(Frame):
                 pin.value = True
         # exit the application
         exit(0)
-
-
 # template (superclass) for various bomb components/phases
 class PhaseThread(Thread):
     def __init__(self, name, component=None, target=None):
@@ -184,8 +144,6 @@ class PhaseThread(Thread):
         self._value = None
         # phase threads are either running or not
         self._running = False
-
-
 # the timer phase
 class Timer(PhaseThread):
     def __init__(self, component, initial_value, name="Timer"):
@@ -199,7 +157,6 @@ class Timer(PhaseThread):
         self._sec = ""
         # by default, each tick is 1 second
         self._interval = 1
-
     # runs the thread
     def run(self):
         self._running = True
@@ -216,90 +173,69 @@ class Timer(PhaseThread):
                 self._value -= 1
             else:
                 sleep(0.1)
-
     # updates the timer (only internally called)
     def _update(self):
         self._min = f"{self._value // 60}".zfill(2)
         self._sec = f"{self._value % 60}".zfill(2)
-
     # pauses and unpauses the timer
     def pause(self):
         # toggle the paused state
         self._paused = not self._paused
         # blink the 7-segment display when paused
         self._component.blink_rate = (2 if self._paused else 0)
-
     # returns the timer as a string (mm:ss)
     def __str__(self):
         return f"{self._min}:{self._sec}"
-
-
 # the keypad phase
 class Keypad(PhaseThread):
-    def __init__(self, component, target, gui, name="Keypad"):
+    def __init__(self, component, target, name="Keypad"):
         super().__init__(name, component, target)
         self._value = ""
         self._binary_numbers = self.generate_binary_numbers()
         self._hex_values =[self.binary_to_hex(b) for b in self._binary_numbers]
-
     def generate_binary_numbers(self):
         return [format(randint(0, 15), '04b') for _ in range(8)]
-
     def binary_to_hex(self, binary_str):
         return format(int(binary_str, 2), 'X')
-
     def run(self):
-        global gui
         self._running = True
         while self._running:
             # Display binary numbers on GUI
             gui._lkeypad["text"] = f"Binary numbers: {' '.join(self._binary_numbers)}"
-
             # Simulate user input for testing
             user_input = input("Enter the hexadecimal values: ")
-
             # Check if user input matches the correct hexadecimal values
             if user_input.replace(' ', '').upper() == ''.join(self._hex_values):
                 self._defused = True
             else:
                 self._failed = True
-
             # Delay to prevent rapid looping
             sleep(1)
-
     def __str__(self):
         if self._defused:
             return "DEFUSED"
         else:
             return self._value
-
-
 # the jumper wires phase
 class Wires(PhaseThread):
     def __init__(self, component, target, name="Wires"):
         super().__init__(name, component, target)
-
     def run(self):
         self._running = True
-        global gui
         while self._running:
             # Check the state of each wire and form a binary number
             wire_state = 0
             for i, pin in enumerate(self._component):
                 if pin.value:
                     wire_state |= (1 << (4 - i))  # Convert pin states to a binary number
-
             # Compare the binary number to the target
             if wire_state == self._target:
                 self._defused = True
             else:
                 self._failed = True
-
             # Update the GUI with the current wire state (binary number)
             gui._lwires["text"] = f"Wires: {bin(wire_state)[2:].zfill(5)}"
-
             sleep(1)
-
     def __str__(self):
         if self._defused:
             return "DEFUSED"
@@ -309,19 +245,15 @@ class Wires(PhaseThread):
                 if pin.value:
                     wire_state |= (1 << (4 - i))
             return bin(wire_state)[2:].zfill(5)
-
 # Example target value for the puzzle (24 in binary is 11000)
 wires_target = 24  # This would be set in bomb_configs or dynamically generated
-
 # In bomb_configs or the main script, ensure the wires target is correctly assigned
 component_wires = [DigitalInOut(board.D14), DigitalInOut(board.D15), DigitalInOut(board.D18), DigitalInOut(board.D23), DigitalInOut(board.D24)]
 for pin in component_wires:
     pin.direction = Direction.INPUT
     pin.pull = Pull.DOWN
-
 # Assign the wires phase with the correct target
-wires = Wires(component_wires, 24, )
-
+wires = Wires(component_wires, 24)
 # the pushbutton phase
 class Button(PhaseThread):
     def __init__(self, component_state, component_rgb, target, color, timer, name="Button"):
@@ -338,7 +270,6 @@ class Button(PhaseThread):
         self._timer = timer
         # The amount of time the superpower freezes the timer
         self._time_frozen = 0
-
     # This will give the user a chance to get a 5 minute freeze in time with a 5 percent chance of getting it
     def chance(self):
         random = randint(1, 500)
@@ -346,7 +277,6 @@ class Button(PhaseThread):
             return 300
         else:
             return False
-
     # runs the thread
     def run(self):
         self._running = True
@@ -362,7 +292,6 @@ class Button(PhaseThread):
             else:
                 # No ability to get the superfreeze
                 self._time_frozen = choice([10, 20, 30])
-
             # get the pushbutton's state
             self._value = self._component.value
             # Color starts on green
@@ -391,7 +320,6 @@ class Button(PhaseThread):
                     self._rgb[2].value = True
                     sleep(60)
                     self._pressed = False
-
     # returns the pushbutton's state as a string
     def __str__(self):
         if (not self._rgb[0].value):
@@ -400,11 +328,9 @@ class Button(PhaseThread):
             return (f"Time freeze is now active for {self._time_frozen} seconds!")
         elif (not self._rgb[1].value):
             return "Your time freeze now usable!"
-
-
 # the toggle switches phase
 class Toggles(PhaseThread):
-    def __init__(self, component, target, gui, name="Toggles"):
+    def __init__(self, component, target, name="Toggles"):
         super().__init__(name, component, target)
         # List of questions with their options and correct answers
         self._questions = [
@@ -415,15 +341,12 @@ class Toggles(PhaseThread):
      {"A": "00011010001011110100110001111110", "B": "10101111010000100101001110111110",
       "C": "00011010001011110010110000011110", "D": "00011010001011110100110000111110"}, "B")
         ]
-
         # Choose a random question
         self._current_question = choice(self._questions)
         self._question = self._current_question[0]
         self._options = self._current_question[1]
         self._correct_answer = self._current_question[2]
-
         self._display_text_toggle = ""
-
     def run(self):
         self._running = True
         while self._running:
@@ -432,7 +355,6 @@ class Toggles(PhaseThread):
             self._display_text_toggle = "{}\n{}".format(self._question, "\n".join(self._options))
             #Get the answer the user selected
             answer_selected = self.get_selected_answer()
-
             # Check if the selected answer is correct
             # If answer is correct you have won the game
             if answer_selected == self._correct_answer:
@@ -443,12 +365,12 @@ class Toggles(PhaseThread):
             # If answer is incorrect you have lost the game you are only given one chance since you have 3 strikes on self.failed
             else:
                 self._failed = True
-
     def get_selected_answer(self):
         # Put the toggles in a list
         toggle_list = []
         for toggle in self._component:
             toggle_list.append(toggle.value)
+        print(toggle_list)
 
         # Checks which toggles are True and then outputs the letter that corresponds with each toggle
         if toggle_list == [True, False, False, False]:
@@ -465,7 +387,6 @@ class Toggles(PhaseThread):
             # Return F for failed if more than one toggle is on
             return "F"
         pass
-
     # returns the toggle switches state as a string
     def __str__(self):
         if (self._defused):
