@@ -119,7 +119,7 @@ def genSerial():
     # and make the serial number a string
     serial = "".join(serial)
 
-    return serial, toggle_value, jumper_value
+    return serial, toggle_value, jumper_value, wires_target
 
 # generates the keypad combination from a keyword and rotation key
 def genKeypadCombination():
