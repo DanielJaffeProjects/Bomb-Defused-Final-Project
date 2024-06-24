@@ -41,21 +41,23 @@ class Lcd(Frame):
         self.pack(fill=BOTH, expand=True)
     # sets up the LCD GUI
     def setup(self):
-        # the timer
-        self._ltimer = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Time left: ")
-        self._ltimer.grid(row=1, column=0, columnspan=3, sticky=W)
-        # the keypad passphrase
-        self._lkeypad = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Keypad phase: ")
-        self._lkeypad.grid(row=2, column=0, columnspan=3, sticky=W)
-        # the jumper wires status
-        self._lwires = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Wires phase: ")
-        self._lwires.grid(row=3, column=0, columnspan=3, sticky=W)
-        # the pushbutton status
-        self._lbutton = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Button phase: ")
-        self._lbutton.grid(row=4, column=0, columnspan=3, sticky=W)
         # the toggle switches status
         self._ltoggles = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Toggles phase: ")
-        self._ltoggles.grid(row=5, column=0, columnspan=2, sticky=W)
+        #row span was made bigger to allow for question and choices
+        self._ltoggles.grid(row=1, column=0, columnspan=3, rowspan = 5, sticky=W)
+        # the timer
+        self._ltimer = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Time left: ")
+        self._ltimer.grid(row=2, column=0, columnspan=3, sticky=W)
+        # the keypad passphrase
+        self._lkeypad = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Keypad phase: ")
+        self._lkeypad.grid(row=3, column=0, columnspan=3, sticky=W)
+        # the jumper wires status
+        self._lwires = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Wires phase: ")
+        self._lwires.grid(row=4, column=0, columnspan=3, sticky=W)
+        # the pushbutton status
+        self._lbutton = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Button phase: ")
+        self._lbutton.grid(row=5, column=0, columnspan=3, sticky=W)
+
         # the strikes left
         self._lstrikes = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Strikes left: ")
         self._lstrikes.grid(row=5, column=2, sticky=W)
