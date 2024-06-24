@@ -41,26 +41,47 @@ class Lcd(Frame):
         self.pack(fill=BOTH, expand=True)
     # sets up the LCD GUI
     def setup(self):
+        # the timer
+        self._ltimer = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Time left: ")
+        self._ltimer.grid(row=1, column=0, columnspan=3, sticky=W)
         # the toggle switches status
         self._ltoggles = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Toggles phase: ")
         #row span was made bigger to allow for question and choices
-        self._ltoggles.grid(row=1, column=0, columnspan=3, rowspan = 5, sticky=W)
-        # the timer
-        self._ltimer = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Time left: ")
-        self._ltimer.grid(row=2, column=0, columnspan=3, sticky=W)
+        self._ltoggles.grid(row=2, column=0, columnspan=3, rowspan = 5, sticky=NW)
+
+        self._ltoggles = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Toggles phase: ")
+        #row span was made bigger to allow for question and choices
+        self._ltoggles.grid(row=3, column=0, columnspan=3, sticky=W)
+
+        self._ltoggles1 = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="")
+        # row span was made bigger to allow for question and choices
+        self._ltoggles1.grid(row=4, column=1, sticky=W)
+
+        self._ltoggles2 = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="")
+        # row span was made bigger to allow for question and choices
+        self._ltoggles2.grid(row=5, column=1, sticky=W)
+
+        self._ltoggles3 = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="")
+        # row span was made bigger to allow for question and choices
+        self._ltoggles3.grid(row=6, column=1, sticky=W)
+
+
+
+
         # the keypad passphrase
         self._lkeypad = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Keypad phase: ")
-        self._lkeypad.grid(row=3, column=0, columnspan=3, sticky=W)
+
+        self._lkeypad.grid(row=7, column=0, columnspan=3, sticky=W)
         # the jumper wires status
         self._lwires = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Wires phase: ")
-        self._lwires.grid(row=4, column=0, columnspan=3, sticky=W)
+        self._lwires.grid(row=8, column=0, columnspan=3, sticky=W)
         # the pushbutton status
         self._lbutton = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Button phase: ")
-        self._lbutton.grid(row=5, column=0, columnspan=3, sticky=W)
+        self._lbutton.grid(row=9, column=0, columnspan=3, sticky=W)
 
         # the strikes left
         self._lstrikes = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Strikes left: ")
-        self._lstrikes.grid(row=5, column=2, sticky=W)
+        self._lstrikes.grid(row=10, column=0, sticky=W)
         if (SHOW_BUTTONS):
             # the pause button (pauses the timer)
             self._bpause = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 18), text="Pause",
@@ -72,16 +93,17 @@ class Lcd(Frame):
             self._bquit.grid(row=6, column=2, pady=40)
     # Add entry widget for hexadecimal input
         self._hex_entry = Entry(self, bg="black", fg="#00ff00", font=("Courier New", 18))
-        self._hex_entry.grid(row=6, column=1, sticky=W)
+        self._hex_entry.grid(row=11, column=1, sticky=W)
         # Add submit button for hexadecimal input
         self._bsubmit = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 18), text="Submit", anchor=CENTER, command=self.submit_hex)
-        self._bsubmit.grid(row=6, column=1, pady=40, padx=10)
+        self._bsubmit.grid(row=11, column=1, pady=40, padx=10)
     def submit_hex(self):
         hex_input = self._hex_entry.get().replace(' ', '').upper()
         if hex_input == ''.join(keypad._hex_values):
             keypad._defused = True
         else:
             keypad._failed = True
+
     # lets us pause/unpause the timer (7-segment display)
     def setTimer(self, timer):
         self._timer = timer
@@ -258,7 +280,7 @@ class Wires(PhaseThread):
                 if pin.value:
                     wire_state |= (1 << (4 - i))
             return bin(wire_state)[2:].zfill(5)
-wires = Wires(component_wires, 24)
+# wires = Wires(component_wires, 24)
 # the pushbutton phase
 class Button(PhaseThread):
     def __init__(self, component_state, component_rgb, target, color, timer, name="Button"):
@@ -340,8 +362,7 @@ class Toggles(PhaseThread):
         # List of questions with their options and correct answers
         self._questions = [
             ("Convert the binary number 11010101101010100101011010101010 to decimal.",
-             {"A": choice["65536",str(65536//2), str(65536//4)] ,
-              "B": "3584710314", "C": "3560384384", "D": "43887402"}, "B"),("Convert the hexadecimal number AB23FE97 to decimal",
+             {"A": "65536","B": "3584710314", "C": "3560384384", "D": "43887402"}, "B"),("Convert the hexadecimal number AB23FE97 to decimal",
      {"A": "2871262871", "B": "2871263271", "C": "2823262871", "D": "2871262886"}, "A"),
     ("Convert the hexadecimal number 0x1A2F4C7E to binary.",
      {"A": "00011010001011110100110001111110", "B": "10101111010000100101001110111110",
