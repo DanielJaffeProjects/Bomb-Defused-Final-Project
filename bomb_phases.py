@@ -261,14 +261,11 @@ class Wires(PhaseThread):
                 if pin.value:
                     wire_state |= (1 << (4 - i))  # Convert pin states to a binary number
             # Compare the binary number to the target
-            if wire_state == self._target:
-                self._defused = True
-            else:
-                self._failed = False
-            sleep(1)
     def __str__(self):
         if self._defused:
             return "DEFUSED"
+        elif self._failed:
+            return f"STRIKES: {self._strikes}"
         else:
             wire_state = 0
             for i, pin in enumerate(self._component):
