@@ -93,14 +93,21 @@ class Lcd(Frame):
             self._hex_entry.grid(row=11, column=1, sticky=W)
             self._bsubmit = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 18), text="Submit", anchor=CENTER, command=self.submit_hex)
             self._bsubmit.grid(row=11, column=1, pady=40, padx=10)
-            
     def submit_hex(self):
         hex_input = self._hex_entry.get().replace(' ', '').upper()
-        if hex_input == hex(keypad._target)[2:].upper():
-            keypad._defused = True
+        # Check if any input was entered
+        if hex_input:  # This will be False if the input is empty
+            if hex_input == hex(keypad._target)[2:].upper():
+                keypad._defused = True
+                print("Correct input! Bomb defused.")
+            else:
+                keypad._failed = True
+                print("Incorrect input! Try again.")
         else:
-            keypad._failed = True
+            # Handle the scenario where no keypad was touched
+            print("No input detected. Please enter a valid hexadecimal code.")
         self._hex_entry.delete(0, END)  # Clear the input field after submission.
+
 
     # lets us pause/unpause the timer (7-segment display)
     def setTimer(self, timer):
