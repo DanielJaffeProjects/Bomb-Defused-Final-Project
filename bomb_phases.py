@@ -207,10 +207,12 @@ class Keypad(PhaseThread):
             # Simulate user input for testing
             # user_input = input("Enter the hexadecimal values: ")
             # Check if user input matches the correct hexadecimal values
+            '''
             if user_input.replace(' ', '').upper() == ''.join(self._hex_values):
                 self._defused = True
             else:
                 self._failed = True
+                '''
             # Delay to prevent rapid looping
             sleep(1)
     def __str__(self):
