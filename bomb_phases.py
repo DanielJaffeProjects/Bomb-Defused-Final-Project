@@ -95,7 +95,7 @@ class Lcd(Frame):
             self._bsubmit.grid(row=11, column=1, pady=40, padx=10)
             
     def submit_hex(self):
-    hex_input = self._hex_entry.get().replace(' ', '').upper()
+        hex_input = self._hex_entry.get().replace(' ', '').upper()
     if hex_input == hex(keypad._target)[2:].upper():
         keypad._defused = True
     else:
