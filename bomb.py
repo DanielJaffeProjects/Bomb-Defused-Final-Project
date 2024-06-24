@@ -70,7 +70,7 @@ def check_phases():
         return
     # check the keypad
     if keypad._running:
-    gui._lkeypad["text"] = f"Keypad Phase: {keypad}"
+        gui._lkeypad["text"] = f"Keypad Phase: {keypad}"
     if keypad._defused:
         keypad._running = False
         active_phases -= 1
