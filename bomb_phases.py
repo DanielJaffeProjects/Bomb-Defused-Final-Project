@@ -262,7 +262,7 @@ class Wires(PhaseThread):
             if wire_state == self._target:
                 self._defused = True
             else:
-                self._failed = True
+                self._failed = False
             sleep(1)
     def __str__(self):
         if self._defused:
