@@ -358,7 +358,7 @@ class Toggles(PhaseThread):
         incorrect_list =[]
         for i in range(0,3):
             incorrect_list.append(decimal + randint(5000,1000000))
-            return incorrect_list
+        return incorrect_list
 
     def run(self):
         self._running = True
