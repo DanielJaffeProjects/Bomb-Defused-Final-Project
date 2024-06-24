@@ -69,15 +69,15 @@ def check_phases():
         # don't check any more phases
         return
     # check the keypad
-    if keypad._running:
-        gui._lkeypad["text"] = f"Keypad Phase: {keypad}"
-    if keypad._defused:
-        keypad._running = False
-        active_phases -= 1
-    elif keypad._failed:
-        strike()
-        keypad._failed = False  # Reset the keypad's failed status after handling the strike.
-    if (wires._running):
+    # if keypad._running:
+    #     gui._lkeypad["text"] = f"Keypad Phase: {keypad}"
+    # if keypad._defused:
+    #     keypad._running = False
+    #     active_phases -= 1
+    # elif keypad._failed:
+    #     strike()
+    #     keypad._failed = False  # Reset the keypad's failed status after handling the strike.
+    # if (wires._running):
         # update the GUI
         gui._lwires["text"] = f"Wires: {wires}"
         # the phase is defused -> stop the thread
