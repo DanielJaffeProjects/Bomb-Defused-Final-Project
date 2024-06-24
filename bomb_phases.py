@@ -4,6 +4,7 @@
 # Team: Daniel Jaffe and Jordano Liberato
 #################################
 # import the configs
+
 from bomb_configs import *
 # other imports
 from tkinter import *
@@ -337,7 +338,8 @@ class Toggles(PhaseThread):
         # List of questions with their options and correct answers
         self._questions = [
             ("Convert the binary number 11010101101010100101011010101010 to decimal.",
-             {"A": "65536", "B": "3584710314", "C": "3560384384", "D": "43887402"}, "C"),("Convert the hexadecimal number AB23FE97 to decimal",
+             {"A": choice["65536",str(65536//2), str(65536//4)] ,
+              "B": "3584710314", "C": "3560384384", "D": "43887402"}, "B"),("Convert the hexadecimal number AB23FE97 to decimal",
      {"A": "2871262871", "B": "2871263271", "C": "2823262871", "D": "2871262886"}, "A"),
     ("Convert the hexadecimal number 0x1A2F4C7E to binary.",
      {"A": "00011010001011110100110001111110", "B": "10101111010000100101001110111110",
@@ -354,12 +356,10 @@ class Toggles(PhaseThread):
         while self._running:
             # Display the question and options together
             #Got from ChatGPT
-            '''
             self._display_text_toggle = "{}\n{}".format(self._question, "\n".join(self._options))
             #Get the answer the user selected
-            '''
-            display_text = "{}\n{}".format(self._question, "\n".join([f"{k}: {v}" for k, v in self._options.items()]))
-            self.update_gui(display_text)  # Use the update_gui method
+            # display_text = "{}\n{}".format(self._question, "\n".join([f"{k}: {v}" for k, v in self._options.items()]))
+            # self.update_gui(display_text)  # Use the update_gui method
             answer_selected = self.get_selected_answer()
             # Check if the selected answer is correct
             # If answer is correct you have won the game
@@ -377,9 +377,8 @@ class Toggles(PhaseThread):
         print(toggle_list)
         for toggle in self._component:
             toggle_list.append(toggle.value)
-            '''
         print(toggle_list)
-            '''
+
         # Checks which toggles are True and then outputs the letter that corresponds with each toggle
         if toggle_list == [True, False, False, False]:
             return "A"
