@@ -257,14 +257,6 @@ class Wires(PhaseThread):
                 if pin.value:
                     wire_state |= (1 << (4 - i))
             return bin(wire_state)[2:].zfill(5)
-# Example target value for the puzzle (24 in binary is 11000)
-wires_target = 24  # This would be set in bomb_configs or dynamically generated
-# In bomb_configs or the main script, ensure the wires target is correctly assigned
-component_wires = [DigitalInOut(board.D14), DigitalInOut(board.D15), DigitalInOut(board.D18), DigitalInOut(board.D23), DigitalInOut(board.D24)]
-for pin in component_wires:
-    pin.direction = Direction.INPUT
-    pin.pull = Pull.DOWN
-# Assign the wires phase with the correct target
 wires = Wires(component_wires, 24)
 # the pushbutton phase
 class Button(PhaseThread):
