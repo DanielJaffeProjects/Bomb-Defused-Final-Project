@@ -187,6 +187,7 @@ class Timer(PhaseThread):
     def __str__(self):
         return f"{self._min}:{self._sec}"
 # the keypad phase
+'''
 class Keypad(PhaseThread):
     def __init__(self, component, target, name="Keypad"):
         super().__init__(name, component, target)
@@ -221,6 +222,7 @@ class Keypad(PhaseThread):
         else:
             return self._value
 # the jumper wires phase
+'''
 class Wires(PhaseThread):
     def __init__(self, component, target, name="Wires"):
         super().__init__(name, component, target)
