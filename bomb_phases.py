@@ -374,39 +374,35 @@ class Toggles(PhaseThread):
             incorrect_list.append(bin(decimal + randint(5000,1000000)))
         return incorrect_list
 
-    def update_question(self):
-        # Give a random decimal number
-        self._decimal = randint(20000000, 5000000000)
-        # Taking the random decimal number and move it into binary
-        self._correct_answer = bin(self._decimal)
-        # All answers
-        self._all_answers = self.incorrect_answers(self._decimal)
-        self._all_answers.append(self._correct_answer)
-        print(self._all_answers)
-        # Mixing up the answers so they are not in the same spot everytime
-        shuffle(self._all_answers)
-        print(self._all_answers)
-        # List of questions with their options and correct answers
-        self._question = f"Convert the decimal {self._decimal} to binary!"
-        self._options = [self._all_answers[0], self._all_answers[1], self._all_answers[2], self._all_answers[3]]
-        # Display text
-        self._display_text_toggle = f"{self._question} \nA) {self._options[0]} \nB) {self._options[1]} \nC) {self._options[2]} \nD) {self._options[3]}"
-        # Display the question and options together
-        # Get the answer the user selected
-        self._answer_selected = self.get_selected_answer()
-        #Chatgpt gave me self._timer
 
     def run(self):
         self._running = True
         while self._running:
-            self.update_question()
-            sleep(20)
+            # Give a random decimal number
+            self._decimal = randint(20000000, 5000000000)
+            # Taking the random decimal number and move it into binary
+            self._correct_answer = bin(self._decimal)
+            # All answers
+            self._all_answers = self.incorrect_answers(self._decimal)
+            self._all_answers.append(self._correct_answer)
+            print(self._all_answers)
+            # Mixing up the answers so they are not in the same spot everytime
+            shuffle(self._all_answers)
+            print(self._all_answers)
+            # List of questions with their options and correct answers
+            self._question = f"Convert the decimal {self._decimal} to binary!"
+            self._options = [self._all_answers[0], self._all_answers[1], self._all_answers[2], self._all_answers[3]]
+            # Display text
+            self._display_text_toggle = f"{self._question} \nA) {self._options[0]} \nB) {self._options[1]} \nC) {self._options[2]} \nD) {self._options[3]}"
+            # Display the question and options together
+            #Get the answer the user selected
+            answer_selected = self.get_selected_answer()
             # Check if the selected answer is correct
             # If answer is correct you have won the game
-            if str("self._answer_selected") == str("self._correct_answer"):
+            if str("answer_selected") == str("self._correct_answer"):
                 self._defused = True
             #If all the toggles are off then the toggles should continue to run
-            elif self._answer_selected == "All False":
+            elif answer_selected == "All False":
                 self._running = True
             # If answer is incorrect you have lost the game you are only given one chance since you have 1 strikes on self.failed
             else:
