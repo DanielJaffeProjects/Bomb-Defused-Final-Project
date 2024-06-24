@@ -228,7 +228,6 @@ class Keypad(PhaseThread):
         while self._running:
             # Display the target in hexadecimal
             self._display_hexadecimal = f"Target: {hex(self._target)[2:].upper()}"
-    '''
             # Get user input
             user_input = input("Enter the hexadecimal equivalent of the binary number: ")
             # Check if the user input is correct
@@ -238,7 +237,6 @@ class Keypad(PhaseThread):
                 self._failed = True
                 self._strikes += 1
             sleep(1)
-    '''
     def __str__(self):
         if self._defused:
             return "DEFUSED"
