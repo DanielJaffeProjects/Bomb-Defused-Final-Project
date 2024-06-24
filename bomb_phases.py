@@ -220,7 +220,7 @@ class Timer(PhaseThread):
 
 class Keypad(PhaseThread):
     def __init__(self, component, name="Keypad"):
-        target = random.randint(0, 2**8 - 1)  # Generate a random 8-bit binary number
+        target = randint(0, 2**8 - 1)  # Generate a random 8-bit binary number
         super().__init__(name, component, target)
         self._display_hexadecimal = ""
     def run(self):
