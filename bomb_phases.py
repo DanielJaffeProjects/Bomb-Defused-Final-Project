@@ -247,7 +247,6 @@ class Wires(PhaseThread):
     def __init__(self, component, target, name="Wires"):
         super().__init__(name, component, target)
         self._display_binary_numbers = ""
-
     def run(self):
         self._running = True
         while self._running:
@@ -256,11 +255,9 @@ class Wires(PhaseThread):
             for i, pin in enumerate(self._component):
                 if pin.value:  # Assuming pin.value is True if the wire corresponding to the pin is pulled
                     wire_state |= (1 << (len(self._component) - 1 - i))
-
             # Debugging output
             print(f"Current wire state: {bin(wire_state)}")
             print(f"Target state: {bin(self._target)}")
-
             # Check if the current wire state matches the target
             if wire_state == self._target:
                 self._defused = True
@@ -268,9 +265,7 @@ class Wires(PhaseThread):
                 print("Bomb defused!")
             else:
                 self._failed = True  # Consider what should trigger a failure
-
             sleep(1)  # Sleep to prevent too rapid checking
-
     def __str__(self):
         if self._defused:
             return "DEFUSED"
