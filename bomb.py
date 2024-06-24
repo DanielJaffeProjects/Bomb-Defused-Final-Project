@@ -69,6 +69,7 @@ def check_phases():
         # don't check any more phases
         return
     # check the keypad
+    '''
     if (keypad._running):
         # update the GUI
         gui._lkeypad["text"] = f"Combination: {keypad}"
@@ -82,6 +83,7 @@ def check_phases():
             gui.after(100, gui.conclusion, False)
             return
     # check the wires
+    '''
     if (wires._running):
         # update the GUI
         gui._lwires["text"] = f"Wires: {wires}"
