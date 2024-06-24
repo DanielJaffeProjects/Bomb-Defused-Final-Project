@@ -217,35 +217,38 @@ class Timer(PhaseThread):
     # returns the timer as a string (mm:ss)
     def __str__(self):
         return f"{self._min}:{self._sec}"
-'''
-# the keypad phase
+
 class Keypad(PhaseThread):
-    def __init__(self, component, target, name="Keypad"):
+    def __init__(self, component, name="Keypad"):
+        target = random.randint(0, 2**8 - 1)  # Generate a random 8-bit binary number
         super().__init__(name, component, target)
-        self._value = ""
-        self._binary_numbers = self.generate_binary_numbers()
-        self._hex_values =[self.binary_to_hex(b) for b in self._binary_numbers]
-    def generate_binary_numbers(self):
-        return [format(randint(0, 15), '04b') for _ in range(8)]
-    def binary_to_hex(self, binary_str):
-        return format(int(binary_str, 2), 'X')
+        self._display_hexadecimal = ""
     def run(self):
         self._running = True
         while self._running:
-            display_text = f"Binary numbers: {' '.join(self._binary_numbers)}"
-            # Simulate user input for testing
-            user_input = input("Enter the hexadecimal values: ")
-            if user_input.replace(' ', '').upper() == ''.join(self._hex_values):
+            # Display the target in hexadecimal
+            
+            self._display_hexadecimal = f"Target: {hex(self._target)[2:].upper()}"
+'''
+            # Get user input
+            user_input = input("Enter the hexadecimal equivalent of the binary number: ")
+            
+            # Check if the user input is correct
+            if user_input.upper() == hex(self._target)[2:].upper():
                 self._defused = True
             else:
                 self._failed = True
+                self._strikes += 1
+            
             sleep(1)
+    '''
     def __str__(self):
         if self._defused:
             return "DEFUSED"
+        elif self._failed:
+            return f"STRIKES: {self._strikes}"
         else:
-            return self._value
-            '''
+            return self._display_hexadecimal
 # the jumper wires phase
 class Wires(PhaseThread):
     def __init__(self, component, target, name="Wires"):
