@@ -355,70 +355,70 @@ class Button(PhaseThread):
 class Toggles(PhaseThread):
     def __init__(self, component, target, name="Toggles"):
         super().__init__(name, component, target)
-        self._decimal = randint(20000000,5000000000)
-        self._correct_answer = bin(self._decimal)
-        # All answers
-        self._all_answers = self.incorrect_answers(self._decimal)
-        self._all_answers.append(self._correct_answer)
-        print(self._all_answers)
-        #Mixing up the answers so they are not in the same spot everytime
-        shuffle(self._all_answers)
-        print(self._all_answers)
-        # List of questions with their options and correct answers
-        self._question= f"Convert the decimal {self._decimal} to binary!"
-        self._options = [self._all_answers[0],self._all_answers[1],self._all_answers[2],self._all_answers[3]]
-        #Display text
-        self._display_text_toggle = f"{self._question} \nA) {self._options[0]} \nB) {self._options[1]} \nC) {self._options[2]} \nD) {self._options[3]}"
-    #Give the incorrect possible answer
-    #Incorrect answers are chosen at random but are close to the real answer
-    def incorrect_answers(self,decimal):
-        incorrect_list =[]
-        for i in range(0,3):
-            incorrect_list.append(decimal + randint(5000,1000000))
-            return incorrect_list
-
-    def run(self):
-        self._running = True
-        while self._running:
-            # Display the question and options together
-            #Get the answer the user selected
-            answer_selected = self.get_selected_answer()
-            # Check if the selected answer is correct
-            # If answer is correct you have won the game
-            if answer_selected == self._correct_answer:
-                self._defused = True
-            #If all the toggles are off then the toggles should continue to run
-            elif answer_selected == "All False":
-                self._running = True
-            # If answer is incorrect you have lost the game you are only given one chance since you have 1 strikes on self.failed
-            else:
-                self._failed = True
-    def get_selected_answer(self):
-        # Put the toggles in a list
-        toggle_list = []
-        for toggle in self._component:
-            toggle_list.append(toggle.value)
-
-        # Checks which toggles are True and then outputs the letter that corresponds with each toggle
-        if toggle_list == [True, False, False, False]:
-            return self._all_answers[0]
-        elif toggle_list == [False, True, False, False]:
-            return self._all_answers[1]
-        elif toggle_list == [False, False, True, False]:
-            return self._all_answers[2]
-        elif toggle_list == [False, False, False, True]:
-            return self._all_answers[3]
-        elif toggle_list == [False, False, False, False]:
-            return "All False"
-        else:
-            # Return F for failed if more than one toggle is on
-            return "F"
-        pass
+    #     self._decimal = randint(20000000,5000000000)
+    #     self._correct_answer = bin(self._decimal)
+    #     # All answers
+    #     self._all_answers = self.incorrect_answers(self._decimal)
+    #     self._all_answers.append(self._correct_answer)
+    #     print(self._all_answers)
+    #     #Mixing up the answers so they are not in the same spot everytime
+    #     shuffle(self._all_answers)
+    #     print(self._all_answers)
+    #     # List of questions with their options and correct answers
+    #     self._question= f"Convert the decimal {self._decimal} to binary!"
+    #     self._options = [self._all_answers[0],self._all_answers[1],self._all_answers[2],self._all_answers[3]]
+    #     #Display text
+    #     self._display_text_toggle = f"{self._question} \nA) {self._options[0]} \nB) {self._options[1]} \nC) {self._options[2]} \nD) {self._options[3]}"
+    # #Give the incorrect possible answer
+    # #Incorrect answers are chosen at random but are close to the real answer
+    # def incorrect_answers(self,decimal):
+    #     incorrect_list =[]
+    #     for i in range(0,3):
+    #         incorrect_list.append(decimal + randint(5000,1000000))
+    #         return incorrect_list
+    #
+    # def run(self):
+    #     self._running = True
+    #     while self._running:
+    #         # Display the question and options together
+    #         #Get the answer the user selected
+    #         answer_selected = self.get_selected_answer()
+    #         # Check if the selected answer is correct
+    #         # If answer is correct you have won the game
+    #         if answer_selected == self._correct_answer:
+    #             self._defused = True
+    #         #If all the toggles are off then the toggles should continue to run
+    #         elif answer_selected == "All False":
+    #             self._running = True
+    #         # If answer is incorrect you have lost the game you are only given one chance since you have 1 strikes on self.failed
+    #         else:
+    #             self._failed = True
+    # def get_selected_answer(self):
+    #     # Put the toggles in a list
+    #     toggle_list = []
+    #     for toggle in self._component:
+    #         toggle_list.append(toggle.value)
+    #
+    #     # Checks which toggles are True and then outputs the letter that corresponds with each toggle
+    #     if toggle_list == [True, False, False, False]:
+    #         return self._all_answers[0]
+    #     elif toggle_list == [False, True, False, False]:
+    #         return self._all_answers[1]
+    #     elif toggle_list == [False, False, True, False]:
+    #         return self._all_answers[2]
+    #     elif toggle_list == [False, False, False, True]:
+    #         return self._all_answers[3]
+    #     elif toggle_list == [False, False, False, False]:
+    #         return "All False"
+    #     else:
+    #         # Return F for failed if more than one toggle is on
+    #         return "F"
+    #     pass
     # returns the toggle switches state as a string
-    def __str__(self):
-        if (self._defused):
-            return "DEFUSED"
-        elif self._failed:
-            return "failed"
-        else:
-            return self._display_text_toggle
+    # def __str__(self):
+    #     if (self._defused):
+    #         return "DEFUSED"
+    #     elif self._failed:
+    #         return "failed"
+    #     else:
+    #         return self._display_text_toggle
