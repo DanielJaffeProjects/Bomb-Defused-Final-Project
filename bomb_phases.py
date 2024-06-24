@@ -362,10 +362,12 @@ class Toggles(PhaseThread):
         while self._running:
             # Display the question and options together
             #Got from ChatGPT
+            '''
             self._display_text_toggle = "{}\n{}".format(self._question, "\n".join(self._options))
             #Get the answer the user selected
-            # display_text = "{}\n{}".format(self._question, "\n".join([f"{k}: {v}" for k, v in self._options.items()]))
-            # self.update_gui(display_text)  # Use the update_gui method
+            '''
+            display_text = "{}\n{}".format(self._question, "\n".join([f"{k}: {v}" for k, v in self._options.items()]))
+            self.update_gui(display_text)  # Use the update_gui method
             answer_selected = self.get_selected_answer()
             # Check if the selected answer is correct
             # If answer is correct you have won the game
@@ -380,9 +382,12 @@ class Toggles(PhaseThread):
     def get_selected_answer(self):
         # Put the toggles in a list
         toggle_list = []
+        print(toggle_list)
         for toggle in self._component:
             toggle_list.append(toggle.value)
+            '''
         print(toggle_list)
+            '''
         # Checks which toggles are True and then outputs the letter that corresponds with each toggle
         if toggle_list == [True, False, False, False]:
             return "A"

@@ -1,4 +1,3 @@
-#################################
 # CSC 102 Defuse the Bomb Project
 # Main program
 # Team: Daniel Jaffe and Jordano Liberato
@@ -32,7 +31,6 @@ def bootup(n=0):
         gui.after(25 if boot_text[n] != "\x00" else 750, bootup, n + 1)
 # sets up the phase threads
 def setup_phases():
-    '''
     global timer, keypad, wires, button, toggles
     
     # setup the timer thread
@@ -40,7 +38,7 @@ def setup_phases():
     # bind the 7-segment display to the LCD GUI so that it can be paused/unpaused from the GUI
     gui.setTimer(timer)
     # setup the keypad thread
-    keypad = Keypad(component_keypad, keypad_target)
+    # keypad = Keypad(component_keypad, keypad_target)
     # setup the jumper wires thread
     wires = Wires(component_wires, wires_target)
     # setup the pushbutton thread
@@ -51,31 +49,9 @@ def setup_phases():
     toggles = Toggles(component_toggles, toggles_target)
     # start the phase threads
     timer.start()
-    keypad.start()
+    # keypad.start()
     wires.start()
     button.start()
-    toggles.start()
-    '''
-    global timer, keypad, wires, button, toggles
-    
-    timer = Timer(component_7seg, COUNTDOWN)
-    gui.setTimer(timer)
-    timer.start()
-    
-    keypad = Keypad(component_keypad, keypad_target)
-    keypad.set_update_callback(lambda text: gui._lkeypad.config(text=text))
-    keypad.start()
-    
-    wires = Wires(component_wires, wires_target)
-    wires.set_update_callback(lambda text: gui._lwires.config(text=text))
-    wires.start()
-    
-    button = Button(component_button_state, component_button_RGB, button_target, button_color, timer)
-    gui.setButton(button)
-    button.start()
-    
-    toggles = Toggles(component_toggles, toggles_target)
-    toggles.set_update_callback(lambda text: gui._ltoggles.config(text=text))
     toggles.start()
 # checks the phase threads
 def check_phases():
@@ -93,6 +69,7 @@ def check_phases():
         # don't check any more phases
         return
     # check the keypad
+    '''
     if (keypad._running):
         # update the GUI
         gui._lkeypad["text"] = f"Combination: {keypad}"
@@ -106,6 +83,7 @@ def check_phases():
             gui.after(100, gui.conclusion, False)
             return
     # check the wires
+    '''
     if (wires._running):
         # update the GUI
         gui._lwires["text"] = f"Wires: {wires}"
@@ -172,7 +150,7 @@ def strike():
 def turn_off():
     # stop all threads
     timer._running = False
-    keypad._running = False
+    # keypad._running = False
     wires._running = False
     button._running = False
     toggles._running = False
