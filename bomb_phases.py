@@ -259,16 +259,16 @@ class Wires(PhaseThread):
     def run(self):
         self._running = True
         while self._running:
-            wire_state = 0
+            self.wire_state = 0
             # Compute the wire state based on the value of the pins
             for i, pin in enumerate(self._component):
                 if pin.value:  # Assuming pin.value is True if the wire corresponding to the pin is pulled
-                    wire_state |= (1 << (len(self._component) - 1 - i))
+                    self.wire_state |= (1 << (len(self._component) - 1 - i))
             # Debugging output
-            print(f"Current wire state: {bin(wire_state)}")
+            print(f"Current wire state: {bin(self.wire_state)}")
             print(f"Target state: {bin(self._target)}")
             # Check if the current wire state matches the target
-            if wire_state == self._target:
+            if self.wire_state == self._target:
                 self._defused = True
                 self._running = False  # Optionally stop checking once defused
                 print("Bomb defused!")
@@ -281,7 +281,7 @@ class Wires(PhaseThread):
         elif self._failed:
             return "STRIKE"
         else:
-            return f"Current State: {bin(wire_state)[2:].zfill(5)}"
+            return f"Current State: {bin(self.wire_state)[2:].zfill(5)}"
 # Further class definitions (e.g., Keypad, Button, etc.) would follow here
 # This is an example instantiation, which you would normally place in the part of your code
 # that sets up and starts thread objects:
@@ -387,10 +387,8 @@ class Toggles(PhaseThread):
             # All answers
             self._all_answers = self.incorrect_answers(self._decimal)
             self._all_answers.append(self._correct_answer)
-            print(self._all_answers)
             # Mixing up the answers so they are not in the same spot everytime
             shuffle(self._all_answers)
-            print(self._all_answers)
             # List of questions with their options and correct answers
             self._question = f"Convert the decimal {self._decimal} to binary!"
             self._options = [self._all_answers[0], self._all_answers[1], self._all_answers[2], self._all_answers[3]]
