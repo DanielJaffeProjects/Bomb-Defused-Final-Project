@@ -360,29 +360,27 @@ class Toggles(PhaseThread):
             incorrect_list.append(decimal + randint(5000,1000000))
             return incorrect_list
 
-        #Give a random decimal number
-        self._decimal = randint(20000000,5000000000)
-        #Taking the random decimal number and move it into binary
-        self._correct_answer = bin(self._decimal)
-
-        # All answers
-        self._all_answers = self.incorrect_answers(self._decimal)
-        print(self._all_answers)
-        self._all_answers.append(self._correct_answer)
-        print(self._all_answers)
-        #Mixing up the answers so they are not in the same spot everytime
-        shuffle(self._all_answers)
-        print(self._all_answers)
-        # List of questions with their options and correct answers
-        self._question= f"Convert the decimal {self._decimal} to binary!"
-        self._options = [self._all_answers[0],self._all_answers[1],self._all_answers[2],self._all_answers[3]]
-        #Display text
-        self._display_text_toggle = f"{self._question} \nA) {self._options[0]} \nB) {self._options[1]} \nC) {self._options[2]} \nD) {self._options[3]}"
-
-
     def run(self):
         self._running = True
         while self._running:
+            # Give a random decimal number
+            self._decimal = randint(20000000, 5000000000)
+            # Taking the random decimal number and move it into binary
+            self._correct_answer = bin(self._decimal)
+
+            # All answers
+            self._all_answers = self.incorrect_answers(self._decimal)
+            print(self._all_answers)
+            self._all_answers.append(self._correct_answer)
+            print(self._all_answers)
+            # Mixing up the answers so they are not in the same spot everytime
+            shuffle(self._all_answers)
+            print(self._all_answers)
+            # List of questions with their options and correct answers
+            self._question = f"Convert the decimal {self._decimal} to binary!"
+            self._options = [self._all_answers[0], self._all_answers[1], self._all_answers[2], self._all_answers[3]]
+            # Display text
+            self._display_text_toggle = f"{self._question} \nA) {self._options[0]} \nB) {self._options[1]} \nC) {self._options[2]} \nD) {self._options[3]}"
             # Display the question and options together
             #Get the answer the user selected
             answer_selected = self.get_selected_answer()
