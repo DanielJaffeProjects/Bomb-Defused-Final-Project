@@ -93,6 +93,7 @@ class Lcd(Frame):
             self._hex_entry.grid(row=11, column=1, sticky=W)
             self._bsubmit = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 18), text="Submit", anchor=CENTER, command=self.submit_hex)
             self._bsubmit.grid(row=11, column=1, pady=40, padx=10)
+    '''        
     def submit_hex(self):
         hex_input = self._hex_entry.get().replace(' ', '').upper()
         # Check if any input was entered
@@ -108,7 +109,7 @@ class Lcd(Frame):
             print("No input detected. Please enter a valid hexadecimal code.")
         self._hex_entry.delete(0, END)  # Clear the input field after submission.
 
-
+'''
     # lets us pause/unpause the timer (7-segment display)
     def setTimer(self, timer):
         self._timer = timer
@@ -224,6 +225,7 @@ class Timer(PhaseThread):
 
 class Keypad(PhaseThread):
     def __init__(self, component, name="Keypad"):
+        '''
         target = randint(0, 2**8 - 1)  # Generate a random 8-bit binary number
         super().__init__(name, component, target)
         self._display_hexadecimal = ""
@@ -248,7 +250,7 @@ class Keypad(PhaseThread):
             return f"STRIKES: {self._strikes}"
         else:
             return self._display_hexadecimal
-
+        '''
 # Wires phase class
 class Wires(PhaseThread):
     def __init__(self, component, target, name="Wires"):
