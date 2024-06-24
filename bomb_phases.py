@@ -364,6 +364,7 @@ class Toggles(PhaseThread):
         self._decimal = randint(20000000,5000000000)
         #Taking the random decimal number and move it into binary
         self._correct_answer = bin(self._decimal)
+
         # All answers
         self._all_answers = self.incorrect_answers(self._decimal)
         print(self._all_answers)
@@ -387,7 +388,7 @@ class Toggles(PhaseThread):
             answer_selected = self.get_selected_answer()
             # Check if the selected answer is correct
             # If answer is correct you have won the game
-            if answer_selected == self._correct_answer:
+            if str("answer_selected") == str("self._correct_answer"):
                 self._defused = True
             #If all the toggles are off then the toggles should continue to run
             elif answer_selected == "All False":
