@@ -51,22 +51,19 @@ class Lcd(Frame):
 
         self._ltoggles = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Toggles phase: ")
         #row span was made bigger to allow for question and choices
-        # self._ltoggles.grid(row=3, column=0, columnspan=3, sticky=W)
+        self._ltoggles.grid(row=3, column=0, columnspan=3, sticky=W)
 
-        # self._ltoggles1 = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="")
-        # # row span was made bigger to allow for question and choices
-        # self._ltoggles1.grid(row=4, column=1, sticky=W)
-        #
-        # self._ltoggles2 = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="")
-        # # row span was made bigger to allow for question and choices
-        # self._ltoggles2.grid(row=5, column=1, sticky=W)
-        #
-        # self._ltoggles3 = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="")
-        # # row span was made bigger to allow for question and choices
-        # self._ltoggles3.grid(row=6, column=1, sticky=W)
+        self._ltoggles1 = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="")
+        # row span was made bigger to allow for question and choices
+        self._ltoggles1.grid(row=4, column=1, sticky=W)
 
+        self._ltoggles2 = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="")
+        # row span was made bigger to allow for question and choices
+        self._ltoggles2.grid(row=5, column=1, sticky=W)
 
-
+        self._ltoggles3 = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="")
+        # row span was made bigger to allow for question and choices
+        self._ltoggles3.grid(row=6, column=1, sticky=W)
 
         # the keypad passphrase
         self._lkeypad = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Keypad phase: ")
@@ -126,6 +123,9 @@ class Lcd(Frame):
         self._lbutton.destroy()
         self._ltoggles.destroy()
         self._lstrikes.destroy()
+        self._ltoggles1.destroy()
+        self._ltoggles2.destroy()
+        self._ltoggles3.destroy()
         if (SHOW_BUTTONS):
             self._bpause.destroy()
             self._bquit.destroy()
