@@ -200,8 +200,10 @@ class Keypad(PhaseThread):
     def run(self):
         self._running = True
         while self._running:
+            '''
             # Display binary numbers on GUI
             gui._lkeypad["text"] = f"Binary numbers: {' '.join(self._binary_numbers)}"
+            '''
             # Simulate user input for testing
             user_input = input("Enter the hexadecimal values: ")
             # Check if user input matches the correct hexadecimal values
@@ -234,7 +236,9 @@ class Wires(PhaseThread):
             else:
                 self._failed = True
             # Update the GUI with the current wire state (binary number)
+            '''
             gui._lwires["text"] = f"Wires: {bin(wire_state)[2:].zfill(5)}"
+            '''
             sleep(1)
     def __str__(self):
         if self._defused:
