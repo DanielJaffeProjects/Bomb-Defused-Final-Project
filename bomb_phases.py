@@ -88,21 +88,20 @@ class Lcd(Frame):
             self._bquit = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 18), text="Quit",
                                          anchor=CENTER, command=self.quit)
             self._bquit.grid(row=6, column=2, pady=40)
-    '''
-    # Add entry widget for hexadecimal input
-        self._hex_entry = Entry(self, bg="black", fg="#00ff00", font=("Courier New", 18))
-        self._hex_entry.grid(row=11, column=1, sticky=W)
-        # Add submit button for hexadecimal input
-        self._bsubmit = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 18), text="Submit", anchor=CENTER, command=self.submit_hex)
-        self._bsubmit.grid(row=11, column=1, pady=40, padx=10)
-
+            
+            self._hex_entry = Entry(self, bg="black", fg="#00ff00", font=("Courier New", 18))
+            self._hex_entry.grid(row=11, column=1, sticky=W)
+            self._bsubmit = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 18), text="Submit", anchor=CENTER, command=self.submit_hex)
+            self._bsubmit.grid(row=11, column=1, pady=40, padx=10)
+            
     def submit_hex(self):
-        hex_input = self._hex_entry.get().replace(' ', '').upper()
-        if hex_input == ''.join(keypad._hex_values):
-            keypad._defused = True
-        else:
-            keypad._failed = True
-'''
+    hex_input = self._hex_entry.get().replace(' ', '').upper()
+    if hex_input == hex(keypad._target)[2:].upper():
+        keypad._defused = True
+    else:
+        keypad._failed = True
+    self._hex_entry.delete(0, END)  # Clear the input field after submission.
+
     # lets us pause/unpause the timer (7-segment display)
     def setTimer(self, timer):
         self._timer = timer
