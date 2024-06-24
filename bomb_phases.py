@@ -96,11 +96,11 @@ class Lcd(Frame):
             
     def submit_hex(self):
         hex_input = self._hex_entry.get().replace(' ', '').upper()
-    if hex_input == hex(keypad._target)[2:].upper():
-        keypad._defused = True
-    else:
-        keypad._failed = True
-    self._hex_entry.delete(0, END)  # Clear the input field after submission.
+        if hex_input == hex(keypad._target)[2:].upper():
+            keypad._defused = True
+        else:
+            keypad._failed = True
+        self._hex_entry.delete(0, END)  # Clear the input field after submission.
 
     # lets us pause/unpause the timer (7-segment display)
     def setTimer(self, timer):
