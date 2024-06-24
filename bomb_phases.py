@@ -171,15 +171,6 @@ class PhaseThread(Thread):
         self._running = False
         # Add callback for GUI updates update starts here
         self._update_callback = None
-    def set_update_callback(self, callback):
-        """Set the callback function for GUI updates."""
-        self._update_callback = callback
-
-    def update_gui(self, data):
-        """Call the update callback if set."""
-        if self._update_callback:
-            self._update_callback(data)
-            # update ends here
 # the timer phase
 class Timer(PhaseThread):
     def __init__(self, component, initial_value, name="Timer"):
@@ -237,8 +228,6 @@ class Keypad(PhaseThread):
         self._running = True
         while self._running:
             display_text = f"Binary numbers: {' '.join(self._binary_numbers)}"
-            self.update_gui(display_text)  # Use the update_gui method
-
             # Simulate user input for testing
             user_input = input("Enter the hexadecimal values: ")
             if user_input.replace(' ', '').upper() == ''.join(self._hex_values):
