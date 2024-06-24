@@ -93,7 +93,7 @@ if (RPi):
 #  the first three letters should be distinct and in the range 0..4 such that A=0, B=1, etc, to match the jumper wires
 #  the last letter should be outside of the range
 def genSerial():
-    wires_target = bin(24)
+    wires_target = 0b11000
     # set the digits (used in the toggle switches phase)
     serial_digits = []
     toggle_value = randint(1, 15)
