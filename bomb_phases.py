@@ -172,8 +172,6 @@ class PhaseThread(Thread):
         self._value = None
         # phase threads are either running or not
         self._running = False
-        # Add callback for GUI updates update starts here
-        self._update_callback = None
 # the timer phase
 class Timer(PhaseThread):
     def __init__(self, component, initial_value, name="Timer"):
@@ -244,33 +242,49 @@ class Keypad(PhaseThread):
         else:
             return self._display_hexadecimal
 
-# the jumper wires phase
+# Wires phase class
 class Wires(PhaseThread):
     def __init__(self, component, target, name="Wires"):
         super().__init__(name, component, target)
         self._display_binary_numbers = ""
+
     def run(self):
         self._running = True
         while self._running:
             wire_state = 0
-            self._display_binary_numbers = f"Wires: {bin(wire_state)[2:].zfill(5)}"
-            # Check the state of each wire and form a binary number
+            # Compute the wire state based on the value of the pins
             for i, pin in enumerate(self._component):
-                if pin.value:
-                    wire_state |= (1 << (4 - i))  # Convert pin states to a binary number
-            # Compare the binary number to the target
+                if pin.value:  # Assuming pin.value is True if the wire corresponding to the pin is pulled
+                    wire_state |= (1 << (len(self._component) - 1 - i))
+
+            # Debugging output
+            print(f"Current wire state: {bin(wire_state)}")
+            print(f"Target state: {bin(self._target)}")
+
+            # Check if the current wire state matches the target
+            if wire_state == self._target:
+                self._defused = True
+                self._running = False  # Optionally stop checking once defused
+                print("Bomb defused!")
+            else:
+                self._failed = True  # Consider what should trigger a failure
+
+            sleep(1)  # Sleep to prevent too rapid checking
+
     def __str__(self):
         if self._defused:
             return "DEFUSED"
         elif self._failed:
-            return f"STRIKES: {self._strikes}"
+            return "STRIKE"
         else:
-            wire_state = 0
-            for i, pin in enumerate(self._component):
-                if pin.value:
-                    wire_state |= (1 << (4 - i))
-            return bin(wire_state)[2:].zfill(5)
-# wires = Wires(component_wires, 24)
+            return f"Current State: {bin(wire_state)[2:].zfill(5)}"
+# Further class definitions (e.g., Keypad, Button, etc.) would follow here
+# This is an example instantiation, which you would normally place in the part of your code
+# that sets up and starts thread objects:
+# component_wires = [YourWireComponentSetupHere]  # Setup your wire component list
+# target_wires = 0b11000  # Example target
+# wires = Wires(component_wires, target_wires)
+# wires.start()  # Starting the Wires thread
 # the pushbutton phase
 class Button(PhaseThread):
     def __init__(self, component_state, component_rgb, target, color, timer, name="Button"):
