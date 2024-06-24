@@ -388,7 +388,6 @@ class Toggles(PhaseThread):
             self._decimal = randint(20000000, 5000000000)
             # Taking the random decimal number and move it into binary
             self._correct_answer = bin(self._decimal)
-
             # All answers
             self._all_answers = self.incorrect_answers(self._decimal)
             self._all_answers.append(self._correct_answer)
@@ -404,10 +403,6 @@ class Toggles(PhaseThread):
             # Display the question and options together
             #Get the answer the user selected
             answer_selected = self.get_selected_answer()
-            #If all the toggles are down then question won't change
-            #if the toggles are change
-            if answer_selected == "All False":
-                sleep(20)
             # Check if the selected answer is correct
             # If answer is correct you have won the game
             if str("answer_selected") == str("self._correct_answer"):
