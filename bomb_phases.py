@@ -355,6 +355,7 @@ class Button(PhaseThread):
             return (f"Time freeze is now active for {self._time_frozen} seconds!")
         elif (not self._rgb[1].value):
             return "Your time freeze now usable!"
+
 # the toggle switches phase
 class Toggles(PhaseThread):
     def __init__(self, component, target, name="Toggles"):
