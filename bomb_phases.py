@@ -144,17 +144,6 @@ class PhaseThread(Thread):
         self._value = None
         # phase threads are either running or not
         self._running = False
-        # Add callback for GUI updates update starts here
-        self._update_callback = None
-    def set_update_callback(self, callback):
-        """Set the callback function for GUI updates."""
-        self._update_callback = callback
-
-    def update_gui(self, data):
-        """Call the update callback if set."""
-        if self._update_callback:
-            self._update_callback(data)
-            # update ends here
 # the timer phase
 class Timer(PhaseThread):
     def __init__(self, component, initial_value, name="Timer"):
@@ -211,15 +200,16 @@ class Keypad(PhaseThread):
     def run(self):
         self._running = True
         while self._running:
-            display_text = f"Binary numbers: {' '.join(self._binary_numbers)}"
-            self.update_gui(display_text)  # Use the update_gui method
-
+            # Display binary numbers on GUI
+            gui._lkeypad["text"] = f"Binary numbers: {' '.join(self._binary_numbers)}"
             # Simulate user input for testing
             user_input = input("Enter the hexadecimal values: ")
+            # Check if user input matches the correct hexadecimal values
             if user_input.replace(' ', '').upper() == ''.join(self._hex_values):
                 self._defused = True
             else:
                 self._failed = True
+            # Delay to prevent rapid looping
             sleep(1)
     def __str__(self):
         if self._defused:
@@ -244,7 +234,7 @@ class Wires(PhaseThread):
             else:
                 self._failed = True
             # Update the GUI with the current wire state (binary number)
-            self.update_gui(f"Wires: {bin(wire_state)[2:].zfill(5)}")
+            gui._lwires["text"] = f"Wires: {bin(wire_state)[2:].zfill(5)}"
             sleep(1)
     def __str__(self):
         if self._defused:
@@ -362,12 +352,8 @@ class Toggles(PhaseThread):
         while self._running:
             # Display the question and options together
             #Got from ChatGPT
-            '''
             self._display_text_toggle = "{}\n{}".format(self._question, "\n".join(self._options))
             #Get the answer the user selected
-            '''
-            display_text = "{}\n{}".format(self._question, "\n".join([f"{k}: {v}" for k, v in self._options.items()]))
-            self.update_gui(display_text)  # Use the update_gui method
             answer_selected = self.get_selected_answer()
             # Check if the selected answer is correct
             # If answer is correct you have won the game
@@ -382,12 +368,10 @@ class Toggles(PhaseThread):
     def get_selected_answer(self):
         # Put the toggles in a list
         toggle_list = []
-        print(toggle_list)
         for toggle in self._component:
             toggle_list.append(toggle.value)
-            '''
         print(toggle_list)
-            '''
+
         # Checks which toggles are True and then outputs the letter that corresponds with each toggle
         if toggle_list == [True, False, False, False]:
             return "A"
