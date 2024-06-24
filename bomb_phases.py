@@ -252,9 +252,9 @@ class Wires(PhaseThread):
     def run(self):
         self._running = True
         while self._running:
+            wire_state = 0
             self._display_binary_numbers = f"Wires: {bin(wire_state)[2:].zfill(5)}"
             # Check the state of each wire and form a binary number
-            wire_state = 0
             for i, pin in enumerate(self._component):
                 if pin.value:
                     wire_state |= (1 << (4 - i))  # Convert pin states to a binary number
