@@ -255,9 +255,11 @@ class Keypad(PhaseThread):
 class Wires(PhaseThread):
     def __init__(self, component, target, name="Wires"):
         super().__init__(name, component, target)
+        self._display_binary_numbers = ""
     def run(self):
         self._running = True
         while self._running:
+            self._display_binary_numbers = f"Wires: {bin(wire_state)[2:].zfill(5)}"
             # Check the state of each wire and form a binary number
             wire_state = 0
             for i, pin in enumerate(self._component):
@@ -268,8 +270,6 @@ class Wires(PhaseThread):
                 self._defused = True
             else:
                 self._failed = True
-            # Update the GUI with the current wire state (binary number)
-            self.update_gui(f"Wires: {bin(wire_state)[2:].zfill(5)}")
             sleep(1)
     def __str__(self):
         if self._defused:
