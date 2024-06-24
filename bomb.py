@@ -150,7 +150,7 @@ def strike():
 def turn_off():
     # stop all threads
     timer._running = False
-    keypad._running = False
+    # keypad._running = False
     wires._running = False
     button._running = False
     toggles._running = False
