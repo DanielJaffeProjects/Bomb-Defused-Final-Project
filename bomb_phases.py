@@ -288,7 +288,7 @@ class Button(PhaseThread):
         self._time_frozen = 0
     # This will give the user a chance to get a 5 minute freeze in time with a 5 percent chance of getting it
     def chance(self):
-        random = randint(1, 500)
+        random = randint(1, 50)
         if random == 50:
             return 300
         else:
