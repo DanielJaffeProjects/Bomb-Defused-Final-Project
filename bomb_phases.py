@@ -72,10 +72,12 @@ class Lcd(Frame):
         self._ltoggles5.grid(row=6, column=1, sticky=W)
 
         # the keypad binary code
-        self._lkeypad_binary = Text(self, bg="black", fg="#00ff00", font=("Courier New", 12), height=2, width=40)
-        self._lkeypad_binary.grid(row=2, column=0, columnspan=3, sticky=W)
-        self._lkeypad_binary.insert(END, "Keypad Binary code: ")
-        self._lkeypad_binary.config(state=DISABLED)  # Make it read-only
+        self._lkeypad_binary = Label(self, bg="black", fg="#00ff00", font=("Courier New", 12), text="Keypad Binary code: ")
+        self._lkeypad_binary.grid(row=7, column=0, columnspan=3, sticky=W)
+
+        # the keypad user input
+        self._lkeypad_entry = Label(self, bg="black", fg="#00ff00", font=("Courier New", 12), text="Keypad Entry: ")
+        self._lkeypad_entry.grid(row=8, column=0, columnspan=3, sticky=W)
 
         # the jumper wires status
         self._lwires = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16), text="Wires phase: ")
