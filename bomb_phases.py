@@ -96,38 +96,9 @@ class Lcd(Frame):
             self._bquit = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 16), text="Quit",
                                          anchor=CENTER, command=self.quit)
             self._bquit.grid(row=6, column=2, pady=40)
-        '''
+        
         self._hex_entry = Entry(self, bg="black", fg="#00ff00", font=("Courier New", 16))
         self._hex_entry.grid(row=7, column=1, sticky=W)
-        '''
-        self._bsubmit = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 16), text="Submit",
-                                       anchor=CENTER, command=self.submit_hex)
-        self._bsubmit.grid(row=7, column=2, pady=20, padx=10)
-
-    '''
-    def submit_hex(self,keypad):
-        hex_input = self._hex_entry.get().replace(' ', '').upper()
-        # Check if any input was entered
-        if hex_input:  # This will be False if the input is empty
-            if hex_input == hex(keypad._target)[2:].upper():
-                keypad._defused = True
-                print("Correct input! Bomb defused.")
-            else:
-                keypad._failed = True
-                print("Incorrect input! Try again.")
-        else:
-            # Handle the scenario where no keypad was touched
-            print("No input detected. Please enter a valid hexadecimal code.")
-        self._hex_entry.delete(0, END)  # Clear the input field after submission.
-        '''
-    def submit_hex(self,keypad):
-        hex_input = self._hex_entry.get().replace(' ', '').upper()
-        if hex_input == hex(keypad._target)[2:].upper():
-            keypad._defused = True
-        else:
-            keypad._failed = True
-        self._hex_entry.delete(0, END)  # Clear the input field after submission.
-
 
     # lets us pause/unpause the timer (7-segment display)
     def setTimer(self, timer):
@@ -263,14 +234,16 @@ class Timer(PhaseThread):
         return f"{self._min}:{self._sec}"
 
 class Keypad(PhaseThread):
-    def __init__(self, keypad, name="Keypad"):
-        super().__init__(name)
+    def __init__(self, keypad, target, name="Keypad"):
+        super().__init__(name, keypad, target)
         self._value = ""
         self._keypad = keypad  # the keypad pins
+        self._target_hex = hex(self._target)[2:].upper()  # Target hexadecimal value for comparison
 
     # runs the thread
     def run(self):
         self._running = True
+        self._update_callback(self._target_hex)  # Display the initial target value
         while self._running:
             # process keys when keypad key(s) are pressed
             if self._keypad.pressed_keys:
@@ -288,8 +261,16 @@ class Keypad(PhaseThread):
                 elif len(self._value) < MAX_PASS_LEN:
                     # log the key
                     self._value += str(key)
+                # Check the value immediately
+                if self._value.upper() == self._target_hex:
+                    self._defused = True
+                    self._update_callback("DEFUSED")
+                elif len(self._value) >= MAX_PASS_LEN:
+                    self._failed = True
+                    self._update_callback("STRIKE")
                 # Update the GUI
-                self._update_callback(self._value)
+                else:
+                    self._update_callback(self._value)
             sleep(0.1)
         self._running = False
 
@@ -299,6 +280,7 @@ class Keypad(PhaseThread):
     # Setter for update callback
     def set_update_callback(self, callback):
         self._update_callback = callback
+
 
 # Wires phase class
 class Wires(PhaseThread):
