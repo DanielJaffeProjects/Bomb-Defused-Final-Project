@@ -88,8 +88,7 @@ def check_phases():
         elif (wires._failed):
             strike()
             #reset the wire
-            wires._failed
-            return
+            wires._failed = False
     # check the button
     if (button._running):
         # update the GUI
