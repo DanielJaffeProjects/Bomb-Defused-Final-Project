@@ -146,10 +146,16 @@ class Lcd(Frame):
                                      command=self.quit)
         self._bquit.grid(row=1, column=2, pady=40)
 
-        # Image if you lose
         # Used chatgpt to help me with creating a image and resizing it
-        # Displaying the image
+        # Displaying the image if you lose
         losing_image = "losing image.gif"  # Replace with your image path
+        img1 = PhotoImage(file=losing_image)
+        self.image1 = Label(self, bg="black", image=img1)
+        self.image1.image = img1  # Keep a reference to the image to prevent garbage collection
+        self.image1.grid(row=2, column=1, columnspan=3, sticky=W)
+
+        # Displaying the image if you win
+        losing_image = "winning image.gif"  # Replace with your image path
         img1 = PhotoImage(file=losing_image)
         self.image1 = Label(self, bg="black", image=img1)
         self.image1.image = img1  # Keep a reference to the image to prevent garbage collection
