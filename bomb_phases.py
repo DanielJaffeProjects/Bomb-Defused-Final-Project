@@ -97,9 +97,18 @@ class Lcd(Frame):
             self._bquit.grid(row=6, column=2, pady=40)
             #Image if you lose
             #Used chatgpt to help me with creating a image and resizing it
+            # Displaying the image
+            losing_image = "losing image.gif"  # Replace with your image path
+            image = PhotoImage(losing_image)
+            self.image1 = Label(self, bg="black",  image=(image))
+            self.image1.grid(row=2, column=1, columnspan=3, sticky=W)
 
-
-
+        # Entry widget for hexadecimal input
+        self._hex_entry = Entry(self, bg="black", fg="#00ff00", font=("Courier New", 16))
+        self._hex_entry.grid(row=7, column=1, sticky=W)
+        self._hex_entry.bind("<KeyRelease>", self.check_hex_input)
+        '''
+    '''   
     def check_hex_input(self, event):
         hex_input = self._hex_entry.get().replace(' ', '').upper()
         if hex_input == hex(keypad_phase._target)[2:].upper():
@@ -154,13 +163,6 @@ class Lcd(Frame):
         self._bquit = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 16), text="Quit", anchor=CENTER,
                                      command=self.quit)
         self._bquit.grid(row=1, column=2, pady=40)
-
-        # Displaying the image if lose
-        losing_image = "losing image.gif"  # Replace with your image path
-        img1 = PhotoImage(file = losing_image)
-        self.image1 = Label(self, bg="black",  image=img1)
-        self.image1.grid(row=2, column=1, columnspan=3, sticky=W)
-
 
     # re-attempts the bomb (after an explosion or a successful defusion)
     def retry(self):
