@@ -100,6 +100,7 @@ class Lcd(Frame):
                                            anchor=CENTER, command=self.submit_hex)
             self._bsubmit.grid(row=11, column=1, pady=40, padx=10)
 
+    '''
     def submit_hex(self,keypad):
         hex_input = self._hex_entry.get().replace(' ', '').upper()
         # Check if any input was entered
@@ -114,7 +115,14 @@ class Lcd(Frame):
             # Handle the scenario where no keypad was touched
             print("No input detected. Please enter a valid hexadecimal code.")
         self._hex_entry.delete(0, END)  # Clear the input field after submission.
-
+        '''
+    def submit_hex(self):
+        hex_input = self._hex_entry.get().replace(' ', '').upper()
+        if hex_input == hex(keypad._target)[2:].upper():
+            keypad._defused = True
+        else:
+            keypad._failed = True
+        self._hex_entry.delete(0, END)  # Clear the input field after submission.
 
 
     # lets us pause/unpause the timer (7-segment display)
@@ -129,7 +137,10 @@ class Lcd(Frame):
     def pause(self):
         if (RPi):
             self._timer.pause()
-
+            
+    def update_keypad_display(self, value):
+        self._lkeypad.config(text=f"Keypad phase: {value}")
+        
     # setup the conclusion GUI (explosion/defusion)
     def conclusion(self, success=False):
         # destroy/clear widgets that are no longer needed
@@ -245,32 +256,42 @@ class Timer(PhaseThread):
 
 
 class Keypad(PhaseThread):
-    def __init__(self, component, name="Keypad"):
-        super().__init__(name, component)
-        self._target = randint(0, 2**8 - 1)  # Generate a random 8-bit binary number
-        self._display_hexadecimal = ""
+    def __init__(self, keypad, name="Keypad"):
+        super().__init__(name)
+        self._value = ""
+        self._keypad = keypad  # the keypad pins
+
+    # runs the thread
     def run(self):
         self._running = True
         while self._running:
-            # Display the target in hexadecimal
-            self._display_hexadecimal = f"Target: {hex(self._target)[2:].upper()}"
-            # Get user input
-            user_input = input("Enter the hexadecimal equivalent of the binary number: ")
-            # Check if the user input is correct
-            if user_input.upper() == hex(self._target)[2:].upper():
-                self._defused = True
-            else:
-                self._failed = True
-                self._strikes += 1
-            sleep(1)
-    def __str__(self):
-        if self._defused:
-            return "DEFUSED"
-        elif self._failed:
-            return f"STRIKES: {self._strikes}"
-        else:
-            return self._display_hexadecimal
+            # process keys when keypad key(s) are pressed
+            if self._keypad.pressed_keys:
+                # debounce
+                while self._keypad.pressed_keys:
+                    try:
+                        key = self._keypad.pressed_keys[0]
+                    except IndexError:
+                        key = ""
+                    sleep(0.1)
+                # do we have an asterisk (*) (and it resets the passphrase)?
+                if key == "*" and STAR_CLEARS_PASS:
+                    self._value = ""
+                # we haven't yet reached the max pass length (otherwise, we just ignore the keypress)
+                elif len(self._value) < MAX_PASS_LEN:
+                    # log the key
+                    self._value += str(key)
+                # Update the GUI
+                self._update_callback(self._value)
+            sleep(0.1)
+        self._running = False
 
+    def __str__(self):
+        return self._value
+
+    # Setter for update callback
+    def set_update_callback(self, callback):
+        self._update_callback = callback
 
 # Wires phase class
 class Wires(PhaseThread):
