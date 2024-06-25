@@ -13,7 +13,7 @@ from threading import Thread
 from time import sleep
 # other imports
 from tkinter import *
-from pygame import *
+
 from bomb_configs import *
 
 
@@ -317,7 +317,7 @@ class Wires(PhaseThread):
         if self._defused:
             return "DEFUSED"
         elif self._strikes > 0:
-            return self._failed
+            return f"STRIKE: {self._strikes}"
         else:
             return f"Current State: {bin(self.wire_state)[2:].zfill(5)}"
 
