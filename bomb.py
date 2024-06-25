@@ -33,14 +33,14 @@ def bootup(n=0):
 # sets up the phase threads
 def setup_phases():
     global timer, keypad, wires, button, toggles
-    
+    global timer, keypad_phase, wires, button, toggles
     # setup the timer thread
     timer = Timer(component_7seg, COUNTDOWN)
     # bind the 7-segment display to the LCD GUI so that it can be paused/unpaused from the GUI
     gui.setTimer(timer)
     # setup the keypad thread
-    keypad = Keypad(component_keypad, keypad_target)
-    keypad.set_update_callback(gui.update_keypad_display)
+    keypad_phase = Keypad(component_keypad, keypad_target)
+    keypad_phase.set_update_callback(gui.update_keypad_display)
     # setup the jumper wires thread
     wires = Wires(component_wires, wires_target)
     # setup the pushbutton thread
@@ -48,10 +48,10 @@ def setup_phases():
     # bind the pushbutton to the LCD GUI so that its LED can be turned off when we quit
     gui.setButton(button)
     # setup the toggle switches thread
-    toggles = Toggles(component_toggles, toggles_target,timer)
+    toggles = Toggles(component_toggles, toggles_target, timer)
     # start the phase threads
     timer.start()
-    keypad.start()
+    keypad_phase.start()
     wires.start()
     button.start()
     toggles.start()
