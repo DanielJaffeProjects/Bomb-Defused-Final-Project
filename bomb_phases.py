@@ -434,7 +434,7 @@ class Toggles(PhaseThread):
         self.update_question()
         while self._running:
             # starts a timer
-            self.start_time = time()
+            self.start_time = int(time())
             print(self.start_time)
             if self.start_time % 60 == 0:
                 self.update_question()
