@@ -447,13 +447,13 @@ class Toggles(PhaseThread):
             # If answer is incorrect you have lost the game you are only given one chance since you have 1 strikes on self.failed
             else:
                 self._failed = True
-
+            sleep(1)
     def get_selected_answer(self):
         # Put the toggles in a list
         toggle_list = []
         for toggle in self._component:
             toggle_list.append(toggle.value)
-
+        print(toggle_list)
         # Checks which toggles are True and then outputs the letter that corresponds with each toggle
         if toggle_list == [True, False, False, False]:
             return self._all_answers[0]
