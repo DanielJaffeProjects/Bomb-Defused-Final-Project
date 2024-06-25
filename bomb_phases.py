@@ -101,7 +101,7 @@ class Lcd(Frame):
             image_path = "losing image.gif"  # Replace with your image path
             image = Image.open(image_path)
             image = image.resize((300, 300))
-            tk_img = ImageTk.PhotoImage(image)
+            tk_img = PhotoImage(image)
 
             self.image_label = Label(self, image=tk_img)
             self.image_label.image = tk_img  # Keep reference to prevent garbage collection
