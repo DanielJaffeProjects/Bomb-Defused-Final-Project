@@ -288,11 +288,11 @@ class Wires(PhaseThread):
             for i, pin in enumerate(self._component):
                 if pin.value:  # Assuming pin.value is True if the wire corresponding to the pin is pulled
                     self.wire_state |= (1 << (len(self._component) - 1 - i))
-            
+            '''
             # Debugging output
             print(f"Current wire state: {bin(self.wire_state)}")
             print(f"Target state: {bin(self._target)}")
-            
+            '''
             # Check if the current wire state matches the target
             if self.wire_state == self._target:
                 self._defused = True
