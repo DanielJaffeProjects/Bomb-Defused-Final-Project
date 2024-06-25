@@ -82,6 +82,7 @@ def check_phases():
         gui._lwires["text"] = f"Wires: {wires}"
         # the phase is defused -> stop the thread
         if (wires._defused):
+             gui._lwires["text"] =  "Wires: Phase Defused!"
             wires._running = False
             active_phases -= 1
         # the phase has failed -> strike
