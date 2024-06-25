@@ -247,12 +247,18 @@ class Keypad(PhaseThread):
         super().__init__(name, keypad, target)
         self._value = ""
         self._keypad = keypad  # the keypad pins
-        self._target_hex = hex(self._target)[2:].upper()  # Target hexadecimal value for comparison
+        self._target_hex = hex(int(self._target))[2:].upper()  # Target hexadecimal value for comparison
+        self._binary_code = self.generate_binary_code()
+
+    # generates 6 random 4-digit binary numbers
+    def generate_binary_code(self):
+        binary_code = [format(randint(0, 15), '04b') for _ in range(6)]
+        return " ".join(binary_code)
 
     # runs the thread
     def run(self):
         self._running = True
-        self._update_callback(self._target_hex)  # Display the initial target value
+        self._update_callback(self._binary_code, "")  # Display the initial target binary code
         while self._running:
             # process keys when keypad key(s) are pressed
             if self._keypad.pressed_keys:
@@ -269,20 +275,22 @@ class Keypad(PhaseThread):
                     self._value += str(key)
                 if self._value.upper() == self._target_hex:
                     self._defused = True
-                    self._update_callback("DEFUSED")
+                    self._update_callback(self._binary_code, "DEFUSED")
                 elif len(self._value) >= MAX_PASS_LEN:
                     self._failed = True
-                    self._update_callback("STRIKE")
+                    self._update_callback(self._binary_code, "STRIKE")
                 else:
-                    self._update_callback(self._value)
+                    self._update_callback(self._binary_code, self._value)
             sleep(0.1)
         self._running = False
 
     def __str__(self):
         return self._value
 
+    # Setter for update callback
     def set_update_callback(self, callback):
         self._update_callback = callback
+
 
 
 # Wires phase class
