@@ -39,8 +39,8 @@ def setup_phases():
     # bind the 7-segment display to the LCD GUI so that it can be paused/unpaused from the GUI
     gui.setTimer(timer)
     # setup the keypad thread
-    keypad_phase = Keypad(component_keypad, keypad_target)
-    keypad_phase.set_update_callback(gui.update_keypad_display)
+    # keypad_phase = Keypad(component_keypad, keypad_target)
+    # keypad_phase.set_update_callback(gui.update_keypad_display)
     # setup the jumper wires thread
     wires = Wires(component_wires, wires_target)
     # setup the pushbutton thread
@@ -51,7 +51,7 @@ def setup_phases():
     toggles = Toggles(component_toggles, toggles_target, timer)
     # start the phase threads
     timer.start()
-    keypad_phase.start()
+    # keypad_phase.start()
     wires.start()
     button.start()
     toggles.start()
