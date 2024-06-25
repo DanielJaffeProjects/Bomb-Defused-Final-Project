@@ -5,16 +5,19 @@
 #################################
 # import the configs
 
-from bomb_configs import *
-# other imports
-from tkinter import *
+import os
+import sys
 import tkinter
+from random import *
 from threading import Thread
 from time import sleep
 from time import time
-import os
-import sys
-from random import *
+# other imports
+from tkinter import *
+
+from bomb_configs import *
+
+
 #########
 # classes
 #########
@@ -30,6 +33,7 @@ class Lcd(Frame):
         self._button = None
         # setup the initial "boot" GUI
         self.setupBoot()
+
     # sets up the LCD "boot" GUI
     def setupBoot(self):
         # set column weights
@@ -40,62 +44,64 @@ class Lcd(Frame):
         self._lscroll = Label(self, bg="black", fg="white", font=("Courier New", 14), text="", justify=LEFT)
         self._lscroll.grid(row=0, column=0, columnspan=3, sticky=W)
         self.pack(fill=BOTH, expand=True)
+
     # sets up the LCD GUI
     def setup(self):
         # the timer
-        self._ltimer = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Time left: ")
+        self._ltimer = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16), text="Time left: ")
         self._ltimer.grid(row=1, column=0, columnspan=3, sticky=W)
         # the toggle switches status
-        self._ltoggles = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Toggles phase: ")
-        #row span was made bigger to allow for question and choices
-        self._ltoggles.grid(row=2, column=0, columnspan=3, rowspan = 5, sticky=NW)
+        self._ltoggles = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16), text="Toggles phase: ")
+        # row span was made bigger to allow for question and choices
+        self._ltoggles.grid(row=2, column=0, columnspan=3, rowspan=5, sticky=NW)
 
-        self._ltoggles2 = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18))
-        #row span was made bigger to allow for question and choices
+        self._ltoggles2 = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16))
+        # row span was made bigger to allow for question and choices
         self._ltoggles2.grid(row=3, column=0, columnspan=3, sticky=W)
 
-        self._ltoggles3 = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18))
+        self._ltoggles3 = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16))
         # row span was made bigger to allow for question and choices
         self._ltoggles3.grid(row=4, column=1, sticky=W)
 
-        self._ltoggles4 = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18))
+        self._ltoggles4 = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16))
         # row span was made bigger to allow for question and choices
         self._ltoggles4.grid(row=5, column=1, sticky=W)
 
-        self._ltoggles5 = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18))
+        self._ltoggles5 = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16))
         # row span was made bigger to allow for question and choices
         self._ltoggles5.grid(row=6, column=1, sticky=W)
 
         # the keypad passphrase
-        self._lkeypad = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Keypad phase: ")
+        self._lkeypad = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16), text="Keypad phase: ")
 
         self._lkeypad.grid(row=7, column=0, columnspan=3, sticky=W)
         # the jumper wires status
-        self._lwires = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Wires phase: ")
+        self._lwires = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16), text="Wires phase: ")
         self._lwires.grid(row=8, column=0, columnspan=3, sticky=W)
         # the pushbutton status
-        self._lbutton = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Button phase: ")
+        self._lbutton = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16), text="Button phase: ")
         self._lbutton.grid(row=9, column=0, columnspan=3, sticky=W)
 
         # the strikes left
-        self._lstrikes = Label(self, bg="black", fg="#00ff00", font=("Courier New", 18), text="Strikes left: ")
+        self._lstrikes = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16), text="Strikes left: ")
         self._lstrikes.grid(row=10, column=0, sticky=W)
         if (SHOW_BUTTONS):
             # the pause button (pauses the timer)
-            self._bpause = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 18), text="Pause",
+            self._bpause = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 16), text="Pause",
                                           anchor=CENTER, command=self.pause)
             self._bpause.grid(row=6, column=0, pady=40)
             # the quit button
-            self._bquit = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 18), text="Quit",
+            self._bquit = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 16), text="Quit",
                                          anchor=CENTER, command=self.quit)
             self._bquit.grid(row=6, column=2, pady=40)
-            
-            self._hex_entry = Entry(self, bg="black", fg="#00ff00", font=("Courier New", 18))
+
+            self._hex_entry = Entry(self, bg="black", fg="#00ff00", font=("Courier New", 16))
             self._hex_entry.grid(row=11, column=1, sticky=W)
-            self._bsubmit = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 18), text="Submit", anchor=CENTER, command=self.submit_hex)
+            self._bsubmit = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 16), text="Submit",
+                                           anchor=CENTER, command=self.submit_hex)
             self._bsubmit.grid(row=11, column=1, pady=40, padx=10)
-    '''        
-    def submit_hex(self):
+
+    def submit_hex(self,keypad):
         hex_input = self._hex_entry.get().replace(' ', '').upper()
         # Check if any input was entered
         if hex_input:  # This will be False if the input is empty
@@ -110,17 +116,21 @@ class Lcd(Frame):
             print("No input detected. Please enter a valid hexadecimal code.")
         self._hex_entry.delete(0, END)  # Clear the input field after submission.
 
-'''
+
+
     # lets us pause/unpause the timer (7-segment display)
     def setTimer(self, timer):
         self._timer = timer
+
     # lets us turn off the pushbutton's RGB LED
     def setButton(self, button):
         self._button = button
+
     # pauses the timer
     def pause(self):
         if (RPi):
             self._timer.pause()
+
     # setup the conclusion GUI (explosion/defusion)
     def conclusion(self, success=False):
         # destroy/clear widgets that are no longer needed
@@ -141,18 +151,20 @@ class Lcd(Frame):
             self._bquit.destroy()
         # reconfigure the GUI
         # the retry button
-        self._bretry = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 18), text="Retry", anchor=CENTER,
+        self._bretry = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 16), text="Retry", anchor=CENTER,
                                       command=self.retry)
         self._bretry.grid(row=1, column=0, pady=40)
         # the quit button
-        self._bquit = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 18), text="Quit", anchor=CENTER,
+        self._bquit = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 16), text="Quit", anchor=CENTER,
                                      command=self.quit)
         self._bquit.grid(row=1, column=2, pady=40)
+
     # re-attempts the bomb (after an explosion or a successful defusion)
     def retry(self):
         # re-launch the program (and exit this one)
         os.execv(sys.executable, ["python3"] + [sys.argv[0]])
         exit(0)
+
     # quits the GUI, resetting some components
     def quit(self):
         if (RPi):
@@ -165,6 +177,8 @@ class Lcd(Frame):
                 pin.value = True
         # exit the application
         exit(0)
+
+
 # template (superclass) for various bomb components/phases
 class PhaseThread(Thread):
     def __init__(self, name, component=None, target=None):
@@ -181,6 +195,8 @@ class PhaseThread(Thread):
         self._value = None
         # phase threads are either running or not
         self._running = False
+
+
 # the timer phase
 class Timer(PhaseThread):
     def __init__(self, component, initial_value, name="Timer"):
@@ -194,6 +210,7 @@ class Timer(PhaseThread):
         self._sec = ""
         # by default, each tick is 1 second
         self._interval = 1
+
     # runs the thread
     def run(self):
         self._running = True
@@ -210,23 +227,27 @@ class Timer(PhaseThread):
                 self._value -= 1
             else:
                 sleep(0.1)
+
     # updates the timer (only internally called)
     def _update(self):
         self._min = f"{self._value // 60}".zfill(2)
         self._sec = f"{self._value % 60}".zfill(2)
+
     # pauses and unpauses the timer
     def pause(self):
         # toggle the paused state
         self._paused = not self._paused
         # blink the 7-segment display when paused
         self._component.blink_rate = (2 if self._paused else 0)
+
     # returns the timer as a string (mm:ss)
     def __str__(self):
         return f"{self._min}:{self._sec}"
 
+
 class Keypad(PhaseThread):
     def __init__(self, component, name="Keypad"):
-        super().__init__(name, component, target)
+        super().__init__(name, component)
         '''
         target = randint(0, 2**8 - 1)  # Generate a random 8-bit binary number
         self._display_hexadecimal = ""
@@ -252,11 +273,14 @@ class Keypad(PhaseThread):
         else:
             return self._display_hexadecimal
         '''
+
+
 # Wires phase class
 class Wires(PhaseThread):
     def __init__(self, component, target, name="Wires"):
         super().__init__(name, component, target)
         self._display_binary_numbers = ""
+
     def run(self):
         self._running = True
         while self._running:
@@ -276,6 +300,7 @@ class Wires(PhaseThread):
             else:
                 self._failed = True  # Consider what should trigger a failure
             sleep(1)  # Sleep to prevent too rapid checking
+
     def __str__(self):
         if self._defused:
             return "DEFUSED"
@@ -283,6 +308,8 @@ class Wires(PhaseThread):
             return "STRIKE"
         else:
             return f"Current State: {bin(self.wire_state)[2:].zfill(5)}"
+
+
 # Further class definitions (e.g., Keypad, Button, etc.) would follow here
 # This is an example instantiation, which you would normally place in the part of your code
 # that sets up and starts thread objects:
@@ -306,6 +333,7 @@ class Button(PhaseThread):
         self._timer = timer
         # The amount of time the superpower freezes the timer
         self._time_frozen = 0
+
     # This will give the user a chance to get a 5 minute freeze in time with a 5 percent chance of getting it
     def chance(self):
         random = randint(1, 50)
@@ -313,6 +341,7 @@ class Button(PhaseThread):
             return 300
         else:
             return False
+
     # runs the thread
     def run(self):
         self._running = True
@@ -356,6 +385,7 @@ class Button(PhaseThread):
                     self._rgb[2].value = True
                     sleep(60)
                     self._pressed = False
+
     # returns the pushbutton's state as a string
     def __str__(self):
         if (not self._rgb[0].value):
@@ -365,21 +395,23 @@ class Button(PhaseThread):
         elif (not self._rgb[1].value):
             return "Your time freeze now usable!"
 
+
 # the toggle switches phase
 class Toggles(PhaseThread):
     def __init__(self, component, target, name="Toggles"):
         super().__init__(name, component, target)
-    #Give the incorrect possible answer
-    #Incorrect answers are chosen at random but are close to the real answer
-    def incorrect_answers(self,decimal):
-        incorrect_list =[]
-        for i in range(0,3):
-            incorrect_list.append(bin(decimal + randint(5000,1000000)))
+
+    # Give the incorrect possible answer
+    # Incorrect answers are chosen at random but are close to the real answer
+    def incorrect_answers(self, decimal):
+        incorrect_list = []
+        for i in range(0, 3):
+            incorrect_list.append(bin(decimal + randint(5000, 1000000)))
         return incorrect_list
 
     def update_question(self):
         # Give a random decimal number
-        self._decimal = randint(20000000, 5000000000)
+        self._decimal = randint(20000000, 500000000)
         # Taking the random decimal number and move it into binary
         self._correct_answer = bin(self._decimal)
         # All answers
@@ -395,27 +427,28 @@ class Toggles(PhaseThread):
         # Display the question and options together
         # Get the answer the user selected
         self.answer_selected = self.get_selected_answer()
-        return self._display_text_toggle, self.answer_selected,self._correct_answer
+        return self._display_text_toggle, self.answer_selected, self._correct_answer
 
     def run(self):
         self._running = True
         self.update_question()
         while self._running:
-            #starts a timer
+            # starts a timer
             self.start_time = time()
             print(self.start_time)
-            if self.start_time%60 == 0:
+            if self.start_time % 60 == 0:
                 self.update_question()
             # Check if the selected answer is correct
             # If answer is correct you have won the game
             if str(self.answer_selected) == str(self._correct_answer):
                 self._defused = True
-            #If all the toggles are off then the toggles should continue to run
+            # If all the toggles are off then the toggles should continue to run
             elif self.answer_selected == "All False":
                 self._running = True
             # If answer is incorrect you have lost the game you are only given one chance since you have 1 strikes on self.failed
             else:
                 self._failed = True
+
     def get_selected_answer(self):
         # Put the toggles in a list
         toggle_list = []
@@ -437,7 +470,8 @@ class Toggles(PhaseThread):
             # Return F for failed if more than one toggle is on
             return "F"
         pass
-    #returns the toggle switches state as a string
+
+    # returns the toggle switches state as a string
     def __str__(self):
         if (self._defused):
             return "DEFUSED"

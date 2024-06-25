@@ -211,8 +211,8 @@ if (DEBUG):
     print(f"Button target: {button_target}")
 
 # set the bomb's LCD bootup text
-boot_text = f"Booting...\n\x00\x00"\
-            f"*Serial number: {serial}\n"\
-            f"Encrypting keypad...\n\x00"\
-            f"Rendering phases...\x00"
+boot_text = f"System Booting... Please Wait...\n"\
+            f"Checking for any signs of intelligent life... Not found.\n"\
+            f"Ensuring bad jokes are ready... ✔\n"\
+            f"System Ready! Enjoy the ride, and remember: in case of emergency, blame the software!"
 
