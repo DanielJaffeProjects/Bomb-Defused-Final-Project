@@ -90,7 +90,7 @@ class Lcd(Frame):
         self._hex_entry.grid(row=7, column=1, sticky=W)
         self._hex_entry.bind("<KeyRelease>", self.check_hex_input)
         '''
-     '''   
+    '''   
     def check_hex_input(self, event):
         hex_input = self._hex_entry.get().replace(' ', '').upper()
         if hex_input == hex(keypad_phase._target)[2:].upper():
@@ -104,7 +104,7 @@ class Lcd(Frame):
             
     def update_keypad_display(self, value):
         self._lkeypad.config(text=f"Keypad phase: {value}")
-     '''
+    '''
         if (SHOW_BUTTONS):
             # the pause button (pauses the timer)
             self._bpause = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 16), text="Pause",
