@@ -245,19 +245,28 @@ class Timer(PhaseThread):
     def __str__(self):
         return f"{self._min}:{self._sec}"
         
+# Define the Keypad class within bomb_phases.py
 class Keypad(PhaseThread):
     def __init__(self, keypad, target, name="Keypad"):
         super().__init__(name, keypad, target)
         self._value = ""
         self._keypad = keypad  # the keypad pins
-        self._target = int(self._target)  # Ensure target is an integer
-        self._target_hex = hex(self._target)[2:].upper()  # Target hexadecimal value for comparison
         self._binary_code = self.generate_binary_code()
+        self._hex_target = self.binary_to_hex(self._binary_code)  # Target hexadecimal value for comparison
 
     # generates 6 random 4-digit binary numbers
     def generate_binary_code(self):
         binary_code = [format(randint(0, 15), '04b') for _ in range(6)]
         return " ".join(binary_code)
+
+    # converts binary code to hexadecimal
+    def binary_to_hex(self, binary_code):
+        binary_code = binary_code.replace(" ", "")
+        hex_code = ""
+        for i in range(0, len(binary_code), 4):
+            hex_digit = binary_code[i:i+4]
+            hex_code += format(int(hex_digit, 2), 'X')
+        return hex_code
 
     # runs the thread
     def run(self):
@@ -277,7 +286,7 @@ class Keypad(PhaseThread):
                     self._value = ""
                 elif len(self._value) < MAX_PASS_LEN:
                     self._value += str(key)
-                if self._value.upper() == self._target_hex:
+                if self._value.upper() == self._hex_target:
                     self._defused = True
                     self._update_callback(self._binary_code, "DEFUSED")
                 elif len(self._value) >= MAX_PASS_LEN:
