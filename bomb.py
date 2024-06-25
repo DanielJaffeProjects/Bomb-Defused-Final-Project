@@ -63,7 +63,9 @@ def check_phases():
     # check the timer
     if (timer._running):
         # update the GUI
+        #added music
         pygame.mixer.music.load("unstoppable.mp3")
+        pygame.mixer.music.play(-1)
         gui._ltimer["text"] = f"Time left: {timer}"
     else:
         # the countdown has expired -> explode!
