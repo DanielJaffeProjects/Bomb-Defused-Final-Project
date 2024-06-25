@@ -122,8 +122,8 @@ class Lcd(Frame):
         # destroy/clear widgets that are no longer needed
         self._lscroll["text"] = ""
         self._ltimer.destroy()
-        self._lkeypad_binary.destroy()
-        self._lkeypad.destroy()
+        # self._lkeypad_binary.destroy()
+        # self._lkeypad.destroy()
         self._lwires.destroy()
         self._lbutton.destroy()
         self._ltoggles.destroy()
