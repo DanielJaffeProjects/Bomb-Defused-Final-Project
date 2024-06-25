@@ -49,7 +49,7 @@ def setup_phases():
     toggles = Toggles(component_toggles, toggles_target,timer)
     # start the phase threads
     timer.start()
-    # keypad.start()
+    keypad.start()
     wires.start()
     button.start()
     toggles.start()
@@ -159,6 +159,11 @@ def turn_off():
 # initialize the LCD GUI
 window = Tk()
 gui = Lcd(window)
+
+component_keypad = Matrix_Keypad(keypad_rows, keypad_cols, keypad_keys)  # Assume keypad components are set up
+keypad_phase = Keypad(component_keypad)
+keypad_phase.set_update_callback(gui.update_keypad_display)
+
 # initialize the bomb strikes and active phases (i.e., not yet defused)
 strikes_left = NUM_STRIKES
 active_phases = NUM_PHASES
