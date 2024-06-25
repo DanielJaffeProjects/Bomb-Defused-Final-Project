@@ -2,9 +2,6 @@
 # Main program
 # Team: Daniel Jaffe and Jordano Liberato
 #################################
-# Constants
-MAX_PASS_LEN = 6  # Define the maximum length of the passphrase
-STAR_CLEARS_PASS = True  # Define if the star key clears the passphrase (add this based on your logic)
 
 # import the configs
 from bomb_configs import *
