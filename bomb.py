@@ -53,7 +53,7 @@ def setup_phases():
     toggles = Toggles(component_toggles, toggles_target,timer)
     # start the phase threads
     timer.start()
-    keypad.start()
+    keypad_phase.start()
     wires.start()
     button.start()
     toggles.start()
