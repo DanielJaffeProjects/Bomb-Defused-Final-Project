@@ -25,7 +25,7 @@ import pygame
 pygame.init()
 class Lcd(Frame):
     def __init__(self, window):
-        super().__init__(window, bg="black")
+        super().__init__(window, bg="yellow")
         # make the GUI fullscreen
         window.attributes("-fullscreen", False)
         # we need to know about the timer (7-segment display) to be able to pause/unpause it
@@ -118,7 +118,7 @@ class Lcd(Frame):
             print("No input detected. Please enter a valid hexadecimal code.")
         self._hex_entry.delete(0, END)  # Clear the input field after submission.
         '''
-    def submit_hex(self):
+    def submit_hex(self,keypad):
         hex_input = self._hex_entry.get().replace(' ', '').upper()
         if hex_input == hex(keypad._target)[2:].upper():
             keypad._defused = True
