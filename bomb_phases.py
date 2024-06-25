@@ -100,8 +100,8 @@ class Lcd(Frame):
             # Displaying the image
             losing_image = "losing image.gif"  # Replace with your image path
             image = PhotoImage(losing_image)
-            self._lbutton = Label(self, bg="black",  image=(image))
-            self._lbutton.grid(row=9, column=0, columnspan=3, sticky=W)
+            self.image1 = Label(self, bg="black",  image=(image))
+            self.image1.grid(row=2, column=1, columnspan=3, sticky=W)
 
         # Entry widget for hexadecimal input
         self._hex_entry = Entry(self, bg="black", fg="#00ff00", font=("Courier New", 16))
