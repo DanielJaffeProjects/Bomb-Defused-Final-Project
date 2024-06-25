@@ -43,8 +43,9 @@ if (RPi):
     keypad_rows = [DigitalInOut(i) for i in (board.D5, board.D6, board.D13, board.D19)]
     # the keys
     keypad_keys = ((1, 2, 3), (4, 5, 6), (7, 8, 9), ("*", 0, "#"))
-
-    component_keypad = Matrix_Keypad(keypad_rows, keypad_cols, keypad_keys)
+    component_keypad = Matrix_Keypad(keypad_rows, keypad_cols, keypad_keys)  # Assume keypad components are set up
+    keypad_phase = Keypad(component_keypad)
+    keypad_phase.set_update_callback(gui.update_keypad_display)
 
 # jumper wires
 # 10 pins: 14, 15, 18, 23, 24, 3V3, 3V3, 3V3, 3V3, 3V3
