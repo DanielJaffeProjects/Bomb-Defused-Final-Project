@@ -98,14 +98,10 @@ class Lcd(Frame):
             #Image if you lose
             #Used chatgpt to help me with creating a image and resizing it
             # Displaying the image
-            image_path = "losing image.gif"  # Replace with your image path
-            image = Image.open(image_path)
-            image = image.resize((300, 300))
-            tk_img = PhotoImage(image)
-
-            self.image_label = Label(self, image=tk_img)
-            self.image_label.image = tk_img  # Keep reference to prevent garbage collection
-            self.image_label.grid(row=2, column=0, columnspan=3, padx=10, pady=10)
+            losing_image = "losing image.gif"  # Replace with your image path
+            image = PhotoImage(losing_image)
+            self._lbutton = Label(self, bg="black",  image=(image))
+            self._lbutton.grid(row=9, column=0, columnspan=3, sticky=W)
 
         # Entry widget for hexadecimal input
         self._hex_entry = Entry(self, bg="black", fg="#00ff00", font=("Courier New", 16))
