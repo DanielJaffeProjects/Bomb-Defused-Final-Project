@@ -432,10 +432,13 @@ class Toggles(PhaseThread):
         self.update_question()
         while self._running:
             print("str",str(self._timer))
-            if str(self._timer) == "04:50":
+            if str(self._timer) == "02:30":
                 self.update_question()
             # Check if the selected answer is correct
             # If answer is correct you have won the game
+            print(str(self.answer_selected))
+            print(str(self._correct_answer))
+
             if str(self.answer_selected) == str(self._correct_answer):
                 self._defused = True
             # If all the toggles are off then the toggles should continue to run
