@@ -14,12 +14,15 @@ from time import sleep
 # other imports
 from tkinter import *
 from bomb_configs import *
-
+import pygame
 
 #########
 # classes
 #########
 # the LCD display GUI
+
+#Initializing pygame
+pygame.init()
 class Lcd(Frame):
     def __init__(self, window):
         super().__init__(window, bg="black")
@@ -224,6 +227,9 @@ class Timer(PhaseThread):
     # runs the thread
     def run(self):
         self._running = True
+        #added music
+        pygame.mixer.music.load("unstoppable.mp3")
+        pygame.mixer.music.play(1)
         while (self._running):
             if (not self._paused):
                 # update the timer and display its value on the 7-segment display
