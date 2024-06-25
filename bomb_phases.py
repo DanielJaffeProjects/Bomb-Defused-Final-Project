@@ -70,7 +70,7 @@ class Lcd(Frame):
         self._ltoggles5 = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16))
         # row span was made bigger to allow for question and choices
         self._ltoggles5.grid(row=6, column=1, sticky=W)
-        '''
+        
         # the keypad binary code
         self._lkeypad_binary = Label(self, bg="black", fg="#00ff00", font=("Courier New", 12), text="Keypad Binary code: ")
         self._lkeypad_binary.grid(row=7, column=0, columnspan=3, sticky=W)
@@ -78,7 +78,7 @@ class Lcd(Frame):
         # the keypad user input
         self._lkeypad_entry = Label(self, bg="black", fg="#00ff00", font=("Courier New", 12), text="Keypad Entry: ")
         self._lkeypad_entry.grid(row=8, column=0, columnspan=3, sticky=W)
-        '''
+        
         # the jumper wires status
         self._lwires = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16), text="Wires phase: ")
         self._lwires.grid(row=9, column=0, columnspan=3, sticky=W)
@@ -99,11 +99,10 @@ class Lcd(Frame):
                                          anchor=CENTER, command=self.quit)
             self._bquit.grid(row=6, column=2, pady=40)
 
-    '''
     def update_keypad_display(self, binary_value, entry_value):
         self._lkeypad_binary.config(text=f"Keypad Binary code: {binary_value}")
         self._lkeypad_entry.config(text=f"Keypad Entry: {entry_value}")
-    '''   
+        
     # lets us pause/unpause the timer (7-segment display)
     def setTimer(self, timer):
         self._timer = timer
@@ -122,8 +121,8 @@ class Lcd(Frame):
         # destroy/clear widgets that are no longer needed
         self._lscroll["text"] = ""
         self._ltimer.destroy()
-        # self._lkeypad_binary.destroy()
-        # self._lkeypad.destroy()
+        self._lkeypad_binary.destroy()
+        self._lkeypad_entry.destroy()
         self._lwires.destroy()
         self._lbutton.destroy()
         self._ltoggles.destroy()
@@ -245,7 +244,7 @@ class Timer(PhaseThread):
     # returns the timer as a string (mm:ss)
     def __str__(self):
         return f"{self._min}:{self._sec}"
-'''
+        
 class Keypad(PhaseThread):
     def __init__(self, keypad, target, name="Keypad"):
         super().__init__(name, keypad, target)
@@ -295,8 +294,7 @@ class Keypad(PhaseThread):
     # Setter for update callback
     def set_update_callback(self, callback):
         self._update_callback = callback
-
-'''
+        
 # Wires phase class
 class Wires(PhaseThread):
     def __init__(self, component, target, name="Wires"):
