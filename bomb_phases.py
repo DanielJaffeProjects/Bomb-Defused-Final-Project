@@ -274,6 +274,16 @@ class Keypad(PhaseThread):
             hex_code += format(int(hex_digit, 2), 'X')
         return hex_code
 
+    # maps keypad keypresses to their corresponding hexadecimal characters
+    def map_keypress(self, key):
+        keypad_mapping = {
+            1: '1', 2: '2', 3: '3',
+            4: '4', 5: '5', 6: '6',
+            7: '7', 8: '8', 9: '9',
+            0: '0', '*': '*', '#': '#'
+        }
+        return keypad_mapping.get(key, str(key))
+
     # runs the thread
     def run(self):
         self._running = True
@@ -288,10 +298,11 @@ class Keypad(PhaseThread):
                     except IndexError:
                         key = ""
                     sleep(0.1)
-                if key == "*" and STAR_CLEARS_PASS:
+                mapped_key = self.map_keypress(key)
+                if mapped_key == "*" and STAR_CLEARS_PASS:
                     self._value = ""
                 elif len(self._value) < MAX_PASS_LEN:
-                    self._value += str(key)
+                    self._value += mapped_key
                 if self._value.upper() == self._hex_target:
                     self._defused = True
                     self._update_callback(self._binary_code, "DEFUSED")
@@ -309,6 +320,7 @@ class Keypad(PhaseThread):
     # Setter for update callback
     def set_update_callback(self, callback):
         self._update_callback = callback
+
         
 # Wires phase class
 class Wires(PhaseThread):
