@@ -251,7 +251,8 @@ class Keypad(PhaseThread):
         super().__init__(name, keypad, target)
         self._value = ""
         self._keypad = keypad  # the keypad pins
-        self._target_hex = hex(int(self._target))[2:].upper()  # Target hexadecimal value for comparison
+        self._target = int(self._target)  # Ensure target is an integer
+        self._target_hex = hex(self._target)[2:].upper()  # Target hexadecimal value for comparison
         self._binary_code = self.generate_binary_code()
 
     # generates 6 random 4-digit binary numbers
