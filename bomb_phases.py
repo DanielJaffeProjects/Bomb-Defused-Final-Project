@@ -88,6 +88,20 @@ class Lcd(Frame):
         self._hex_entry = Entry(self, bg="black", fg="#00ff00", font=("Courier New", 16))
         self._hex_entry.grid(row=7, column=1, sticky=W)
         self._hex_entry.bind("<KeyRelease>", self.check_hex_input)
+        
+    def check_hex_input(self, event):
+        hex_input = self._hex_entry.get().replace(' ', '').upper()
+        if hex_input == hex(keypad_phase._target)[2:].upper():
+            keypad_phase._defused = True
+            self.update_keypad_display("DEFUSED")
+        elif len(hex_input) >= MAX_PASS_LEN:
+            keypad_phase._failed = True
+            self.update_keypad_display("STRIKE")
+        else:
+            self.update_keypad_display(hex_input)
+            
+    def update_keypad_display(self, value):
+        self._lkeypad.config(text=f"Keypad phase: {value}")
         if (SHOW_BUTTONS):
             # the pause button (pauses the timer)
             self._bpause = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 16), text="Pause",
@@ -97,16 +111,7 @@ class Lcd(Frame):
             self._bquit = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 16), text="Quit",
                                          anchor=CENTER, command=self.quit)
             self._bquit.grid(row=6, column=2, pady=40)
-    def check_hex_input(self, event):
-        hex_input = self._hex_entry.get().replace(' ', '').upper()
-        if hex_input == hex(keypad._target)[2:].upper():
-            keypad._defused = True
-            self.update_keypad_display("DEFUSED")
-        elif len(hex_input) >= MAX_PASS_LEN:
-            keypad._failed = True
-            self.update_keypad_display("STRIKE")
-        else:
-            self.update_keypad_display(hex_input)
+            
     # lets us pause/unpause the timer (7-segment display)
     def setTimer(self, timer):
         self._timer = timer
@@ -120,9 +125,6 @@ class Lcd(Frame):
         if (RPi):
             self._timer.pause()
             
-    def update_keypad_display(self, value):
-        self._lkeypad.config(text=f"Keypad phase: {value}")
-        
     # setup the conclusion GUI (explosion/defusion)
     def conclusion(self, success=False):
         # destroy/clear widgets that are no longer needed
@@ -261,21 +263,16 @@ class Keypad(PhaseThread):
                     except IndexError:
                         key = ""
                     sleep(0.1)
-                # do we have an asterisk (*) (and it resets the passphrase)?
                 if key == "*" and STAR_CLEARS_PASS:
                     self._value = ""
-                # we haven't yet reached the max pass length (otherwise, we just ignore the keypress)
                 elif len(self._value) < MAX_PASS_LEN:
-                    # log the key
                     self._value += str(key)
-                # Check the value immediately
                 if self._value.upper() == self._target_hex:
                     self._defused = True
                     self._update_callback("DEFUSED")
                 elif len(self._value) >= MAX_PASS_LEN:
                     self._failed = True
                     self._update_callback("STRIKE")
-                # Update the GUI
                 else:
                     self._update_callback(self._value)
             sleep(0.1)
@@ -284,10 +281,8 @@ class Keypad(PhaseThread):
     def __str__(self):
         return self._value
 
-    # Setter for update callback
     def set_update_callback(self, callback):
         self._update_callback = callback
-
 
 # Wires phase class
 class Wires(PhaseThread):
