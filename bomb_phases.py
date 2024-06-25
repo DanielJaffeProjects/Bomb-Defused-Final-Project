@@ -84,11 +84,13 @@ class Lcd(Frame):
         # the strikes left
         self._lstrikes = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16), text="Strikes left: ")
         self._lstrikes.grid(row=10, column=0, sticky=W)
+        '''
         # Entry widget for hexadecimal input
         self._hex_entry = Entry(self, bg="black", fg="#00ff00", font=("Courier New", 16))
         self._hex_entry.grid(row=7, column=1, sticky=W)
         self._hex_entry.bind("<KeyRelease>", self.check_hex_input)
-        
+        '''
+     '''   
     def check_hex_input(self, event):
         hex_input = self._hex_entry.get().replace(' ', '').upper()
         if hex_input == hex(keypad_phase._target)[2:].upper():
@@ -102,6 +104,7 @@ class Lcd(Frame):
             
     def update_keypad_display(self, value):
         self._lkeypad.config(text=f"Keypad phase: {value}")
+     '''
         if (SHOW_BUTTONS):
             # the pause button (pauses the timer)
             self._bpause = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 16), text="Pause",
@@ -241,7 +244,7 @@ class Timer(PhaseThread):
     # returns the timer as a string (mm:ss)
     def __str__(self):
         return f"{self._min}:{self._sec}"
-
+'''
 class Keypad(PhaseThread):
     def __init__(self, keypad, target, name="Keypad"):
         super().__init__(name, keypad, target)
@@ -283,7 +286,7 @@ class Keypad(PhaseThread):
 
     def set_update_callback(self, callback):
         self._update_callback = callback
-
+'''
 # Wires phase class
 class Wires(PhaseThread):
     def __init__(self, component, target, name="Wires"):
