@@ -132,8 +132,7 @@ class Lcd(Frame):
         self._ltoggles3.destroy()
         self._ltoggles4.destroy()
         self._ltoggles5.destroy()
-        self._lkeypad_entry.destroy()
-        
+
 
         if (SHOW_BUTTONS):
             self._bpause.destroy()
