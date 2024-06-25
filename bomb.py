@@ -7,9 +7,11 @@
 from bomb_configs import *
 # import the phases
 from bomb_phases import *
+import pygame
 ###########
 # functions
 ###########
+pygame.init()
 # generates the bootup sequence on the LCD
 def bootup(n=0):
     # if we're not animating (or we're at the end of the bootup text)

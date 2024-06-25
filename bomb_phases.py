@@ -15,7 +15,8 @@ from time import sleep
 from tkinter import *
 from bomb_configs import *
 import pygame
-
+#got import chatgpt
+from PIL import ImageTk, Image
 #########
 # classes
 #########
@@ -94,13 +95,24 @@ class Lcd(Frame):
             self._bquit = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 16), text="Quit",
                                          anchor=CENTER, command=self.quit)
             self._bquit.grid(row=6, column=2, pady=40)
-        
-        # # Entry widget for hexadecimal input
-        # self._hex_entry = Entry(self, bg="black", fg="#00ff00", font=("Courier New", 16))
-        # self._hex_entry.grid(row=7, column=1, sticky=W)
-        # self._hex_entry.bind("<KeyRelease>", self.check_hex_input)
-        
-       
+            #Image if you lose
+            #Used chatgpt to help me with creating a image and resizing it
+            # Displaying the image
+            image_path = "losing image.gif"  # Replace with your image path
+            image = Image.open(image_path)
+            image = image.resize((300, 300))
+            tk_img = ImageTk.PhotoImage(image)
+
+            self.image_label = Label(self, image=tk_img)
+            self.image_label.image = tk_img  # Keep reference to prevent garbage collection
+            self.image_label.grid(row=2, column=0, columnspan=3, padx=10, pady=10)
+
+        # Entry widget for hexadecimal input
+        self._hex_entry = Entry(self, bg="black", fg="#00ff00", font=("Courier New", 16))
+        self._hex_entry.grid(row=7, column=1, sticky=W)
+        self._hex_entry.bind("<KeyRelease>", self.check_hex_input)
+        '''
+    '''   
     def check_hex_input(self, event):
         hex_input = self._hex_entry.get().replace(' ', '').upper()
         if hex_input == hex(keypad_phase._target)[2:].upper():
@@ -114,7 +126,7 @@ class Lcd(Frame):
             
     def update_keypad_display(self, value):
         self._lkeypad.config(text=f"Keypad phase: {value}")
-    
+
     # lets us pause/unpause the timer (7-segment display)
     def setTimer(self, timer):
         self._timer = timer
@@ -251,10 +263,7 @@ class Keypad(PhaseThread):
         super().__init__(name, keypad, target)
         self._value = ""
         self._keypad = keypad  # the keypad pins
-        try:
-            self._target_hex = hex(int(self._target))[2:].upper()  # Target hexadecimal value for comparison
-        except ValueError:
-            raise ValueError(f"Invalid target value: {self._target}. Cannot convert to integer.")
+        self._target_hex = hex(self._target)[2:].upper()  # Target hexadecimal value for comparison
 
     # runs the thread
     def run(self):
@@ -290,7 +299,6 @@ class Keypad(PhaseThread):
 
     def set_update_callback(self, callback):
         self._update_callback = callback
-
 
 # Wires phase class
 class Wires(PhaseThread):
