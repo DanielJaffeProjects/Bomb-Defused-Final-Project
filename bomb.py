@@ -39,8 +39,8 @@ def setup_phases():
     # bind the 7-segment display to the LCD GUI so that it can be paused/unpaused from the GUI
     gui.setTimer(timer)
     # setup the keypad thread
-    # keypad_phase = Keypad(component_keypad, keypad_target)
-    # keypad_phase.set_update_callback(gui.update_keypad_display)
+    keypad_phase = Keypad(component_keypad, keypad_target)
+    keypad_phase.set_update_callback(gui.update_keypad_display)
     # setup the jumper wires thread
     wires = Wires(component_wires, wires_target)
     # setup the pushbutton thread
@@ -51,7 +51,7 @@ def setup_phases():
     toggles = Toggles(component_toggles, toggles_target, timer)
     # start the phase threads
     timer.start()
-    # keypad_phase.start()
+    keypad_phase.start()
     wires.start()
     button.start()
     toggles.start()
@@ -71,14 +71,14 @@ def check_phases():
         # don't check any more phases
         return
    # check the keypad
-    # if keypad_phase._running:
-    #     gui._lkeypad["text"] = f"Keypad Phase: {keypad_phase}"
-    # if keypad_phase._defused:
-    #     keypad_phase._running = False
-    #     active_phases -= 1
-    # elif keypad_phase._failed:
-    #     strike()
-    #     keypad_phase._failed = False
+    if keypad_phase._running:
+        gui._lkeypad["text"] = f"Keypad Phase: {keypad_phase}"
+    if keypad_phase._defused:
+        keypad_phase._running = False
+        active_phases -= 1
+    elif keypad_phase._failed:
+        strike()
+        keypad_phase._failed = False
     if (wires._running):
         # update the GUI
         gui._lwires["text"] = f"Wires: {wires}"
