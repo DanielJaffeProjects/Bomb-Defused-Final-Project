@@ -254,10 +254,6 @@ class Timer(PhaseThread):
     def __str__(self):
         return f"{self._min}:{self._sec}"
 
-# Constants
-MAX_PASS_LEN = 6  # Define the maximum length of the passphrase
-STAR_CLEARS_PASS = True  # Define if the star key clears the passphrase (add this based on your logic)
-
 class Keypad(PhaseThread):
     def __init__(self, keypad, name="Keypad"):
         super().__init__(name)
