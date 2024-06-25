@@ -279,6 +279,8 @@ class Wires(PhaseThread):
     def __init__(self, component, target, name="Wires"):
         super().__init__(name, component, target)
         self._display_binary_numbers = ""
+        self.previous_state = None
+        self._strikes = 0  # Tracking number of strikes
 
     def run(self):
         self._running = True
@@ -288,24 +290,37 @@ class Wires(PhaseThread):
             for i, pin in enumerate(self._component):
                 if pin.value:  # Assuming pin.value is True if the wire corresponding to the pin is pulled
                     self.wire_state |= (1 << (len(self._component) - 1 - i))
+            
             # Debugging output
             print(f"Current wire state: {bin(self.wire_state)}")
             print(f"Target state: {bin(self._target)}")
+            
             # Check if the current wire state matches the target
             if self.wire_state == self._target:
                 self._defused = True
-                # self._running = False  # Optionally stop checking once defused
+                # Optionally stop checking once defused, though not stopping allows for continuous interaction
             else:
-                pass # Consider what should trigger a failure
+                if self.previous_state is not None:  # Ensure this isn't the first check
+                    if not self._check_wire_removal_correctness(self.previous_state, self.wire_state):
+                        self._strikes += 1
+                        print("Strike added! Incorrect wire removed.")
+            
+            self.previous_state = self.wire_state  # Update the previous state after processing
             sleep(1)  # Sleep to prevent too rapid checking
+
+    def _check_wire_removal_correctness(self, old_state, new_state):
+        # Check if removing a wire was correct (only one wire should be considered at a time for simplicity)
+        # Incorrect removal if new_state has a 0 where target has a 1 at the same position
+        return (old_state & ~new_state) & self._target == 0
 
     def __str__(self):
         if self._defused:
             return "DEFUSED"
-        elif self._failed:
-            return "STRIKE"
+        elif self._strikes > 0:
+            return f"STRIKE: {self._strikes}"
         else:
             return f"Current State: {bin(self.wire_state)[2:].zfill(5)}"
+
 
 
 # Further class definitions (e.g., Keypad, Button, etc.) would follow here
