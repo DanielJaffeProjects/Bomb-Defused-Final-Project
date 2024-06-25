@@ -100,21 +100,10 @@ class Lcd(Frame):
             self._bquit.grid(row=6, column=2, pady=40)
 
 
-
-    def check_hex_input(self, event):
-        hex_input = self._hex_entry.get().replace(' ', '').upper()
-        if hex_input == hex(keypad_phase._target)[2:].upper():
-            keypad_phase._defused = True
-            self.update_keypad_display("DEFUSED")
-        elif len(hex_input) >= MAX_PASS_LEN:
-            keypad_phase._failed = True
-            self.update_keypad_display("STRIKE")
-        else:
-            self.update_keypad_display(hex_input)
-            
-    def update_keypad_display(self, value):
-        self._lkeypad.config(text=f"Keypad phase: {value}")
-
+    def update_keypad_display(self, binary_value, entry_value):
+        self._lkeypad_binary.config(text=f"Keypad Binary code: {binary_value}")
+        self._lkeypad_entry.config(text=f"Keypad Entry: {entry_value}")
+        
     # lets us pause/unpause the timer (7-segment display)
     def setTimer(self, timer):
         self._timer = timer
@@ -133,6 +122,7 @@ class Lcd(Frame):
         # destroy/clear widgets that are no longer needed
         self._lscroll["text"] = ""
         self._ltimer.destroy()
+        self._lkeypad_binary.destroy()
         self._lkeypad.destroy()
         self._lwires.destroy()
         self._lbutton.destroy()
@@ -142,6 +132,8 @@ class Lcd(Frame):
         self._ltoggles3.destroy()
         self._ltoggles4.destroy()
         self._ltoggles5.destroy()
+        self._lkeypad_entry.destroy()
+        
 
         if (SHOW_BUTTONS):
             self._bpause.destroy()
