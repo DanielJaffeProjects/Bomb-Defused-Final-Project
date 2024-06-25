@@ -251,7 +251,10 @@ class Keypad(PhaseThread):
         super().__init__(name, keypad, target)
         self._value = ""
         self._keypad = keypad  # the keypad pins
-        self._target_hex = hex(self._target)[2:].upper()  # Target hexadecimal value for comparison
+        try:
+            self._target_hex = hex(int(self._target))[2:].upper()  # Target hexadecimal value for comparison
+        except ValueError:
+            raise ValueError(f"Invalid target value: {self._target}. Cannot convert to integer.")
 
     # runs the thread
     def run(self):
@@ -287,6 +290,7 @@ class Keypad(PhaseThread):
 
     def set_update_callback(self, callback):
         self._update_callback = callback
+
 
 # Wires phase class
 class Wires(PhaseThread):
