@@ -5,7 +5,7 @@
 #################################
 
 # constants
-DEBUG = False        # debug mode?
+DEBUG = True        # debug mode?
 RPi = True           # is this running on the RPi?
 ANIMATE = False       # animate the LCD text?
 SHOW_BUTTONS = False # show the Pause and Quit buttons on the main LCD GUI?
