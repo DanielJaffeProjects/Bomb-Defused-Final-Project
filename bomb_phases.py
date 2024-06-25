@@ -295,7 +295,6 @@ class Wires(PhaseThread):
             if self.wire_state == self._target:
                 self._defused = True
                 self._running = False  # Optionally stop checking once defused
-                self._display_binary_numbers = "Bomb defused!"
             else:
                 pass # Consider what should trigger a failure
             sleep(1)  # Sleep to prevent too rapid checking
