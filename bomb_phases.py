@@ -16,7 +16,7 @@ from tkinter import *
 from bomb_configs import *
 import pygame
 #got import chatgpt
-from PIL import ImageTk, Image
+from PIL import  Image
 #########
 # classes
 #########
