@@ -298,7 +298,7 @@ class Wires(PhaseThread):
                 self._running = False  # Optionally stop checking once defused
                 print("Bomb defused!")
             else:
-                self._failed = True  # Consider what should trigger a failure
+                pass # Consider what should trigger a failure
             sleep(1)  # Sleep to prevent too rapid checking
 
     def __str__(self):
