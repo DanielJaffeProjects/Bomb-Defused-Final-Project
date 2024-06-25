@@ -214,6 +214,7 @@ class Timer(PhaseThread):
         self._running = True
         #added music
         pygame.mixer.music.load("unstoppable.mp3")
+        pygame.mixer.music.set_volume(20)
         pygame.mixer.music.play(1)
         while (self._running):
             if (not self._paused):

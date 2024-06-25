@@ -212,5 +212,5 @@ if (DEBUG):
     print(f"Button target: {button_target}")
 
 # set the bomb's LCD bootup text
-boot_text = f"System Booting... Please Wait...\n Checking for any signs of intelligent life... Not found.\n Ensuring bad jokes are ready... ✔\n System Ready! Enjoy the ride, and remember: |nin case of emergency, blame the software!"
+boot_text = f"System Booting... Please Wait...\n Checking for any signs of intelligent life... Not found.\n Ensuring bad jokes are ready... ✔\n System Ready! Enjoy the ride, and remember: \nin case of emergency, blame the software!"
 
