@@ -432,7 +432,7 @@ class Toggles(PhaseThread):
         self.update_question()
         while self._running:
             print("str",str(self._timer))
-            if str(self._timer) == "4:30":
+            if str(self._timer) == "04:50":
                 self.update_question()
             # Check if the selected answer is correct
             # If answer is correct you have won the game
