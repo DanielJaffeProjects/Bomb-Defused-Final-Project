@@ -434,8 +434,6 @@ class Toggles(PhaseThread):
                 self.update_question()
             #Answer the user selected
             self.answer_selected = self.get_selected_answer()
-            print(str(self.answer_selected))
-            print(str(self._correct_answer))
             # Check if the selected answer is correct
             # If answer is correct you have won the game
             # Get the answer the user selected
@@ -453,7 +451,6 @@ class Toggles(PhaseThread):
         toggle_list = []
         for toggle in self._component:
             toggle_list.append(toggle.value)
-        print(toggle_list)
         # Checks which toggles are True and then outputs the letter that corresponds with each toggle
         if toggle_list == [True, False, False, False]:
             return self._all_answers[0]
