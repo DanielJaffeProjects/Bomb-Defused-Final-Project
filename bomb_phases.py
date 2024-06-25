@@ -11,7 +11,6 @@ import tkinter
 from random import *
 from threading import Thread
 from time import sleep
-from time import time
 # other imports
 from tkinter import *
 
@@ -398,9 +397,9 @@ class Button(PhaseThread):
 
 # the toggle switches phase
 class Toggles(PhaseThread):
-    def __init__(self, component, target, name="Toggles"):
+    def __init__(self, component, target,timer, name="Toggles"):
         super().__init__(name, component, target)
-
+        self._timer = timer
     # Give the incorrect possible answer
     # Incorrect answers are chosen at random but are close to the real answer
     def incorrect_answers(self, decimal):
@@ -433,10 +432,8 @@ class Toggles(PhaseThread):
         self._running = True
         self.update_question()
         while self._running:
-            # starts a timer
-            self.start_time = int(time())
-            if self.start_time % 60 == 0:
-                self.update_question()
+            print(self._timer)
+            self.update_question()
             # Check if the selected answer is correct
             # If answer is correct you have won the game
             if str(self.answer_selected) == str(self._correct_answer):
