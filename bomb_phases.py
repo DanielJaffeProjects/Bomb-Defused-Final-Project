@@ -84,6 +84,15 @@ class Lcd(Frame):
         # the strikes left
         self._lstrikes = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16), text="Strikes left: ")
         self._lstrikes.grid(row=10, column=0, sticky=W)
+         if (SHOW_BUTTONS):
+            # the pause button (pauses the timer)
+            self._bpause = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 16), text="Pause",
+                                          anchor=CENTER, command=self.pause)
+            self._bpause.grid(row=6, column=0, pady=40)
+            # the quit button
+            self._bquit = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 16), text="Quit",
+                                         anchor=CENTER, command=self.quit)
+            self._bquit.grid(row=6, column=2, pady=40)
         '''
         # Entry widget for hexadecimal input
         self._hex_entry = Entry(self, bg="black", fg="#00ff00", font=("Courier New", 16))
@@ -105,16 +114,6 @@ class Lcd(Frame):
     def update_keypad_display(self, value):
         self._lkeypad.config(text=f"Keypad phase: {value}")
     '''
-        if (SHOW_BUTTONS):
-            # the pause button (pauses the timer)
-            self._bpause = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 16), text="Pause",
-                                          anchor=CENTER, command=self.pause)
-            self._bpause.grid(row=6, column=0, pady=40)
-            # the quit button
-            self._bquit = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 16), text="Quit",
-                                         anchor=CENTER, command=self.quit)
-            self._bquit.grid(row=6, column=2, pady=40)
-            
     # lets us pause/unpause the timer (7-segment display)
     def setTimer(self, timer):
         self._timer = timer
