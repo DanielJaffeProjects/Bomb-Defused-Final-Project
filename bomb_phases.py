@@ -423,9 +423,7 @@ class Toggles(PhaseThread):
         # Display text
         self._display_text_toggle = f"{self._question} \nA) {self._options[0]} \nB) {self._options[1]} \nC) {self._options[2]} \nD) {self._options[3]}"
         # Display the question and options together
-        # Get the answer the user selected
-        self.answer_selected = self.get_selected_answer()
-        return self._display_text_toggle, self.answer_selected, self._correct_answer
+        return self._display_text_toggle,  self._correct_answer
 
     def run(self):
         self._running = True
@@ -434,11 +432,13 @@ class Toggles(PhaseThread):
             print("str",str(self._timer))
             if str(self._timer) == "02:30":
                 self.update_question()
-            # Check if the selected answer is correct
-            # If answer is correct you have won the game
+            #Answer the user selected
+            self.answer_selected = self.get_selected_answer()
             print(str(self.answer_selected))
             print(str(self._correct_answer))
-
+            # Check if the selected answer is correct
+            # If answer is correct you have won the game
+            # Get the answer the user selected
             if str(self.answer_selected) == str(self._correct_answer):
                 self._defused = True
             # If all the toggles are off then the toggles should continue to run
