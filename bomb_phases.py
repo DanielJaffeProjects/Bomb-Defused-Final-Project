@@ -210,7 +210,6 @@ class PhaseThread(Thread):
 class Timer(PhaseThread):
     def __init__(self, component, initial_value, name="Timer"):
         super().__init__(name, component)
-        pygame.init()
 
         # the default value is the specified initial value
         self._value = initial_value
