@@ -301,9 +301,8 @@ class Keypad(PhaseThread):
                     except IndexError:
                         key = ""
                     sleep(0.1)
-                if key == "*":
-                    if STAR_CLEARS_PASS:
-                        self._value = ""
+                if key == "*" and STAR_CLEARS_PASS:
+                    self._value = ""
                 else:
                     hex_char = self.map_key_to_hex(key)
                     if len(self._value) < MAX_PASS_LEN and hex_char != "":
