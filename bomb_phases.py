@@ -25,7 +25,7 @@ import pygame
 pygame.init()
 class Lcd(Frame):
     def __init__(self, window):
-        super().__init__(window, bg="yellow")
+        super().__init__(window, bg="black")
         # make the GUI fullscreen
         window.attributes("-fullscreen", False)
         # we need to know about the timer (7-segment display) to be able to pause/unpause it
@@ -96,9 +96,10 @@ class Lcd(Frame):
             self._bquit = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 16), text="Quit",
                                          anchor=CENTER, command=self.quit)
             self._bquit.grid(row=6, column=2, pady=40)
-
+        '''
         self._hex_entry = Entry(self, bg="black", fg="#00ff00", font=("Courier New", 16))
         self._hex_entry.grid(row=7, column=1, sticky=W)
+        '''
         self._bsubmit = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 16), text="Submit",
                                        anchor=CENTER, command=self.submit_hex)
         self._bsubmit.grid(row=7, column=2, pady=40, padx=10)
