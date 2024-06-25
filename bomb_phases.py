@@ -72,10 +72,10 @@ class Lcd(Frame):
         self._ltoggles5 = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16))
         # row span was made bigger to allow for question and choices
         self._ltoggles5.grid(row=6, column=1, sticky=W)
-
-        # the keypad passphrase
-        self._lkeypad = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16), text="Keypad phase: ")
-        self._lkeypad.grid(row=7, column=0, columnspan=3, sticky=W)
+        
+        # the keypad binary code
+        self._lkeypad_binary = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16), text="Keypad Binary code: ")
+        self._lkeypad_binary.grid(row=7, column=0, columnspan=3, sticky=W)
         # the jumper wires status
         self._lwires = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16), text="Wires phase: ")
         self._lwires.grid(row=8, column=0, columnspan=3, sticky=W)
@@ -107,8 +107,8 @@ class Lcd(Frame):
         self._hex_entry = Entry(self, bg="black", fg="#00ff00", font=("Courier New", 16))
         self._hex_entry.grid(row=7, column=1, sticky=W)
         self._hex_entry.bind("<KeyRelease>", self.check_hex_input)
-        '''
-    '''   
+        
+   
     def check_hex_input(self, event):
         hex_input = self._hex_entry.get().replace(' ', '').upper()
         if hex_input == hex(keypad_phase._target)[2:].upper():
@@ -119,7 +119,7 @@ class Lcd(Frame):
             self.update_keypad_display("STRIKE")
         else:
             self.update_keypad_display(hex_input)
-            
+
     def update_keypad_display(self, value):
         self._lkeypad.config(text=f"Keypad phase: {value}")
 
@@ -295,6 +295,7 @@ class Keypad(PhaseThread):
 
     def set_update_callback(self, callback):
         self._update_callback = callback
+
 
 # Wires phase class
 class Wires(PhaseThread):
