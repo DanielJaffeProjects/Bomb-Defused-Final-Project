@@ -34,7 +34,6 @@ def bootup(n=0):
         gui.after(25 if boot_text[n] != "\x00" else 750, bootup, n + 1)
 # sets up the phase threads
 def setup_phases():
-    global timer, keypad, wires, button, toggles
     global timer, keypad_phase, wires, button, toggles
     # setup the timer thread
     timer = Timer(component_7seg, COUNTDOWN)
@@ -55,7 +54,7 @@ def setup_phases():
     toggles = Toggles(component_toggles, toggles_target, timer)
     # start the phase threads
     timer.start()
-    # keypad_phase.start()
+    keypad_phase.start()
     wires.start()
     button.start()
     toggles.start()
@@ -74,17 +73,15 @@ def check_phases():
         gui.after(100, gui.conclusion, False)
         # don't check any more phases
         return
-# '''
-#    # check the keypad
-#     if keypad_phase._running:
-#         gui._lkeypad["text"] = f"Keypad Phase: {keypad_phase}"
-#     if keypad_phase._defused:
-#         keypad_phase._running = False
-#         active_phases -= 1
-#     elif keypad_phase._failed:
-#         strike()
-#         keypad_phase._failed = False
-# '''
+# check the keypad
+    if keypad_phase._running:
+        gui.update_keypad_display(keypad_phase._binary_code, keypad_phase._value)
+    if keypad_phase._defused:
+        keypad_phase._running = False
+        active_phases -= 1
+    elif keypad_phase._failed:
+        strike()
+        keypad_phase._failed = False
     if (wires._running):
         # update the GUI
         gui._lwires["text"] = f"Wires: {wires}"
@@ -151,7 +148,7 @@ def strike():
 def turn_off():
     # stop all threads
     timer._running = False
-    # keypad._running = False
+    keypad_phase._running = False
     wires._running = False
     button._running = False
     toggles._running = False
