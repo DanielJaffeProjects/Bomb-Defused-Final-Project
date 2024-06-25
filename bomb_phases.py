@@ -294,7 +294,7 @@ class Wires(PhaseThread):
             # Check if the current wire state matches the target
             if self.wire_state == self._target:
                 self._defused = True
-                self._running = False  # Optionally stop checking once defused
+                # self._running = False  # Optionally stop checking once defused
             else:
                 pass # Consider what should trigger a failure
             sleep(1)  # Sleep to prevent too rapid checking
