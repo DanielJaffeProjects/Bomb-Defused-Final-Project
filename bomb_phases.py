@@ -252,7 +252,6 @@ class Timer(PhaseThread):
     def __str__(self):
         return f"{self._min}:{self._sec}"
         
-# Define the Keypad class within bomb_phases.py
 class Keypad(PhaseThread):
     def __init__(self, keypad, target, name="Keypad"):
         super().__init__(name, keypad, target)
@@ -279,6 +278,15 @@ class Keypad(PhaseThread):
             hex_code += format(int(hex_digit, 2), 'X')
         return hex_code
 
+    # map keypad input to hexadecimal characters
+    def map_key_to_hex(self, key):
+        key_to_hex_map = {
+            0: '0', 1: '1', 2: '2', 3: '3',
+            4: '4', 5: '5', 6: '6', 7: '7',
+            8: '8', 9: '9', '*': '*', '#': '#'
+        }
+        return key_to_hex_map.get(key, "")
+
     # runs the thread
     def run(self):
         self._running = True
@@ -296,9 +304,11 @@ class Keypad(PhaseThread):
                 if key == "*":
                     if STAR_CLEARS_PASS:
                         self._value = ""
-                elif key in range(10):  # Only handle 0-9 keys
-                    self._value += str(key)
-                
+                else:
+                    hex_char = self.map_key_to_hex(key)
+                    if len(self._value) < MAX_PASS_LEN and hex_char != "":
+                        self._value += hex_char
+
                 if DEBUG:
                     print(f"Current input value: {self._value}")
                 
@@ -323,6 +333,7 @@ class Keypad(PhaseThread):
     # Setter for update callback
     def set_update_callback(self, callback):
         self._update_callback = callback
+
         
 # Wires phase class
 class Wires(PhaseThread):
