@@ -8,7 +8,6 @@
 import os
 import sys
 import tkinter
-from random import *
 from threading import Thread
 from time import sleep
 # other imports
@@ -16,7 +15,6 @@ from tkinter import *
 from bomb_configs import *
 import pygame
 #got import chatgpt
-from PIL import  Image
 #########
 # classes
 #########
@@ -152,8 +150,9 @@ class Lcd(Frame):
         # Used chatgpt to help me with creating a image and resizing it
         # Displaying the image
         losing_image = "losing image.gif"  # Replace with your image path
-        img1 = PhotoImage(file = losing_image)
+        img1 = PhotoImage(file=losing_image)
         self.image1 = Label(self, bg="black", image=img1)
+        self.image1.image = img1  # Keep a reference to the image to prevent garbage collection
         self.image1.grid(row=2, column=1, columnspan=3, sticky=W)
 
     # re-attempts the bomb (after an explosion or a successful defusion)
@@ -465,7 +464,6 @@ class Toggles(PhaseThread):
         self._running = True
         self.update_question()
         while self._running:
-            print("str",str(self._timer))
             if str(self._timer) == "02:30":
                 self.update_question()
             #Answer the user selected
