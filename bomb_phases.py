@@ -77,7 +77,7 @@ class Lcd(Frame):
         self._lkeypad = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16), text="Keypad phase: ")
         self._lkeypad.grid(row=7, column=0, columnspan=3, sticky=W)
         # the keypad 2
-        self._lkeypad = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16)
+        self._lkeypad = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16))
         self._lkeypad.grid(row=8, column=0, columnspan=3, sticky=W)
         # the jumper wires status
         self._lwires = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16), text="Wires phase: ")
