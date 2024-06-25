@@ -86,21 +86,22 @@ class Lcd(Frame):
         # the strikes left
         self._lstrikes = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16), text="Strikes left: ")
         self._lstrikes.grid(row=10, column=0, sticky=W)
-        if (SHOW_BUTTONS):
-            # the pause button (pauses the timer)
-            self._bpause = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 16), text="Pause",
-                                          anchor=CENTER, command=self.pause)
-            self._bpause.grid(row=6, column=0, pady=40)
-            # the quit button
-            self._bquit = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 16), text="Quit",
-                                         anchor=CENTER, command=self.quit)
-            self._bquit.grid(row=6, column=2, pady=40)
+        # if (SHOW_BUTTONS):
 
-            self._hex_entry = Entry(self, bg="black", fg="#00ff00", font=("Courier New", 16))
-            self._hex_entry.grid(row=7, column=1, sticky=W)
-            self._bsubmit = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 16), text="Submit",
-                                           anchor=CENTER, command=self.submit_hex)
-            self._bsubmit.grid(row=7, column=2, pady=40, padx=10)
+        # the pause button (pauses the timer)
+        self._bpause = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 16), text="Pause",
+                                      anchor=CENTER, command=self.pause)
+        self._bpause.grid(row=6, column=0, pady=40)
+        # the quit button
+        self._bquit = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 16), text="Quit",
+                                     anchor=CENTER, command=self.quit)
+        self._bquit.grid(row=6, column=2, pady=40)
+
+        self._hex_entry = Entry(self, bg="black", fg="#00ff00", font=("Courier New", 16))
+        self._hex_entry.grid(row=7, column=1, sticky=W)
+        self._bsubmit = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 16), text="Submit",
+                                       anchor=CENTER, command=self.submit_hex)
+        self._bsubmit.grid(row=7, column=2, pady=40, padx=10)
 
     '''
     def submit_hex(self,keypad):
