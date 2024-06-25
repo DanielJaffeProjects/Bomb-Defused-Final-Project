@@ -148,15 +148,15 @@ class Lcd(Frame):
 
         # Used chatgpt to help me with creating a image and resizing it
         # Displaying the image if you lose
-        losing_image = "losing image.gif"  # Replace with your image path
-        img1 = PhotoImage(file=losing_image)
-        self.image1 = Label(self, bg="black", image=img1)
-        self.image1.image = img1  # Keep a reference to the image to prevent garbage collection
-        self.image1.grid(row=2, column=1, columnspan=3, sticky=W)
+        # losing_image = "losing image.gif"  # Replace with your image path
+        # img1 = PhotoImage(file=losing_image)
+        # self.image1 = Label(self, bg="black", image=img1)
+        # self.image1.image = img1  # Keep a reference to the image to prevent garbage collection
+        # self.image1.grid(row=2, column=1, columnspan=3, sticky=W)
 
         # Displaying the image if you win
-        losing_image = "winning image.gif"  # Replace with your image path
-        img1 = PhotoImage(file=losing_image)
+        winning_image = "winning image.gif"  # Replace with your image path
+        img1 = PhotoImage(file=winning_image)
         self.image1 = Label(self, bg="black", image=img1)
         self.image1.image = img1  # Keep a reference to the image to prevent garbage collection
         self.image1.grid(row=2, column=1, columnspan=3, sticky=W)
