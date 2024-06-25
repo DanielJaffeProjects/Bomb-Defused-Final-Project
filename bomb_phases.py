@@ -13,7 +13,6 @@ from threading import Thread
 from time import sleep
 # other imports
 from tkinter import *
-
 from bomb_configs import *
 
 
@@ -211,6 +210,8 @@ class PhaseThread(Thread):
 class Timer(PhaseThread):
     def __init__(self, component, initial_value, name="Timer"):
         super().__init__(name, component)
+        pygame.init()
+
         # the default value is the specified initial value
         self._value = initial_value
         # is the timer paused?
@@ -326,7 +327,6 @@ class Wires(PhaseThread):
                     if not self._check_wire_removal_correctness(self.previous_state, self.wire_state):
                         self._failed = True
 
-            
             self.previous_state = self.wire_state  # Update the previous state after processing
             sleep(1)  # Sleep to prevent too rapid checking
 
