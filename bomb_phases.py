@@ -74,7 +74,6 @@ class Lcd(Frame):
 
         # the keypad passphrase
         self._lkeypad = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16), text="Keypad phase: ")
-
         self._lkeypad.grid(row=7, column=0, columnspan=3, sticky=W)
         # the jumper wires status
         self._lwires = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16), text="Wires phase: ")
@@ -82,12 +81,14 @@ class Lcd(Frame):
         # the pushbutton status
         self._lbutton = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16), text="Button phase: ")
         self._lbutton.grid(row=9, column=0, columnspan=3, sticky=W)
-
         # the strikes left
         self._lstrikes = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16), text="Strikes left: ")
         self._lstrikes.grid(row=10, column=0, sticky=W)
+        # Entry widget for hexadecimal input
+        self._hex_entry = Entry(self, bg="black", fg="#00ff00", font=("Courier New", 16))
+        self._hex_entry.grid(row=7, column=1, sticky=W)
+        self._hex_entry.bind("<KeyRelease>", self.check_hex_input)
         if (SHOW_BUTTONS):
-
             # the pause button (pauses the timer)
             self._bpause = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 16), text="Pause",
                                           anchor=CENTER, command=self.pause)
@@ -96,10 +97,16 @@ class Lcd(Frame):
             self._bquit = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 16), text="Quit",
                                          anchor=CENTER, command=self.quit)
             self._bquit.grid(row=6, column=2, pady=40)
-        
-        self._hex_entry = Entry(self, bg="black", fg="#00ff00", font=("Courier New", 16))
-        self._hex_entry.grid(row=7, column=1, sticky=W)
-
+    def check_hex_input(self, event):
+        hex_input = self._hex_entry.get().replace(' ', '').upper()
+        if hex_input == hex(keypad._target)[2:].upper():
+            keypad._defused = True
+            self.update_keypad_display("DEFUSED")
+        elif len(hex_input) >= MAX_PASS_LEN:
+            keypad._failed = True
+            self.update_keypad_display("STRIKE")
+        else:
+            self.update_keypad_display(hex_input)
     # lets us pause/unpause the timer (7-segment display)
     def setTimer(self, timer):
         self._timer = timer
