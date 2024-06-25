@@ -76,6 +76,9 @@ class Lcd(Frame):
         # the keypad binary code
         self._lkeypad_binary = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16), text="Keypad Binary code: ")
         self._lkeypad_binary.grid(row=7, column=0, columnspan=3, sticky=W)
+        # the keypad user input
+        self._lkeypad_entry = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16), text="Keypad Entry: ")
+        self._lkeypad_entry.grid(row=8, column=0, columnspan=3, sticky=W)
         # the jumper wires status
         self._lwires = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16), text="Wires phase: ")
         self._lwires.grid(row=8, column=0, columnspan=3, sticky=W)
@@ -103,26 +106,10 @@ class Lcd(Frame):
             self.image1 = Label(self, bg="black",  image=(image))
             self.image1.grid(row=2, column=1, columnspan=3, sticky=W)
 
-        # Entry widget for hexadecimal input
-        self._hex_entry = Entry(self, bg="black", fg="#00ff00", font=("Courier New", 16))
-        self._hex_entry.grid(row=7, column=1, sticky=W)
-        self._hex_entry.bind("<KeyRelease>", self.check_hex_input)
+    def update_keypad_display(self, binary_value, entry_value):
+        self._lkeypad_binary.config(text=f"Keypad Binary code: {binary_value}")
+        self._lkeypad_entry.config(text=f"Keypad Entry: {entry_value}")
         
-   
-    def check_hex_input(self, event):
-        hex_input = self._hex_entry.get().replace(' ', '').upper()
-        if hex_input == hex(keypad_phase._target)[2:].upper():
-            keypad_phase._defused = True
-            self.update_keypad_display("DEFUSED")
-        elif len(hex_input) >= MAX_PASS_LEN:
-            keypad_phase._failed = True
-            self.update_keypad_display("STRIKE")
-        else:
-            self.update_keypad_display(hex_input)
-
-    def update_keypad_display(self, value):
-        self._lkeypad.config(text=f"Keypad phase: {value}")
-
     # lets us pause/unpause the timer (7-segment display)
     def setTimer(self, timer):
         self._timer = timer
@@ -141,7 +128,7 @@ class Lcd(Frame):
         # destroy/clear widgets that are no longer needed
         self._lscroll["text"] = ""
         self._ltimer.destroy()
-        self._lkeypad.destroy()
+        self._lkeypad_binary.destroy()
         self._lwires.destroy()
         self._lbutton.destroy()
         self._ltoggles.destroy()
@@ -150,6 +137,7 @@ class Lcd(Frame):
         self._ltoggles3.destroy()
         self._ltoggles4.destroy()
         self._ltoggles5.destroy()
+        self._lkeypad_entry.destroy()
 
         if (SHOW_BUTTONS):
             self._bpause.destroy()
