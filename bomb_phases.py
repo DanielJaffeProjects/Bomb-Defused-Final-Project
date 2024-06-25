@@ -302,8 +302,8 @@ class Wires(PhaseThread):
             else:
                 if self.previous_state is not None:  # Ensure this isn't the first check
                     if not self._check_wire_removal_correctness(self.previous_state, self.wire_state):
-                        self._strikes += 1
-                        print("Strike added! Incorrect wire removed.")
+                        self._failed = True
+
             
             self.previous_state = self.wire_state  # Update the previous state after processing
             sleep(1)  # Sleep to prevent too rapid checking
@@ -317,7 +317,7 @@ class Wires(PhaseThread):
         if self._defused:
             return "DEFUSED"
         elif self._strikes > 0:
-            return f"STRIKE: {self._strikes}"
+            return ("Strike added! Incorrect wire removed.")
         else:
             return f"Current State: {bin(self.wire_state)[2:].zfill(5)}"
 
