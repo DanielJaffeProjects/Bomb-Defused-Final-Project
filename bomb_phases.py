@@ -73,12 +73,12 @@ class Lcd(Frame):
         # row span was made bigger to allow for question and choices
         self._ltoggles5.grid(row=6, column=1, sticky=W)
 
-        # the keypad passphrase
-        self._lkeypad = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16), text="Keypad phase: ")
-        self._lkeypad.grid(row=7, column=0, columnspan=3, sticky=W)
-        # the keypad 2
-        self._lkeypad2 = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16))
-        self._lkeypad2.grid(row=8, column=0, columnspan=3, sticky=W)
+        # the keypad binary code
+        self._lkeypad_binary = Text(self, bg="black", fg="#00ff00", font=("Courier New", 12), height=2, width=40)
+        self._lkeypad_binary.grid(row=2, column=0, columnspan=3, sticky=W)
+        self._lkeypad_binary.insert(END, "Keypad Binary code: ")
+        self._lkeypad_binary.config(state=DISABLED)  # Make it read-only
+
         # the jumper wires status
         self._lwires = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16), text="Wires phase: ")
         self._lwires.grid(row=9, column=0, columnspan=3, sticky=W)
@@ -259,12 +259,18 @@ class Keypad(PhaseThread):
         super().__init__(name, keypad, target)
         self._value = ""
         self._keypad = keypad  # the keypad pins
-        self._target_hex = hex(self._target)[2:].upper()  # Target hexadecimal value for comparison
+        self._target_hex = hex(int(self._target))[2:].upper()  # Target hexadecimal value for comparison
+        self._binary_code = self.generate_binary_code()
+
+    # generates 6 random 4-digit binary numbers
+    def generate_binary_code(self):
+        binary_code = [format(randint(0, 15), '04b') for _ in range(6)]
+        return " ".join(binary_code)
 
     # runs the thread
     def run(self):
         self._running = True
-        self._update_callback(self._target_hex)  # Display the initial target value
+        self._update_callback(self._binary_code, "")  # Display the initial target binary code
         while self._running:
             # process keys when keypad key(s) are pressed
             if self._keypad.pressed_keys:
@@ -281,20 +287,22 @@ class Keypad(PhaseThread):
                     self._value += str(key)
                 if self._value.upper() == self._target_hex:
                     self._defused = True
-                    self._update_callback("DEFUSED")
+                    self._update_callback(self._binary_code, "DEFUSED")
                 elif len(self._value) >= MAX_PASS_LEN:
                     self._failed = True
-                    self._update_callback("STRIKE")
+                    self._update_callback(self._binary_code, "STRIKE")
                 else:
-                    self._update_callback(self._value)
+                    self._update_callback(self._binary_code, self._value)
             sleep(0.1)
         self._running = False
 
     def __str__(self):
         return self._value
 
+    # Setter for update callback
     def set_update_callback(self, callback):
         self._update_callback = callback
+
 
 # Wires phase class
 class Wires(PhaseThread):
