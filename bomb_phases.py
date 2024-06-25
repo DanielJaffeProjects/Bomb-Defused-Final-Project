@@ -71,11 +71,8 @@ class Lcd(Frame):
         # row span was made bigger to allow for question and choices
         self._ltoggles5.grid(row=6, column=1, sticky=W)
         
-        # the keypad binary code
         self._lkeypad_binary = Label(self, bg="black", fg="#00ff00", font=("Courier New", 12), text="Keypad Binary code: ")
         self._lkeypad_binary.grid(row=7, column=0, columnspan=3, sticky=W)
-        
-        # the keypad user input
         self._lkeypad_entry = Label(self, bg="black", fg="#00ff00", font=("Courier New", 12), text="Keypad Entry: ")
         self._lkeypad_entry.grid(row=8, column=0, columnspan=3, sticky=W)
         
@@ -267,7 +264,7 @@ class Keypad(PhaseThread):
         if DEBUG:
             print(f"Generated binary code: {self._binary_code}")
             print(f"Translated hex target: {self._hex_target}")
-            
+
     # generates 6 random 4-digit binary numbers
     def generate_binary_code(self):
         binary_code = [format(randint(0, 15), '04b') for _ in range(6)]
@@ -281,16 +278,6 @@ class Keypad(PhaseThread):
             hex_digit = binary_code[i:i+4]
             hex_code += format(int(hex_digit, 2), 'X')
         return hex_code
-
-    # maps keypad keypresses to their corresponding hexadecimal characters
-    def map_keypress(self, key):
-        keypad_mapping = {
-            1: '1', 2: '2', 3: '3',
-            4: '4', 5: '5', 6: '6',
-            7: '7', 8: '8', 9: '9',
-            0: '0', '*': '*', '#': '#'
-        }
-        return keypad_mapping.get(key, str(key))
 
     # runs the thread
     def run(self):
@@ -306,13 +293,15 @@ class Keypad(PhaseThread):
                     except IndexError:
                         key = ""
                     sleep(0.1)
-                mapped_key = self.map_keypress(key)
-                if mapped_key == "*" and STAR_CLEARS_PASS:
-                    self._value = ""
-                elif len(self._value) < MAX_PASS_LEN:
-                    self._value += mapped_key
+                if key == "*":
+                    if STAR_CLEARS_PASS:
+                        self._value = ""
+                elif key in range(10):  # Only handle 0-9 keys
+                    self._value += str(key)
+                
                 if DEBUG:
                     print(f"Current input value: {self._value}")
+                
                 if self._value.upper() == self._hex_target:
                     self._defused = True
                     self._update_callback(self._binary_code, "DEFUSED")
@@ -334,7 +323,6 @@ class Keypad(PhaseThread):
     # Setter for update callback
     def set_update_callback(self, callback):
         self._update_callback = callback
-
         
 # Wires phase class
 class Wires(PhaseThread):
