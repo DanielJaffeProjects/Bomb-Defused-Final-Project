@@ -120,9 +120,6 @@ class Lcd(Frame):
     def setButton(self, button):
         self._button = button
 
-    def update_wires_letter(self, letter):
-        self._lwires_letter.config(text=f"Letter: {letter}")
-
     # pauses the timer
     def pause(self):
         if (RPi):
@@ -357,10 +354,10 @@ class Keypad(PhaseThread):
 class Wires(PhaseThread):
     def __init__(self, component, target, letter, name="Wires"):
         super().__init__(name, component, target)
-        self._letter = letter
+        self._display_binary_numbers = ""
         self.previous_state = None
         self._strikes = 0  # Tracking number of strikes
-        self.wire_state = 0  # Initialize wire_state
+        self._letter = letter  # Add the letter attribute
 
     def run(self):
         self._running = True
@@ -370,6 +367,7 @@ class Wires(PhaseThread):
             for i, pin in enumerate(self._component):
                 if pin.value:  # Assuming pin.value is True if the wire corresponding to the pin is pulled
                     self.wire_state |= (1 << (len(self._component) - 1 - i))
+
             # Check if the current wire state matches the target
             if self.wire_state == self._target:
                 self._defused = True
@@ -381,6 +379,19 @@ class Wires(PhaseThread):
 
             self.previous_state = self.wire_state  # Update the previous state after processing
             sleep(1)  # Sleep to prevent too rapid checking
+
+    def _check_wire_removal_correctness(self, old_state, new_state):
+        # Check if removing a wire was correct (only one wire should be considered at a time for simplicity)
+        # Incorrect removal if new_state has a 0 where target has a 1 at the same position
+        return (old_state & ~new_state) & self._target == 0
+
+    def __str__(self):
+        if self._defused:
+            return "DEFUSED"
+        elif self._strikes > 0:
+            return "Strike added! Incorrect wire removed."
+        else:
+            return f"Current State: {bin(self.wire_state)[2:].zfill(5)}, Expected Letter: {self._letter}"
 
     def _check_wire_removal_correctness(self, old_state, new_state):
         # Check if removing a wire was correct (only one wire should be considered at a time for simplicity)
