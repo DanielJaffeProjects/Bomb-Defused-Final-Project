@@ -357,7 +357,7 @@ class Wires(PhaseThread):
         self._display_binary_numbers = ""
         self.previous_state = None
         self._strikes = 0  # Tracking number of strikes
-        self._letter = letter  # Add the letter attribute
+        self._letter = letter  # Store the letter corresponding to the target
 
     def run(self):
         self._running = True
@@ -367,11 +367,9 @@ class Wires(PhaseThread):
             for i, pin in enumerate(self._component):
                 if pin.value:  # Assuming pin.value is True if the wire corresponding to the pin is pulled
                     self.wire_state |= (1 << (len(self._component) - 1 - i))
-
             # Check if the current wire state matches the target
             if self.wire_state == self._target:
                 self._defused = True
-                # Optionally stop checking once defused, though not stopping allows for continuous interaction
             else:
                 if self.previous_state is not None:  # Ensure this isn't the first check
                     if not self._check_wire_removal_correctness(self.previous_state, self.wire_state):
@@ -391,20 +389,8 @@ class Wires(PhaseThread):
         elif self._strikes > 0:
             return "Strike added! Incorrect wire removed."
         else:
-            return f"Current State: {bin(self.wire_state)[2:].zfill(5)}, Expected Letter: {self._letter}"
+            return f"Letter: {self._letter} | Current State: {bin(self.wire_state)[2:].zfill(5)}"
 
-    def _check_wire_removal_correctness(self, old_state, new_state):
-        # Check if removing a wire was correct (only one wire should be considered at a time for simplicity)
-        # Incorrect removal if new_state has a 0 where target has a 1 at the same position
-        return (old_state & ~new_state) & self._target == 0
-
-    def __str__(self):
-        if self._defused:
-            return "DEFUSED"
-        elif self._strikes > 0:
-            return "Strike added! Incorrect wire removed."
-        else:
-            return f"Letter: {self._letter}, Current State: {bin(self.wire_state)[2:].zfill(5)}"
 
 
 # the pushbutton phase
