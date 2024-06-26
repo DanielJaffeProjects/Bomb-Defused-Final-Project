@@ -22,6 +22,11 @@ import pygame
 
 #Initializing pygame
 pygame.init()
+def music():
+    # added music
+    pygame.mixer.music.load("unstoppable.mp3")
+    pygame.mixer.music.set_volume(.5)
+    pygame.mixer.music.play(1)
 class Lcd(Frame):
     def __init__(self, window):
         super().__init__(window, bg="black")
@@ -128,7 +133,10 @@ class Lcd(Frame):
         self._ltoggles3.destroy()
         self._ltoggles4.destroy()
         self._ltoggles5.destroy()
-
+        # added voice over
+        pygame.mixer.music.load("mission failed.mp3")
+        pygame.mixer.music.set_volume(1)
+        pygame.mixer.music.play(1)
 
         if (SHOW_BUTTONS):
             self._bpause.destroy()
@@ -144,7 +152,7 @@ class Lcd(Frame):
         self._bquit.grid(row=1, column=2, pady=40)
 
 
-        # Used chatgpt to help me with creating a image and resizing it
+        # Used chatgpt to help me addwith creating a image and resizing it
         # Displaying the image if you lose
         if strikes_left == 0:
             losing_image = "losing image.gif"  # Replace with your image path
@@ -214,13 +222,16 @@ class Timer(PhaseThread):
         # by default, each tick is 1 second
         self._interval = 1
 
+
     # runs the thread
     def run(self):
         self._running = True
-        #added music
-        pygame.mixer.music.load("unstoppable.mp3")
-        pygame.mixer.music.set_volume(.5)
+        # added voice over
+        pygame.mixer.music.load("start of game voice.mp3")
+        pygame.mixer.music.set_volume(1)
         pygame.mixer.music.play(1)
+        sleep(50)
+        music()
         while (self._running):
             if (not self._paused):
                 # update the timer and display its value on the 7-segment display
@@ -349,11 +360,7 @@ class Wires(PhaseThread):
             for i, pin in enumerate(self._component):
                 if pin.value:  # Assuming pin.value is True if the wire corresponding to the pin is pulled
                     self.wire_state |= (1 << (len(self._component) - 1 - i))
-            '''
-            # Debugging output
-            print(f"Current wire state: {bin(self.wire_state)}")
-            print(f"Target state: {bin(self._target)}")
-            '''
+
             # Check if the current wire state matches the target
             if self.wire_state == self._target:
                 self._defused = True
@@ -435,6 +442,43 @@ class Button(PhaseThread):
             else:
                 # was it previously pressed?
                 if (self._pressed):
+                    # added music with 5 different tracks
+                    button_voice_choice = randint(1, 5)
+                    if button_voice_choice == 1:
+                        # added voice over
+                        pygame.mixer.music.load("button 1 sound.mp3")
+                        pygame.mixer.music.set_volume(1)
+                        pygame.mixer.music.play(1)
+                        sleep(4)
+                        music()
+                    elif button_voice_choice == 2:
+                        # added voice over
+                        pygame.mixer.music.load("button 2 sound.mp3")
+                        pygame.mixer.music.set_volume(1)
+                        pygame.mixer.music.play(1)
+                        sleep(4)
+                        music()
+                    elif button_voice_choice == 3:
+                        # added voice over
+                        pygame.mixer.music.load("button 3 sound.mp3")
+                        pygame.mixer.music.set_volume(1)
+                        pygame.mixer.music.play(1)
+                        sleep(4)
+                        music()
+                    elif button_voice_choice == 4:
+                        # added voice over
+                        pygame.mixer.music.load("button 4 sound.mp3")
+                        pygame.mixer.music.set_volume(1)
+                        pygame.mixer.music.play(1)
+                        sleep(4)
+                        music()
+                    elif button_voice_choice == 5:
+                        # added voice over
+                        pygame.mixer.music.load("button 5 sound.mp3")
+                        pygame.mixer.music.set_volume(1)
+                        pygame.mixer.music.play(1)
+                        sleep(4)
+                        music()
                     # Once the button is push a blue color shows up and a 10 second timer extension start
                     self._rgb[0].value = True
                     self._rgb[1].value = True

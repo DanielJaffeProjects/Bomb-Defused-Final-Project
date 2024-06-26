@@ -125,20 +125,6 @@ def check_phases():
         if (button._defused):
             button._running = False
             active_phases -= 1
-            button_voice_choice = randint(1,3)
-            if button_voice_choice == 1:
-                # added voice over
-                pygame.mixer.music.load("button 1 sound.mp3")
-                pygame.mixer.music.set_volume(1)
-                pygame.mixer.music.play(1)
-                sleep(3)
-                music()
-            elif button_voice_choice == 2:
-                # TODO
-                pass
-            elif button_voice_choice == 3:
-                #TODO
-                pass
         # the phase has failed -> strike
         elif (button._failed):
             strike()
