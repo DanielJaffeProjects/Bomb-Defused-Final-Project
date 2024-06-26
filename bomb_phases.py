@@ -384,7 +384,7 @@ class Wires(PhaseThread):
         elif self._strikes > 0:
             return ("Strike added! Incorrect wire removed.")
         else:
-            return f"Current State: {bin(self.wire_state)[2:].zfill(5)}"
+            return f"Current State: {(self.wire_state)[2:].zfill(5)}"
 
 
 
