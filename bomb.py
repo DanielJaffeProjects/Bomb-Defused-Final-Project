@@ -3,8 +3,6 @@
 # Team: Daniel Jaffe and Jordano Liberato
 #################################
 
-import pygame
-
 # import the configs
 # import the phases
 from bomb_phases import *
@@ -13,6 +11,7 @@ from bomb_phases import *
 # functions
 ###########
 pygame.init()
+
 
 # generates the bootup sequence on the LCD
 def bootup(n=0):
@@ -67,8 +66,9 @@ def setup_phases():
 # checks the phase threads
 def check_phases():
     global active_phases
+
     def music():
-        #added music
+        # added music
         pygame.mixer.music.load("unstoppable.mp3")
         pygame.mixer.music.set_volume(.5)
         pygame.mixer.music.play(1)
@@ -90,7 +90,7 @@ def check_phases():
         if keypad._defused:
             keypad._running = False
             active_phases -= 1
-            #added voice over
+            # added voice over
             pygame.mixer.music.load("Keypad defuse sound.mp3")
             pygame.mixer.music.set_volume(1)
             pygame.mixer.music.play(1)
@@ -173,7 +173,6 @@ def check_phases():
 # handles a strike
 def strike():
     global strikes_left
-
     # note the strike
     strikes_left -= 1
 
