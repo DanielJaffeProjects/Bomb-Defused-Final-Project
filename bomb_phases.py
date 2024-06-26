@@ -255,14 +255,9 @@ class Keypad(PhaseThread):
         self._binary_code = self.generate_binary_code()
         self._hex_target = self.binary_to_hex(self._binary_code)  # Target hexadecimal value for comparison
 
-        # if DEBUG:
-        #     print(f"Generated binary code: {self._binary_code}")
-        #     print(f"Translated hex target: {self._hex_target}")
-
     # generates 6 random 4-digit binary numbers
     def generate_binary_code(self):
         binary_code = [format(randint(0, 9), '04b') for _ in range(6)]
-        print(binary_code)
         return " ".join(binary_code)
 
     # converts binary code to hexadecimal
