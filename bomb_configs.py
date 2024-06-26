@@ -196,7 +196,7 @@ serial, toggles_target, wires_target, wires_letter = genSerial()
 #  rot: the key to decrypt the keyword
 #  keypad_target: the keypad phase defuse value (combination)
 #  passphrase: the target plaintext passphrase
-keyword, cipher_keyword, rot, keypad_target, passphrase = genKeypadCombination()
+# keyword, cipher_keyword, rot, keypad_target, passphrase = genKeypadCombination()
 
 # generate the color of the pushbutton (which determines how to defuse the phase)
 button_color = choice(["R", "G", "B"])
