@@ -142,7 +142,7 @@ def genSerial():
     return serial, toggle_value, wires_target, wires_letter
 
 
-'''        
+       
 # generates the keypad combination from a keyword and rotation key
 # generates the keypad combination from a keyword and rotation key
 def genKeypadCombination():
@@ -179,7 +179,7 @@ def genKeypadCombination():
     combination = digits(passphrase)
 
     return keyword, cipher_keyword, rot, int(combination), passphrase
-    '''
+    
 
 ###############################
 # generate the bomb's specifics
@@ -196,7 +196,7 @@ serial, toggles_target, wires_target, wires_letter = genSerial()
 #  rot: the key to decrypt the keyword
 #  keypad_target: the keypad phase defuse value (combination)
 #  passphrase: the target plaintext passphrase
-# keyword, cipher_keyword, rot, keypad_target, passphrase = genKeypadCombination()
+keyword, cipher_keyword, rot, keypad_target, passphrase = genKeypadCombination()
 
 # generate the color of the pushbutton (which determines how to defuse the phase)
 button_color = choice(["R", "G", "B"])
@@ -214,7 +214,7 @@ if (DEBUG):
     print(f"Toggles target: {bin(toggles_target)[2:].zfill(4)}/{toggles_target}")
     print(f"Wires target: {bin(wires_target)[2:].zfill(5)}/{wires_target}")
     print(f"Wires letter: {wires_letter}")
-    # print(f"Keypad target: {keypad_target}/{passphrase}/{keyword}/{cipher_keyword}(rot={rot})")
+    print(f"Keypad target: {keypad_target}/{passphrase}/{keyword}/{cipher_keyword}(rot={rot})")
     print(f"Button target: {button_target}")
 
 # set the bomb's LCD bootup text
