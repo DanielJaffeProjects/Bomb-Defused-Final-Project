@@ -259,9 +259,9 @@ class Keypad(PhaseThread):
         self._binary_code = self.generate_binary_code()
         self._hex_target = self.binary_to_hex(self._binary_code)  # Target hexadecimal value for comparison
 
-        if DEBUG:
-            print(f"Generated binary code: {self._binary_code}")
-            print(f"Translated hex target: {self._hex_target}")
+        # if DEBUG:
+        #     print(f"Generated binary code: {self._binary_code}")
+        #     print(f"Translated hex target: {self._hex_target}")
 
     # generates 6 random 4-digit binary numbers
     def generate_binary_code(self):
@@ -310,11 +310,11 @@ class Keypad(PhaseThread):
 
                 if self._value.upper() == self._hex_target:
                     self._defused = True
-                    # self._update_callback(self._binary_code, "DEFUSED")
+                    self._running = False
 
                 elif len(self._value) >= MAX_PASS_LEN and self._value.upper()!=self._hex_target:
                     self._failed = True
-                    # self._update_callback(self._binary_code, "STRIKE")
+                    self._running = False
                 else:
                     self._update_callback(self._binary_code, self._value)
             sleep(0.1)
