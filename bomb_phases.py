@@ -35,7 +35,7 @@ def music():
 # sleep(50)
 class Lcd(Frame):
     def __init__(self, window):
-        super().__init__(window, bg="black")
+        super().__init__(window, bg="yellow")
         # make the GUI fullscreen
         window.attributes("-fullscreen", False)
         # we need to know about the timer (7-segment display) to be able to pause/unpause it
