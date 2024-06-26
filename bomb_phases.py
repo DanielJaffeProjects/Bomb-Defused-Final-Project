@@ -164,7 +164,7 @@ class Lcd(Frame):
             self.image1.image = img1  # Keep a reference to the image to prevent garbage collection
             self.image1.grid(row=2, column=1, columnspan=3, sticky=W)
             # added voice over
-            sleep(3)
+            sleep(1)
             pygame.mixer.music.load("Bomb defuse sound.mp3")
             pygame.mixer.music.set_volume(1)
             pygame.mixer.music.play(1)
