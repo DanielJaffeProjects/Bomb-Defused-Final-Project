@@ -90,6 +90,11 @@ class Lcd(Frame):
         # the jumper wires status
         self._lwires = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16), text="Wires phase: ")
         self._lwires.grid(row=9, column=0, columnspan=3, sticky=W)
+        
+        # Add a new label for the wires letter
+        self._lwires_letter = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16))
+        self._lwires_letter.grid(row=9, column=1, sticky=W)
+        
         # the pushbutton status
         self._lbutton = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16), text="Button phase: ")
         self._lbutton.grid(row=10, column=0, columnspan=3, sticky=W)
@@ -119,6 +124,9 @@ class Lcd(Frame):
     def setButton(self, button):
         self._button = button
 
+    def update_wires_letter(self, letter):
+        self._lwires_letter.config(text=f"Letter: {letter}")
+
     # pauses the timer
     def pause(self):
         if (RPi):
@@ -139,6 +147,8 @@ class Lcd(Frame):
         self._ltoggles3.destroy()
         self._ltoggles4.destroy()
         self._ltoggles5.destroy()
+        self._lwires_letter.destroy()
+        
         # added voice over
         pygame.mixer.music.load("mission failed.mp3")
         pygame.mixer.music.set_volume(1)
@@ -358,6 +368,7 @@ class Wires(PhaseThread):
 
     def run(self):
         self._running = True
+        gui.update_wires_letter(self._letter)  # Update the GUI with the wires letter
         while self._running:
             self.wire_state = 0
             for i, pin in enumerate(self._component):
@@ -382,6 +393,7 @@ class Wires(PhaseThread):
             return "Strike added! Incorrect wire removed."
         else:
             return f"Current State: {bin(self.wire_state)[2:].zfill(5)}"
+
 
 # the pushbutton phase
 class Button(PhaseThread):
