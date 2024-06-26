@@ -95,6 +95,15 @@ if (RPi):
 #  the sum of the digits should be in the range 1..15 to set the toggles target
 #  the first three letters should be distinct and in the range 0..4 such that A=0, B=1, etc, to match the jumper wires
 #  the last letter should be outside of the range
+# Define the letter mapping
+letter_to_number = {
+    'A': 1, 'B': 16, 'C': 24, 'D': 9, 'E': 6, 'F': 5, 'G': 7, 'H': 29, 'I': 26, 'J': 17,
+    'K': 4, 'L': 22, 'M': 15, 'N': 20, 'O': 10, 'P': 19, 'Q': 8, 'R': 28, 'S': 13, 'T': 25,
+    'U': 14, 'V': 0, 'W': 12, 'X': 18, 'Y': 27, 'Z': 2, 'AA': 30, 'AB': 21, 'AC': 11, 'AD': 23, 'AE': 13
+}
+# Reverse the mapping
+number_to_letter = {v: k for k, v in letter_to_number.items()}
+
 def generate_letter_from_number(number):
     if number < 26:
         return string.ascii_uppercase[number]
@@ -102,7 +111,9 @@ def generate_letter_from_number(number):
         return string.ascii_uppercase[number // 26 - 1] + string.ascii_uppercase[number % 26]
         
 def genSerial():
-    wires_target = 0b11000
+    wires_target = randint(0, 30)  # Generate a random number between 0 and 30 for the wires phase
+    wires_letter = number_to_letter[wires_target]  # Get the corresponding letter
+
     # set the digits (used in the toggle switches phase)
     serial_digits = []
     toggle_value = randint(1, 15)
@@ -128,15 +139,7 @@ def genSerial():
     # and make the serial number a string
     serial = "".join(serial)
 
-    # Generate a random number from 0 to 30 for wires phase
-    wires_number = randint(0, 30)
-    wires_letter = ""
-    num = wires_number
-    while num >= 0:
-        wires_letter = ascii_uppercase[num % 26] + wires_letter
-        num = num // 26 - 1
-
-    return serial, toggle_value, wires_target, wires_letter, wires_number
+    return serial, toggle_value, wires_target, wires_letter
 
 
         
