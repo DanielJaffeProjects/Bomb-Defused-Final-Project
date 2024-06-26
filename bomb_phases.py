@@ -310,11 +310,11 @@ class Keypad(PhaseThread):
 
                 if self._value.upper() == self._hex_target:
                     self._defused = True
-                    self._update_callback(self._binary_code, "DEFUSED")
+                    # self._update_callback(self._binary_code, "DEFUSED")
 
                 elif len(self._value) >= MAX_PASS_LEN:
                     self._failed = True
-                    self._update_callback(self._binary_code, "STRIKE")
+                    # self._update_callback(self._binary_code, "STRIKE")
                 else:
                     self._update_callback(self._binary_code, self._value)
             sleep(0.1)
