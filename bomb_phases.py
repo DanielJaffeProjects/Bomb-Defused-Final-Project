@@ -346,9 +346,10 @@ class Keypad(PhaseThread):
         
 # Wires phase class
 class Wires(PhaseThread):
-    def __init__(self, component, target, name="Wires"):
+    def __init__(self, component, target, letter, number, name="Wires"):
         super().__init__(name, component, target)
-        self._display_binary_numbers = ""
+        self._letter = letter
+        self._number = number
         self.previous_state = None
         self._strikes = 0  # Tracking number of strikes
 
@@ -356,38 +357,28 @@ class Wires(PhaseThread):
         self._running = True
         while self._running:
             self.wire_state = 0
-            # Compute the wire state based on the value of the pins
             for i, pin in enumerate(self._component):
-                if pin.value:  # Assuming pin.value is True if the wire corresponding to the pin is pulled
+                if pin.value:
                     self.wire_state |= (1 << (len(self._component) - 1 - i))
-
-            # Check if the current wire state matches the target
             if self.wire_state == self._target:
                 self._defused = True
-                # Optionally stop checking once defused, though not stopping allows for continuous interaction
             else:
-                if self.previous_state is not None:  # Ensure this isn't the first check
+                if self.previous_state is not None:
                     if not self._check_wire_removal_correctness(self.previous_state, self.wire_state):
                         self._failed = True
-
-            self.previous_state = self.wire_state  # Update the previous state after processing
-            sleep(1)  # Sleep to prevent too rapid checking
+            self.previous_state = self.wire_state
+            sleep(1)
 
     def _check_wire_removal_correctness(self, old_state, new_state):
-        # Check if removing a wire was correct (only one wire should be considered at a time for simplicity)
-        # Incorrect removal if new_state has a 0 where target has a 1 at the same position
         return (old_state & ~new_state) & self._target == 0
 
     def __str__(self):
         if self._defused:
             return "DEFUSED"
         elif self._strikes > 0:
-            return ("Strike added! Incorrect wire removed.")
+            return "Strike added! Incorrect wire removed."
         else:
-            return f"Current State: {(self.wire_state)[2:].zfill(5)}"
-
-
-
+            return f"Letter: {self._letter}, Expected Binary: {bin(self._number)[2:].zfill(5)}"
 
 # the pushbutton phase
 class Button(PhaseThread):
