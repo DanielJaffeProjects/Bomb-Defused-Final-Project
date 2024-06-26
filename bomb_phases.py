@@ -538,6 +538,6 @@ class Toggles(PhaseThread):
         if (self._defused):
             return "DEFUSED"
         elif self._failed:
-            return "One strike add incorrect answer"
+            return "You have failed!"
         else:
             return self._display_text_toggle
