@@ -156,14 +156,14 @@ def check_phases():
     if (strikes_left == 0):
         # turn off the bomb and render the conclusion GUI
         turn_off()
-        gui.after(1000, lambda: gui.conclusion(strikes_left, active_phases), False)
+        gui.after(1000, gui.conclusion, strikes_left, active_phases)
         # stop checking phases
         return
     # the bomb has been successfully defused!
     if (active_phases == 0):
         # turn off the bomb and render the conclusion GUI
         turn_off()
-        gui.after(100, lambda: gui.conclusion(strikes_left, active_phases), True)
+        gui.after(100, lambda: gui.conclusion(strikes_left, active_phases))
         # stop checking phases
         return
     # check the phases again after a slight delay
