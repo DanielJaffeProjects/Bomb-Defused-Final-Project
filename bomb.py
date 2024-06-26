@@ -82,6 +82,16 @@ def check_phases():
         # turn off the bomb and render the conclusion GUI
         turn_off()
         gui.after(100, lambda: gui.conclusion(strikes_left, active_phases))
+        #Losing image if time goes to 0
+        losing_image = "losing image.gif"  # Replace with your image path
+        img1 = PhotoImage(file=losing_image)
+        self.image1 = Label(self, bg="black", image=img1)
+        self.image1.image = img1  # Keep a reference to the image to prevent garbage collection
+        self.image1.grid(row=2, column=1, columnspan=3, sticky=W)
+        # added voice over
+        pygame.mixer.music.load("mission failed.mp3")
+        pygame.mixer.music.set_volume(1)
+        pygame.mixer.music.play(1)
         # don't check any more phases
         return
     # check the keypad
