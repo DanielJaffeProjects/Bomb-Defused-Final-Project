@@ -446,35 +446,35 @@ class Button(PhaseThread):
                     button_voice_choice = randint(1, 5)
                     if button_voice_choice == 1:
                         # added voice over
-                        pygame.mixer.music.load("button 1 sound.mp3")
+                        pygame.mixer.music.load("button sound 1.mp3")
                         pygame.mixer.music.set_volume(1)
                         pygame.mixer.music.play(1)
                         sleep(4)
                         music()
                     elif button_voice_choice == 2:
                         # added voice over
-                        pygame.mixer.music.load("button 2 sound.mp3")
+                        pygame.mixer.music.load("button sound 2.mp3")
                         pygame.mixer.music.set_volume(1)
                         pygame.mixer.music.play(1)
                         sleep(4)
                         music()
                     elif button_voice_choice == 3:
                         # added voice over
-                        pygame.mixer.music.load("button 3 sound.mp3")
+                        pygame.mixer.music.load("button sound 3.mp3")
                         pygame.mixer.music.set_volume(1)
                         pygame.mixer.music.play(1)
                         sleep(4)
                         music()
                     elif button_voice_choice == 4:
                         # added voice over
-                        pygame.mixer.music.load("button 4 sound.mp3")
+                        pygame.mixer.music.load("button sound 4.mp3")
                         pygame.mixer.music.set_volume(1)
                         pygame.mixer.music.play(1)
                         sleep(4)
                         music()
                     elif button_voice_choice == 5:
                         # added voice over
-                        pygame.mixer.music.load("button 5 sound.mp3")
+                        pygame.mixer.music.load("button sound 5.mp3")
                         pygame.mixer.music.set_volume(1)
                         pygame.mixer.music.play(1)
                         sleep(4)
