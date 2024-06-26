@@ -471,7 +471,7 @@ class Toggles(PhaseThread):
     def incorrect_answers(self, decimal):
         incorrect_list = []
         for i in range(0, 3):
-            incorrect_list.append(bin(decimal + 2**(randint(10, 20))))
+            incorrect_list.append(bin(decimal + 2**(randint(10, 20)))[2:])
         return incorrect_list
 
     def update_question(self):
