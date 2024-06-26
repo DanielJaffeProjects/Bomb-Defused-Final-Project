@@ -476,7 +476,7 @@ class Toggles(PhaseThread):
 
     def update_question(self):
         # Give a random decimal number
-        self._decimal = randint(20000000, 500000000)
+        self._decimal = randint(20, 5000)
         # Taking the random decimal number and move it into binary
         self._correct_answer = bin(self._decimal)
         # All answers
