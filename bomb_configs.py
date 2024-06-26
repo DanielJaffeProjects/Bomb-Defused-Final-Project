@@ -171,27 +171,27 @@ def genKeypadCombination():
         return combination
 
     # the list of keywords and matching passphrases
-    keywords = {"BANDIT": "RIVER", \
-                "BUCKLE": "FADED", \
-                "CANOPY": "FOXES", \
-                "DEBATE": "THROW", \
-                "FIERCE": "TRICK", \
-                "GIFTED": "CYCLE", \
-                "IMPACT": "STOLE", \
-                "LONELY": "TOADY", \
-                "MIGHTY": "ALOOF", \
-                "NATURE": "CARVE", \
-                "REBORN": "CLIMB", \
-                "RECALL": "FEIGN", \
-                "SYSTEM": "LEAVE", \
-                "TAKING": "SPINY", \
-                "WIDELY": "BOUND", \
-                "ZAGGED": "YACHT"}
-    # the rotation cipher key
+    # keywords = {"BANDIT": "RIVER", \
+    #             "BUCKLE": "FADED", \
+    #             "CANOPY": "FOXES", \
+    #             "DEBATE": "THROW", \
+    #             "FIERCE": "TRICK", \
+    #             "GIFTED": "CYCLE", \
+    #             "IMPACT": "STOLE", \
+    #             "LONELY": "TOADY", \
+    #             "MIGHTY": "ALOOF", \
+    #             "NATURE": "CARVE", \
+    #             "REBORN": "CLIMB", \
+    #             "RECALL": "FEIGN", \
+    #             "SYSTEM": "LEAVE", \
+    #             "TAKING": "SPINY", \
+    #             "WIDELY": "BOUND", \
+    #             "ZAGGED": "YACHT"}
+    # # the rotation cipher key
     rot = randint(1, 25)
 
     # pick a keyword and matching passphrase
-    keyword, passphrase = choice(list(keywords.items()))
+    # keyword, passphrase = choice(list(keywords.items()))
     # encrypt the passphrase and get its combination
     cipher_keyword = encrypt(keyword, rot)
     combination = digits(passphrase)
