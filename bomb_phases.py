@@ -358,33 +358,36 @@ class Keypad(PhaseThread):
         
 # Wires phase class
 class Wires(PhaseThread):
-    def __init__(self, component, target, letter, number, name="Wires"):
+    def __init__(self, component, target, letter, name="Wires"):
         super().__init__(name, component, target)
         self._letter = letter
-        self._number = number
-        self._wire_state = 0  # Initialize wire_state
         self.previous_state = None
         self._strikes = 0  # Tracking number of strikes
-        print(f"Expected Binary for Letter {self._letter}: {bin(self._number)[2:].zfill(5)}")  # Print expected binary to terminal
+        self.wire_state = 0  # Initialize wire_state
 
     def run(self):
         self._running = True
-        gui.update_wires_letter(self._letter)  # Update the GUI with the wires letter
         while self._running:
-            self._wire_state = 0
+            self.wire_state = 0
+            # Compute the wire state based on the value of the pins
             for i, pin in enumerate(self._component):
-                if pin.value:
-                    self._wire_state |= (1 << (len(self._component) - 1 - i))
-            if self._wire_state == self._target:
+                if pin.value:  # Assuming pin.value is True if the wire corresponding to the pin is pulled
+                    self.wire_state |= (1 << (len(self._component) - 1 - i))
+            # Check if the current wire state matches the target
+            if self.wire_state == self._target:
                 self._defused = True
+                # Optionally stop checking once defused, though not stopping allows for continuous interaction
             else:
-                if self.previous_state is not None:
-                    if not self._check_wire_removal_correctness(self.previous_state, self._wire_state):
+                if self.previous_state is not None:  # Ensure this isn't the first check
+                    if not self._check_wire_removal_correctness(self.previous_state, self.wire_state):
                         self._failed = True
-            self.previous_state = self._wire_state
-            sleep(1)
+
+            self.previous_state = self.wire_state  # Update the previous state after processing
+            sleep(1)  # Sleep to prevent too rapid checking
 
     def _check_wire_removal_correctness(self, old_state, new_state):
+        # Check if removing a wire was correct (only one wire should be considered at a time for simplicity)
+        # Incorrect removal if new_state has a 0 where target has a 1 at the same position
         return (old_state & ~new_state) & self._target == 0
 
     def __str__(self):
@@ -393,8 +396,7 @@ class Wires(PhaseThread):
         elif self._strikes > 0:
             return "Strike added! Incorrect wire removed."
         else:
-            return f"Current State: {bin(self._wire_state)[2:].zfill(5)}"
-
+            return f"Letter: {self._letter}, Current State: {bin(self.wire_state)[2:].zfill(5)}"
 
 
 # the pushbutton phase
