@@ -94,13 +94,20 @@ if (RPi):
 #  the sum of the digits should be in the range 1..15 to set the toggles target
 #  the first three letters should be distinct and in the range 0..4 such that A=0, B=1, etc, to match the jumper wires
 #  the last letter should be outside of the range
+def generate_letter_from_number(number):
+    if number < 26:
+        return string.ascii_uppercase[number]
+    else:
+        return string.ascii_uppercase[number // 26 - 1] + string.ascii_uppercase[number % 26]
+        
 def genSerial():
-    wires_decimal =(24)
-    wires_target = bin(wires_decimal)
+    # Wires target as a random number between 0 and 30
+    wires_number = randint(0, 30)
+    wires_letter = generate_letter_from_number(wires_number)
+
     # set the digits (used in the toggle switches phase)
     serial_digits = []
     toggle_value = randint(1, 15)
-    # the sum of the digits is the toggle value
     while (len(serial_digits) < 3 or toggle_value - sum(serial_digits) > 0):
         d = randint(0, min(9, toggle_value - sum(serial_digits)))
         serial_digits.append(d)
@@ -110,21 +117,15 @@ def genSerial():
     while (sum(jumper_indexes) < 3):
         jumper_indexes[randint(0, len(jumper_indexes) - 1)] = 1
     jumper_value = int("".join([str(n) for n in jumper_indexes]), 2)
-    # the letters indicate which jumper wires must be "cut"
     jumper_letters = [chr(i + 65) for i, n in enumerate(jumper_indexes) if n == 1]
 
-    # form the serial number
     serial = [str(d) for d in serial_digits] + jumper_letters
-    # and shuffle it
     shuffle(serial)
-    # finally, add a final letter (F..Z)
     serial += [choice([chr(n) for n in range(70, 91)])]
-    # and make the serial number a string
     serial = "".join(serial)
 
-    return serial, toggle_value, wires_target
-
-
+    return serial, toggle_value, jumper_value, wires_letter, wires_number
+        
 # generates the keypad combination from a keyword and rotation key
 # generates the keypad combination from a keyword and rotation key
 def genKeypadCombination():
@@ -188,7 +189,7 @@ def genKeypadCombination():
 #  serial: the bomb's serial number
 #  toggles_target: the toggles phase defuse value
 #  wires_target: the wires phase defuse value
-serial, toggles_target, wires_target = genSerial()
+serial, toggles_target, wires_target, wires_letter, wires_number = genSerial()
 
 # generate the combination for the keypad phase
 #  keyword: the plaintext keyword for the lookup table
