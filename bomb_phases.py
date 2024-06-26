@@ -133,7 +133,7 @@ class Lcd(Frame):
             self._timer.pause()
             
     # setup the conclusion GUI (explosion/defusion)
-    def conclusion(self, success=False):
+    def conclusion(self, strikes_left,active_phases):
         # destroy/clear widgets that are no longer needed
         self._lscroll["text"] = ""
         self._ltimer.destroy()
