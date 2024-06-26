@@ -308,8 +308,9 @@ class Keypad(PhaseThread):
     # runs the thread
     def run(self):
         self._running = True
+        self._value = ""
         while self._running:
-            self._update_callback(self._binary_code, "")  # Display the initial target binary code
+            self._update_callback(self._binary_code, self._value)  # Display the initial target binary code
             # process keys when keypad key(s) are pressed
             if self._keypad.pressed_keys:
                 # debounce
