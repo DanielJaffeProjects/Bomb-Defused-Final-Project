@@ -91,10 +91,6 @@ class Lcd(Frame):
         self._lwires = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16), text="Wires phase: ")
         self._lwires.grid(row=9, column=0, columnspan=3, sticky=W)
         
-        # Add a new label for the wires letter
-        self._lwires_letter = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16))
-        self._lwires_letter.grid(row=9, column=1, sticky=W)
-        
         # the pushbutton status
         self._lbutton = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16), text="Button phase: ")
         self._lbutton.grid(row=10, column=0, columnspan=3, sticky=W)
