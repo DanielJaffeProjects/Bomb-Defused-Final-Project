@@ -86,17 +86,19 @@ def check_phases():
         return
     # check the keypad
     if keypad_phase._running:
-        keypad_phase._running = False
-        active_phases -= 1
-        #added voice over
-        pygame.mixer.music.load("Keypad defuse sound.mp3")
-        pygame.mixer.music.set_volume(1)
-        pygame.mixer.music.play(1)
-        sleep(3)
-        music()
-    elif keypad_phase._failed:
-        strike()
-        keypad_phase._failed = False
+        gui.update_keypad_display(keypad_phase._binary_code, keypad_phase._value)
+        if keypad_phase._defused:
+            keypad_phase._running = False
+            active_phases -= 1
+            #added voice over
+            pygame.mixer.music.load("Keypad defuse sound.mp3")
+            pygame.mixer.music.set_volume(1)
+            pygame.mixer.music.play(1)
+            sleep(3)
+            music()
+        elif keypad_phase._failed:
+            strike()
+            keypad_phase._failed = False
     if (wires._running):
         # update the GUI
         gui._lwires["text"] = f"Wires: {wires}"
