@@ -170,10 +170,28 @@ def genKeypadCombination():
 
         return combination
 
+    # the list of keywords and matching passphrases
+    keywords = {"BANDIT": "RIVER", \
+                "BUCKLE": "FADED", \
+                "CANOPY": "FOXES", \
+                "DEBATE": "THROW", \
+                "FIERCE": "TRICK", \
+                "GIFTED": "CYCLE", \
+                "IMPACT": "STOLE", \
+                "LONELY": "TOADY", \
+                "MIGHTY": "ALOOF", \
+                "NATURE": "CARVE", \
+                "REBORN": "CLIMB", \
+                "RECALL": "FEIGN", \
+                "SYSTEM": "LEAVE", \
+                "TAKING": "SPINY", \
+                "WIDELY": "BOUND", \
+                "ZAGGED": "YACHT"}
     # the rotation cipher key
     rot = randint(1, 25)
 
     # pick a keyword and matching passphrase
+    keyword, passphrase = choice(list(keywords.items()))
     # encrypt the passphrase and get its combination
     cipher_keyword = encrypt(keyword, rot)
     combination = digits(passphrase)
@@ -189,24 +207,7 @@ def genKeypadCombination():
 #  toggles_target: the toggles phase defuse value
 #  wires_target: the wires phase defuse value
 serial, toggles_target, wires_target, wires_letter = genSerial()
-keyword, passphrase = choice(list(keywords.items()))
-# the list of keywords and matching passphrases
-keywords = {"BANDIT": "RIVER", \
-            "BUCKLE": "FADED", \
-            "CANOPY": "FOXES", \
-            "DEBATE": "THROW", \
-            "FIERCE": "TRICK", \
-            "GIFTED": "CYCLE", \
-            "IMPACT": "STOLE", \
-            "LONELY": "TOADY", \
-            "MIGHTY": "ALOOF", \
-            "NATURE": "CARVE", \
-            "REBORN": "CLIMB", \
-            "RECALL": "FEIGN", \
-            "SYSTEM": "LEAVE", \
-            "TAKING": "SPINY", \
-            "WIDELY": "BOUND", \
-            "ZAGGED": "YACHT"}
+
 # generate the combination for the keypad phase
 #  keyword: the plaintext keyword for the lookup table
 #  cipher_keyword: the encrypted keyword for the lookup table
