@@ -308,26 +308,25 @@ class Keypad(PhaseThread):
                     if len(self._value) < MAX_PASS_LEN and hex_char != "":
                         self._value += hex_char
 
-                if DEBUG:
-                    print(f"Current input value: {self._value}")
-                
                 if self._value.upper() == self._hex_target:
                     self._defused = True
                     self._update_callback(self._binary_code, "DEFUSED")
-                    if DEBUG:
-                        print("Defused!")
+
                 elif len(self._value) >= MAX_PASS_LEN:
                     self._failed = True
                     self._update_callback(self._binary_code, "STRIKE")
-                    if DEBUG:
-                        print("Strike!")
                 else:
                     self._update_callback(self._binary_code, self._value)
             sleep(0.1)
         self._running = False
 
     def __str__(self):
-        return self._value
+        if self._defused:
+            return "Defused"
+        elif self._failed:
+            return "strike added"
+        else:
+            return (f"Current input value: {self._value}")
 
     # Setter for update callback
     def set_update_callback(self, callback):
