@@ -471,12 +471,12 @@ class Toggles(PhaseThread):
     def incorrect_answers(self, decimal):
         incorrect_list = []
         for i in range(0, 3):
-            incorrect_list.append(bin(decimal + randint(5000, 1000000)))
+            incorrect_list.append(bin(decimal + randint(20, 500)))
         return incorrect_list
 
     def update_question(self):
         # Give a random decimal number
-        self._decimal = randint(20, 5000)
+        self._decimal = randint(20000000, 500000000)
         # Taking the random decimal number and move it into binary
         self._correct_answer = bin(self._decimal)
         # All answers
