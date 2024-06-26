@@ -354,8 +354,8 @@ class Wires(PhaseThread):
         self._number = number
         self.previous_state = None
         self._strikes = 0  # Tracking number of strikes
-        self._letter = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S',
-                        'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA', 'AB', 'AC', 'AD', 'AE']
+        print(f"Expected Binary for Letter {self._letter}: {bin(self._number)[2:].zfill(5)}")  # Print expected binary to terminal
+
     def run(self):
         self._running = True
         while self._running:
@@ -381,7 +381,7 @@ class Wires(PhaseThread):
         elif self._strikes > 0:
             return "Strike added! Incorrect wire removed."
         else:
-            return f"Letter: {self._letter}, Expected Binary: {bin(self._number)[2:].zfill(5)}"
+            return f"Current State: {bin(self.wire_state)[2:].zfill(5)}"
 
 # the pushbutton phase
 class Button(PhaseThread):
