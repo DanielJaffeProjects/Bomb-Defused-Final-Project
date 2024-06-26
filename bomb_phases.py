@@ -362,6 +362,7 @@ class Wires(PhaseThread):
         super().__init__(name, component, target)
         self._letter = letter
         self._number = number
+        self._wire_state = 0  # Initialize wire_state
         self.previous_state = None
         self._strikes = 0  # Tracking number of strikes
         print(f"Expected Binary for Letter {self._letter}: {bin(self._number)[2:].zfill(5)}")  # Print expected binary to terminal
@@ -370,17 +371,17 @@ class Wires(PhaseThread):
         self._running = True
         gui.update_wires_letter(self._letter)  # Update the GUI with the wires letter
         while self._running:
-            self.wire_state = 0
+            self._wire_state = 0
             for i, pin in enumerate(self._component):
                 if pin.value:
-                    self.wire_state |= (1 << (len(self._component) - 1 - i))
-            if self.wire_state == self._target:
+                    self._wire_state |= (1 << (len(self._component) - 1 - i))
+            if self._wire_state == self._target:
                 self._defused = True
             else:
                 if self.previous_state is not None:
-                    if not self._check_wire_removal_correctness(self.previous_state, self.wire_state):
+                    if not self._check_wire_removal_correctness(self.previous_state, self._wire_state):
                         self._failed = True
-            self.previous_state = self.wire_state
+            self.previous_state = self._wire_state
             sleep(1)
 
     def _check_wire_removal_correctness(self, old_state, new_state):
@@ -392,7 +393,8 @@ class Wires(PhaseThread):
         elif self._strikes > 0:
             return "Strike added! Incorrect wire removed."
         else:
-            return f"Current State: {bin(self.wire_state)[2:].zfill(5)}"
+            return f"Current State: {bin(self._wire_state)[2:].zfill(5)}"
+
 
 
 # the pushbutton phase
