@@ -143,7 +143,6 @@ class Lcd(Frame):
         self._ltoggles3.destroy()
         self._ltoggles4.destroy()
         self._ltoggles5.destroy()
-        self._lwires_letter.destroy()
         
         # added voice over
         pygame.mixer.music.load("mission failed.mp3")
