@@ -59,7 +59,7 @@ class Lcd(Frame):
     # sets up the LCD GUI
     def setup(self):
         # the timer
-        self._ltimer = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16), text="Time left: ")
+        self._ltimer = Label(self, bg="yellow", fg="#00ff00", font=("Courier New", 16), text="Time left: ")
         self._ltimer.grid(row=1, column=0, columnspan=3, sticky=W)
         # the toggle switches status
         self._ltoggles = Label(self, bg="yellow", fg="#00ff00", font=("Courier New", 16), text="Toggles phase: ")
