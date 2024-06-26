@@ -146,8 +146,7 @@ class Lcd(Frame):
                                      command=self.quit)
         self._bquit.grid(row=1, column=2, pady=40)
 
-        global strikes_left
-        global active_phases
+
         # Used chatgpt to help me with creating a image and resizing it
         # Displaying the image if you lose
         if strikes_left == 0:
@@ -384,13 +383,7 @@ class Wires(PhaseThread):
 
 
 
-# Further class definitions (e.g., Keypad, Button, etc.) would follow here
-# This is an example instantiation, which you would normally place in the part of your code
-# that sets up and starts thread objects:
-# component_wires = [YourWireComponentSetupHere]  # Setup your wire component list
-# target_wires = 0b11000  # Example target
-# wires = Wires(component_wires, target_wires)
-# wires.start()  # Starting the Wires thread
+
 # the pushbutton phase
 class Button(PhaseThread):
     def __init__(self, component_state, component_rgb, target, color, timer, name="Button"):
@@ -547,6 +540,6 @@ class Toggles(PhaseThread):
         if (self._defused):
             return "DEFUSED"
         elif self._failed:
-            return "failed"
+            return "One strike add incorrect answer"
         else:
             return self._display_text_toggle

@@ -5,19 +5,19 @@
 #################################
 
 # constants
-DEBUG = True        # debug mode?
-RPi = True           # is this running on the RPi?
-ANIMATE = False       # animate the LCD text?
-SHOW_BUTTONS = False # show the Pause and Quit buttons on the main LCD GUI?
-COUNTDOWN = 300      # the initial bomb countdown value (seconds)
-NUM_STRIKES = 1      # the total strikes allowed before the bomb "explodes"
-NUM_PHASES = 3     # the total number of initial active bomb phases
+DEBUG = True  # debug mode?
+RPi = True  # is this running on the RPi?
+ANIMATE = False  # animate the LCD text?
+SHOW_BUTTONS = False  # show the Pause and Quit buttons on the main LCD GUI?
+COUNTDOWN = 300  # the initial bomb countdown value (seconds)
+NUM_STRIKES = 2  # the total strikes allowed before the bomb "explodes"
+NUM_PHASES = 3  # the total number of initial active bomb phases
 MAX_PASS_LEN = 6  # Define the maximum length of the passphrase
 STAR_CLEARS_PASS = True  # Define if the star key clears the passphrase (add this based on your logic)
 
 # imports
 from random import randint, shuffle, choice
-from string import ascii_uppercase
+
 if (RPi):
     import board
     from adafruit_ht16k33.segments import Seg7x4
@@ -85,6 +85,7 @@ if (RPi):
         pin.direction = Direction.INPUT
         pin.pull = Pull.DOWN
 
+
 ###########
 # functions
 ###########
@@ -104,23 +105,24 @@ def genSerial():
         serial_digits.append(d)
 
     # set the letters (used in the jumper wires phase)
-    jumper_indexes = [ 0 ] * 5
+    jumper_indexes = [0] * 5
     while (sum(jumper_indexes) < 3):
         jumper_indexes[randint(0, len(jumper_indexes) - 1)] = 1
-    jumper_value = int("".join([ str(n) for n in jumper_indexes ]), 2)
+    jumper_value = int("".join([str(n) for n in jumper_indexes]), 2)
     # the letters indicate which jumper wires must be "cut"
-    jumper_letters = [ chr(i + 65) for i, n in enumerate(jumper_indexes) if n == 1 ]
+    jumper_letters = [chr(i + 65) for i, n in enumerate(jumper_indexes) if n == 1]
 
     # form the serial number
-    serial = [ str(d) for d in serial_digits ] + jumper_letters
+    serial = [str(d) for d in serial_digits] + jumper_letters
     # and shuffle it
     shuffle(serial)
     # finally, add a final letter (F..Z)
-    serial += [ choice([ chr(n) for n in range(70, 91) ]) ]
+    serial += [choice([chr(n) for n in range(70, 91)])]
     # and make the serial number a string
     serial = "".join(serial)
 
     return serial, toggle_value, wires_target
+
 
 # generates the keypad combination from a keyword and rotation key
 # generates the keypad combination from a keyword and rotation key
@@ -138,7 +140,7 @@ def genKeypadCombination():
     # returns the keypad digits that correspond to the passphrase
     def digits(passphrase):
         combination = ""
-        keys = [ None, None, "ABC", "DEF", "GHI", "JKL", "MNO", "PRS", "TUV", "WXY" ]
+        keys = [None, None, "ABC", "DEF", "GHI", "JKL", "MNO", "PRS", "TUV", "WXY"]
 
         # process each character of the keyword
         for c in passphrase:
@@ -150,22 +152,22 @@ def genKeypadCombination():
         return combination
 
     # the list of keywords and matching passphrases
-    keywords = { "BANDIT": "RIVER",\
-                 "BUCKLE": "FADED",\
-                 "CANOPY": "FOXES",\
-                 "DEBATE": "THROW",\
-                 "FIERCE": "TRICK",\
-                 "GIFTED": "CYCLE",\
-                 "IMPACT": "STOLE",\
-                 "LONELY": "TOADY",\
-                 "MIGHTY": "ALOOF",\
-                 "NATURE": "CARVE",\
-                 "REBORN": "CLIMB",\
-                 "RECALL": "FEIGN",\
-                 "SYSTEM": "LEAVE",\
-                 "TAKING": "SPINY",\
-                 "WIDELY": "BOUND",\
-                 "ZAGGED": "YACHT" }
+    keywords = {"BANDIT": "RIVER", \
+                "BUCKLE": "FADED", \
+                "CANOPY": "FOXES", \
+                "DEBATE": "THROW", \
+                "FIERCE": "TRICK", \
+                "GIFTED": "CYCLE", \
+                "IMPACT": "STOLE", \
+                "LONELY": "TOADY", \
+                "MIGHTY": "ALOOF", \
+                "NATURE": "CARVE", \
+                "REBORN": "CLIMB", \
+                "RECALL": "FEIGN", \
+                "SYSTEM": "LEAVE", \
+                "TAKING": "SPINY", \
+                "WIDELY": "BOUND", \
+                "ZAGGED": "YACHT"}
     # the rotation cipher key
     rot = randint(1, 25)
 
@@ -176,6 +178,7 @@ def genKeypadCombination():
     combination = digits(passphrase)
 
     return keyword, cipher_keyword, rot, int(combination), passphrase
+
 
 ###############################
 # generate the bomb's specifics
@@ -200,10 +203,10 @@ button_color = choice(["R", "G", "B"])
 button_target = None
 # G is the first numeric digit in the serial number
 if (button_color == "G"):
-    button_target = [ n for n in serial if n.isdigit() ][0]
+    button_target = [n for n in serial if n.isdigit()][0]
 # B is the last numeric digit in the serial number
 elif (button_color == "B"):
-    button_target = [ n for n in serial if n.isdigit() ][-1]
+    button_target = [n for n in serial if n.isdigit()][-1]
 
 if (DEBUG):
     print(f"Serial number: {serial}")
@@ -213,5 +216,4 @@ if (DEBUG):
     print(f"Button target: {button_target}")
 
 # set the bomb's LCD bootup text
-boot_text = f"System Booting... Please Wait...\n Checking for any signs of intelligent life... Not found.\n Ensuring bad jokes are ready... ✔\n System Ready! Enjoy the ride, and remember: \nin case of emergency, blame the software!"
-
+boot_text = f"System Booting... Please Wait...\n Checking for any signs of intelligent life... Not found.\n Ensuring bad jokes are ready... \n System Ready! Enjoy the ride, and remember: \nin case of emergency, blame the software!"

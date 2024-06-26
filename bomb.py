@@ -3,15 +3,18 @@
 # Team: Daniel Jaffe and Jordano Liberato
 #################################
 
+import pygame
+
 # import the configs
-from bomb_configs import *
 # import the phases
 from bomb_phases import *
-import pygame
+
 ###########
 # functions
 ###########
 pygame.init()
+
+
 # generates the bootup sequence on the LCD
 def bootup(n=0):
     # if we're not animating (or we're at the end of the bootup text)
@@ -32,6 +35,8 @@ def bootup(n=0):
             gui._lscroll["text"] += boot_text[n]
         # scroll the next character after a slight delay (\x00 is a longer delay)
         gui.after(25 if boot_text[n] != "\x00" else 750, bootup, n + 1)
+
+
 # sets up the phase threads
 def setup_phases():
     global timer, keypad_phase, wires, button, toggles
@@ -39,11 +44,11 @@ def setup_phases():
     timer = Timer(component_7seg, COUNTDOWN)
     # bind the 7-segment display to the LCD GUI so that it can be paused/unpaused from the GUI
     gui.setTimer(timer)
-    
+
     # setup the keypad thread
     keypad_phase = Keypad(component_keypad, int(keypad_target))
     keypad_phase.set_update_callback(gui.update_keypad_display)
-    
+
     # setup the jumper wires thread
     wires = Wires(component_wires, wires_target)
     # setup the pushbutton thread
@@ -58,10 +63,12 @@ def setup_phases():
     wires.start()
     button.start()
     toggles.start()
+
+
 # checks the phase threads
 def check_phases():
     global active_phases
-    
+
     # check the timer
     if (timer._running):
         # update the GUI
@@ -73,12 +80,16 @@ def check_phases():
         gui.after(100, gui.conclusion, False)
         # don't check any more phases
         return
-# check the keypad
+    # check the keypad
     if keypad_phase._running:
         gui.update_keypad_display(keypad_phase._binary_code, keypad_phase._value)
     if keypad_phase._defused:
         keypad_phase._running = False
         active_phases -= 1
+        #added voice over
+        pygame.mixer.music.load("Keypad defuse sound.mp3")
+        pygame.mixer.music.set_volume(.5)
+        pygame.mixer.music.play(1)
     elif keypad_phase._failed:
         strike()
         keypad_phase._failed = False
@@ -89,10 +100,14 @@ def check_phases():
         if (wires._defused):
             wires._running = False
             active_phases -= 1
+            # added voice over
+            pygame.mixer.music.load("wires defuse sound.mp3")
+            pygame.mixer.music.set_volume(.5)
+            pygame.mixer.music.play(1)
         # the phase has failed -> strike
         elif (wires._failed):
             strike()
-            #reset the wire
+            # reset the wire
             wires._failed = False
     # check the button
     if (button._running):
@@ -102,6 +117,18 @@ def check_phases():
         if (button._defused):
             button._running = False
             active_phases -= 1
+            button_voice_choice = randint(1,3)
+            if button_voice_choice == 1:
+                # added voice over
+                pygame.mixer.music.load("button 1 sound.mp3")
+                pygame.mixer.music.set_volume(.5)
+                pygame.mixer.music.play(1)
+            elif button_voice_choice == 2:
+                # TODO
+                pass
+            elif button_voice_choice == 3:
+                #TODO
+                pass
         # the phase has failed -> strike
         elif (button._failed):
             strike()
@@ -115,8 +142,13 @@ def check_phases():
         if (toggles._defused):
             toggles._running = False
             active_phases -= 1
+            # added voice over
+            pygame.mixer.music.load("toggles defused sound.mp3")
+            pygame.mixer.music.set_volume(.5)
+            pygame.mixer.music.play(1)
         # the phase has failed -> strike
         elif (toggles._failed):
+            strike()
             strike()
             # reset the toggles
             toggles._failed = False
@@ -138,12 +170,16 @@ def check_phases():
         return
     # check the phases again after a slight delay
     gui.after(100, check_phases)
+
+
 # handles a strike
 def strike():
     global strikes_left
-    
+
     # note the strike
     strikes_left -= 1
+
+
 # turns off the bomb
 def turn_off():
     # stop all threads
@@ -158,6 +194,8 @@ def turn_off():
     # turn off the pushbutton's LED
     for pin in button._rgb:
         pin.value = True
+
+
 ######
 # MAIN
 ######
