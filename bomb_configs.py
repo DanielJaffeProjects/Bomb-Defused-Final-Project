@@ -95,24 +95,29 @@ if (RPi):
 #  the sum of the digits should be in the range 1..15 to set the toggles target
 #  the first three letters should be distinct and in the range 0..4 such that A=0, B=1, etc, to match the jumper wires
 #  the last letter should be outside of the range
-# Define the letter mapping
+# Define each letter/letter combination to a specific value on the manual
 letter_to_number = {
     'A': 1, 'B': 16, 'C': 24, 'D': 9, 'E': 6, 'F': 5, 'G': 7, 'H': 29, 'I': 26, 'J': 17,
     'K': 4, 'L': 22, 'M': 15, 'N': 20, 'O': 10, 'P': 19, 'Q': 8, 'R': 28, 'S': 13, 'T': 25,
     'U': 14, 'V': 0, 'W': 12, 'X': 18, 'Y': 27, 'Z': 2, 'AA': 30, 'AB': 21, 'AC': 11, 'AD': 23, 'AE': 13
 }
-# Reverse the mapping
+# Reverses the letter_to_number to get a letter from a numebr
 number_to_letter = {v: k for k, v in letter_to_number.items()}
 
+# We use the function to generate a letter based on a number
 def generate_letter_from_number(number):
     if number < 26:
         return ascii_uppercase[number]
     else:
+        # This is for numbers greater than or equal to 26, generate a two-letter combination
         return ascii_uppercase[number // 26 - 1] + ascii_uppercase[number % 26]
-
+        
+# This generates the serial number and targets
 def genSerial():
-    wires_target = randint(0, 30)  # Generate a random number between 0 and 30 for the wires phase
-    wires_letter = number_to_letter[wires_target]  # Get the corresponding letter
+    # Generate a random number between 0 and 30 for the wires phase
+    wires_target = randint(0, 30)  
+    # This generates the letter's corresponding letter
+    wires_letter = number_to_letter[wires_target] 
 
     # set the digits (used in the toggle switches phase)
     serial_digits = []
@@ -140,36 +145,27 @@ def genSerial():
     serial = "".join(serial)
 
     return serial, toggle_value, wires_target, wires_letter
-
-
-       
-# generates the keypad combination from a keyword and rotation key
+    
 # generates the keypad combination from a keyword and rotation key
 def genKeypadCombination():
     # encrypts a keyword using a rotation cipher
     def encrypt(keyword, rot):
         cipher = ""
-
         # encrypt each letter of the keyword using rot
         for c in keyword:
             cipher += chr((ord(c) - 65 + rot) % 26 + 65)
-
         return cipher
-
     # returns the keypad digits that correspond to the passphrase
     def digits(passphrase):
         combination = ""
         keys = [None, None, "ABC", "DEF", "GHI", "JKL", "MNO", "PRS", "TUV", "WXY"]
-
         # process each character of the keyword
         for c in passphrase:
             for i, k in enumerate(keys):
                 if (k and c in k):
                     # map each character to its digit equivalent
                     combination += str(i)
-
         return combination
-
     # the list of keywords and matching passphrases
     keywords = {"BANDIT": "RIVER", \
                 "BUCKLE": "FADED", \
@@ -189,7 +185,6 @@ def genKeypadCombination():
                 "ZAGGED": "YACHT"}
     # the rotation cipher key
     rot = randint(1, 25)
-
     # pick a keyword and matching passphrase
     keyword, passphrase = choice(list(keywords.items()))
     # encrypt the passphrase and get its combination
