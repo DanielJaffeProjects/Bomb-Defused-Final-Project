@@ -518,7 +518,12 @@ class Toggles(PhaseThread):
         self._question = f"Convert the decimal {self._decimal} to binary!"
         self._options = [self._all_answers[0], self._all_answers[1], self._all_answers[2], self._all_answers[3]]
         # Display text
-        self._display_text_toggle = f"{self._question} \nA) {self._options[0]} \nB) {self._options[1]} \nC) {self._options[2]} \nD) {self._options[3]}"
+        self._display_text_toggle = (f"{self._question} \n"+
+                                     "A) {self._options[0]} \n"+
+                                     "B) {self._options[1]} \n"+
+                                     "C) {self._options[2]} \n"+
+                                     "D) {self._options[3]} ")
+
         # Display the question and options together
         return self._display_text_toggle,  self._correct_answer
 
