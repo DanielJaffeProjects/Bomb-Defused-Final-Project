@@ -145,7 +145,7 @@ class Lcd(Frame):
 
         # Used chatgpt to help me addwith creating a image and resizing it
         # Displaying the image if you lose
-        if strikes_left == 0:
+        if strikes_left <= 0:
             losing_image = "losing image.gif"  # Replace with your image path
             img1 = PhotoImage(file=losing_image)
             self.image1 = Label(self, bg="black", image=img1)
