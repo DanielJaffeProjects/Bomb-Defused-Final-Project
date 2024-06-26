@@ -226,13 +226,13 @@ if (button_color == "G"):
 # B is the last numeric digit in the serial number
 elif (button_color == "B"):
     button_target = [n for n in serial if n.isdigit()][-1]
-
+'''
 if (DEBUG):
     print(f"Serial number: {serial}")
     print(f"Toggles target: {bin(toggles_target)[2:].zfill(4)}/{toggles_target}")
     print(f"Wires target: {bin(wires_target)[2:].zfill(5)}/{wires_target}")
     print(f"Keypad target: {keypad_target}/{passphrase}/{keyword}/{cipher_keyword}(rot={rot})")
     print(f"Button target: {button_target}")
-
+ '''
 # set the bomb's LCD bootup text
 boot_text = f"System Booting... Please Wait...\n Checking for any signs of intelligent life... Not found.\n Ensuring bad jokes are ready... \n System Ready! Enjoy the ride, and remember: \nin case of emergency, blame the software!"
