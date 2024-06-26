@@ -120,9 +120,6 @@ class Lcd(Frame):
     def setButton(self, button):
         self._button = button
 
-    def update_wires_letter(self, letter):
-        self._lwires_letter.config(text=f"Letter: {letter}")
-
     # pauses the timer
     def pause(self):
         if (RPi):
@@ -358,10 +355,10 @@ class Keypad(PhaseThread):
 class Wires(PhaseThread):
     def __init__(self, component, target, letter, name="Wires"):
         super().__init__(name, component, target)
-        self._letter = letter
+        self._display_binary_numbers = ""
         self.previous_state = None
         self._strikes = 0  # Tracking number of strikes
-        self.wire_state = 0  # Initialize wire_state
+        self._letter = letter  # Store the letter corresponding to the target
 
     def run(self):
         self._running = True
@@ -374,7 +371,6 @@ class Wires(PhaseThread):
             # Check if the current wire state matches the target
             if self.wire_state == self._target:
                 self._defused = True
-                # Optionally stop checking once defused, though not stopping allows for continuous interaction
             else:
                 if self.previous_state is not None:  # Ensure this isn't the first check
                     if not self._check_wire_removal_correctness(self.previous_state, self.wire_state):
@@ -394,7 +390,8 @@ class Wires(PhaseThread):
         elif self._strikes > 0:
             return "Strike added! Incorrect wire removed."
         else:
-            return f"Letter: {self._letter}, Current State: {bin(self.wire_state)[2:].zfill(5)}"
+            return f"Letter: {self._letter} | Current State: {bin(self.wire_state)[2:].zfill(5)}"
+
 
 
 # the pushbutton phase
