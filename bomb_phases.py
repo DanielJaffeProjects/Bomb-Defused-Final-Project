@@ -141,10 +141,6 @@ class Lcd(Frame):
         self._ltoggles4.destroy()
         self._ltoggles5.destroy()
         
-        # added voice over
-        pygame.mixer.music.load("mission failed.mp3")
-        pygame.mixer.music.set_volume(1)
-        pygame.mixer.music.play(1)
 
         if (SHOW_BUTTONS):
             self._bpause.destroy()
@@ -168,6 +164,10 @@ class Lcd(Frame):
             self.image1 = Label(self, bg="black", image=img1)
             self.image1.image = img1  # Keep a reference to the image to prevent garbage collection
             self.image1.grid(row=2, column=1, columnspan=3, sticky=W)
+            # added voice over
+            pygame.mixer.music.load("mission failed.mp3")
+            pygame.mixer.music.set_volume(1)
+            pygame.mixer.music.play(1)
 
         # Displaying the image if you win
         if active_phases == 0:
@@ -176,7 +176,10 @@ class Lcd(Frame):
             self.image1 = Label(self, bg="black", image=img1)
             self.image1.image = img1  # Keep a reference to the image to prevent garbage collection
             self.image1.grid(row=2, column=1, columnspan=3, sticky=W)
-
+            # added voice over
+            pygame.mixer.music.load("Bomb defuse sound.mp3")
+            pygame.mixer.music.set_volume(1)
+            pygame.mixer.music.play(1)
     # re-attempts the bomb (after an explosion or a successful defusion)
     def retry(self):
         # re-launch the program (and exit this one)
@@ -449,6 +452,13 @@ class Button(PhaseThread):
                 if (self._pressed):
                     # added music with 5 different tracks
                     button_voice_choice = randint(1, 5)
+                    # Once the button is push a blue color shows up and a 10 second timer extension start
+                    self._rgb[0].value = True
+                    self._rgb[1].value = True
+                    self._rgb[2].value = False
+                    # Freezes time for 10 seconds
+                    self._timer.pause()
+                    sleep(self._time_frozen)
                     if button_voice_choice == 1:
                         # added voice over
                         pygame.mixer.music.load("button sound 1.mp3")
@@ -484,13 +494,6 @@ class Button(PhaseThread):
                         pygame.mixer.music.play(1)
                         sleep(4)
                         music()
-                    # Once the button is push a blue color shows up and a 10 second timer extension start
-                    self._rgb[0].value = True
-                    self._rgb[1].value = True
-                    self._rgb[2].value = False
-                    # Freezes time for 10 seconds
-                    self._timer.pause()
-                    sleep(self._time_frozen)
                     # resumes the timer
                     self._timer.pause()
                     # Timer button is under cooldown for 60 seconds and color changes to red
