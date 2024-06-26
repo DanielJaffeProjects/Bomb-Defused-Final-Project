@@ -217,10 +217,10 @@ class Timer(PhaseThread):
     # runs the thread
     def run(self):
         self._running = True
-        #added music
-        pygame.mixer.music.load("unstoppable.mp3")
-        pygame.mixer.music.set_volume(.5)
-        pygame.mixer.music.play(1)
+        # #added music
+        # pygame.mixer.music.load("unstoppable.mp3")
+        # pygame.mixer.music.set_volume(.5)
+        # pygame.mixer.music.play(1)
         while (self._running):
             if (not self._paused):
                 # update the timer and display its value on the 7-segment display
