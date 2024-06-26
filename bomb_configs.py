@@ -102,20 +102,15 @@ def generate_letter_from_number(number):
         return string.ascii_uppercase[number // 26 - 1] + string.ascii_uppercase[number % 26]
         
 def genSerial():
-    # Wires target as a random number between 0 and 30
-    wires_number = randint(0, 30)
-    wires_letter = generate_letter_from_number(wires_number)
-
-    # set the digits (used in the toggle switches phase)
+    wires_target = 0b11000
     serial_digits = []
     toggle_value = randint(1, 15)
-    while (len(serial_digits) < 3 or toggle_value - sum(serial_digits) > 0):
+    while len(serial_digits) < 3 or toggle_value - sum(serial_digits) > 0:
         d = randint(0, min(9, toggle_value - sum(serial_digits)))
         serial_digits.append(d)
 
-    # set the letters (used in the jumper wires phase)
     jumper_indexes = [0] * 5
-    while (sum(jumper_indexes) < 3):
+    while sum(jumper_indexes) < 3:
         jumper_indexes[randint(0, len(jumper_indexes) - 1)] = 1
     jumper_value = int("".join([str(n) for n in jumper_indexes]), 2)
     jumper_letters = [chr(i + 65) for i, n in enumerate(jumper_indexes) if n == 1]
@@ -125,7 +120,11 @@ def genSerial():
     serial += [choice([chr(n) for n in range(70, 91)])]
     serial = "".join(serial)
 
-    return serial, toggle_value, jumper_value, wires_letter, wires_number
+    wires_number = randint(0, 30)
+    wires_letter = ascii_uppercase[wires_number]
+
+    return serial, toggle_value, wires_target, wires_letter, wires_number
+
         
 # generates the keypad combination from a keyword and rotation key
 # generates the keypad combination from a keyword and rotation key
