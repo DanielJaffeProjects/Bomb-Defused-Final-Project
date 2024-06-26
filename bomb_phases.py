@@ -129,10 +129,6 @@ class Lcd(Frame):
         self._ltoggles.destroy()
         self._lstrikes.destroy()
 
-        # added voice over
-        pygame.mixer.music.load("mission failed.mp3")
-        pygame.mixer.music.set_volume(1)
-        pygame.mixer.music.play(1)
 
         if (SHOW_BUTTONS):
             self._bpause.destroy()
@@ -155,6 +151,10 @@ class Lcd(Frame):
             self.image1 = Label(self, bg="black", image=img1)
             self.image1.image = img1  # Keep a reference to the image to prevent garbage collection
             self.image1.grid(row=2, column=1, columnspan=3, sticky=W)
+            # added voice over
+            pygame.mixer.music.load("mission failed.mp3")
+            pygame.mixer.music.set_volume(1)
+            pygame.mixer.music.play(1)
 
         # Displaying the image if you win
         if active_phases == 0:
@@ -163,6 +163,10 @@ class Lcd(Frame):
             self.image1 = Label(self, bg="black", image=img1)
             self.image1.image = img1  # Keep a reference to the image to prevent garbage collection
             self.image1.grid(row=2, column=1, columnspan=3, sticky=W)
+            # added voice over
+            pygame.mixer.music.load("toggles defused sound.mp3")
+            pygame.mixer.music.set_volume(1)
+            pygame.mixer.music.play(1)
 
     # re-attempts the bomb (after an explosion or a successful defusion)
     def retry(self):
