@@ -157,7 +157,7 @@ class Lcd(Frame):
             pygame.mixer.music.play(1)
 
         # Displaying the image if you win
-        if active_phases == 2:
+        if active_phases == 0:
             winning_image = "winning image.gif"  # Replace with your image path
             img1 = PhotoImage(file=winning_image)
             self.image1 = Label(self, bg="black", image=img1)
