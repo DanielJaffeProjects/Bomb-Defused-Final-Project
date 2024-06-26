@@ -91,7 +91,7 @@ if (RPi):
 # functions
 ###########
 # generates the bomb's serial number
-#  it should be made up of alphaneumeric characters, and include at least 3 digits and 3 letters
+#  it should be made up of alphanumeric characters, and include at least 3 digits and 3 letters
 #  the sum of the digits should be in the range 1..15 to set the toggles target
 #  the first three letters should be distinct and in the range 0..4 such that A=0, B=1, etc, to match the jumper wires
 #  the last letter should be outside of the range
@@ -106,10 +106,10 @@ number_to_letter = {v: k for k, v in letter_to_number.items()}
 
 def generate_letter_from_number(number):
     if number < 26:
-        return string.ascii_uppercase[number]
+        return ascii_uppercase[number]
     else:
-        return string.ascii_uppercase[number // 26 - 1] + string.ascii_uppercase[number % 26]
-        
+        return ascii_uppercase[number // 26 - 1] + ascii_uppercase[number % 26]
+
 def genSerial():
     wires_target = randint(0, 30)  # Generate a random number between 0 and 30 for the wires phase
     wires_letter = number_to_letter[wires_target]  # Get the corresponding letter
@@ -206,7 +206,7 @@ def genKeypadCombination():
 #  serial: the bomb's serial number
 #  toggles_target: the toggles phase defuse value
 #  wires_target: the wires phase defuse value
-serial, toggles_target, wires_letter, wires_number = genSerial()
+serial, toggles_target, wires_target, wires_letter = genSerial()
 
 # generate the combination for the keypad phase
 #  keyword: the plaintext keyword for the lookup table
@@ -226,13 +226,15 @@ if (button_color == "G"):
 # B is the last numeric digit in the serial number
 elif (button_color == "B"):
     button_target = [n for n in serial if n.isdigit()][-1]
-'''
+
 if (DEBUG):
     print(f"Serial number: {serial}")
     print(f"Toggles target: {bin(toggles_target)[2:].zfill(4)}/{toggles_target}")
     print(f"Wires target: {bin(wires_target)[2:].zfill(5)}/{wires_target}")
+    print(f"Wires letter: {wires_letter}")
     print(f"Keypad target: {keypad_target}/{passphrase}/{keyword}/{cipher_keyword}(rot={rot})")
     print(f"Button target: {button_target}")
- '''
+
 # set the bomb's LCD bootup text
-boot_text = f"System Booting... Please Wait...\n Checking for any signs of intelligent life... Not found.\n Ensuring bad jokes are ready... \n System Ready! Enjoy the ride, and remember: \nin case of emergency, blame the software!"
+boot_text = f"System Booting... Please Wait...\n Checking for any signs of intelligent life... Not found.\n Ensuring bad jokes are ready... ✔\n System Ready! Enjoy the ride, and remember: \nin case of emergency, blame the software!"
+
