@@ -34,11 +34,11 @@ def music():
     pygame.mixer.music.play(1)
 
 
-# Added voice over
-pygame.mixer.music.load("start of game voice.mp3")
-pygame.mixer.music.set_volume(1)
-pygame.mixer.music.play(1)
-sleep(50)
+# # Added voice over
+# pygame.mixer.music.load("start of game voice.mp3")
+# pygame.mixer.music.set_volume(1)
+# pygame.mixer.music.play(1)
+# sleep(50)
 
 
 class Lcd(Frame):
