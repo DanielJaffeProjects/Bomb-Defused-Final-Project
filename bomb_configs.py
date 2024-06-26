@@ -142,7 +142,7 @@ def genSerial():
     return serial, toggle_value, wires_target, wires_letter
 
 
-        
+'''        
 # generates the keypad combination from a keyword and rotation key
 # generates the keypad combination from a keyword and rotation key
 def genKeypadCombination():
@@ -179,7 +179,7 @@ def genKeypadCombination():
     combination = digits(passphrase)
 
     return keyword, cipher_keyword, rot, int(combination), passphrase
-
+    '''
 
 ###############################
 # generate the bomb's specifics
