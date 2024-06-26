@@ -88,7 +88,7 @@ def check_phases():
         active_phases -= 1
         #added voice over
         pygame.mixer.music.load("Keypad defuse sound.mp3")
-        pygame.mixer.music.set_volume(.5)
+        pygame.mixer.music.set_volume(1)
         pygame.mixer.music.play(1)
     elif keypad_phase._failed:
         strike()
@@ -102,7 +102,7 @@ def check_phases():
             active_phases -= 1
             # added voice over
             pygame.mixer.music.load("wires defuse sound.mp3")
-            pygame.mixer.music.set_volume(.5)
+            pygame.mixer.music.set_volume(1)
             pygame.mixer.music.play(1)
         # the phase has failed -> strike
         elif (wires._failed):
@@ -121,7 +121,7 @@ def check_phases():
             if button_voice_choice == 1:
                 # added voice over
                 pygame.mixer.music.load("button 1 sound.mp3")
-                pygame.mixer.music.set_volume(.5)
+                pygame.mixer.music.set_volume(1)
                 pygame.mixer.music.play(1)
             elif button_voice_choice == 2:
                 # TODO
@@ -144,7 +144,7 @@ def check_phases():
             active_phases -= 1
             # added voice over
             pygame.mixer.music.load("toggles defused sound.mp3")
-            pygame.mixer.music.set_volume(.5)
+            pygame.mixer.music.set_volume(1)
             pygame.mixer.music.play(1)
         # the phase has failed -> strike
         elif (toggles._failed):
