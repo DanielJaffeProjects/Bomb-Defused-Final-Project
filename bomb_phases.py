@@ -62,7 +62,7 @@ class Lcd(Frame):
         self._ltimer = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16), text="Time left: ")
         self._ltimer.grid(row=1, column=0, columnspan=3, sticky=W)
         # the toggle switches status
-        self._ltoggles = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16), text="Toggles phase: ")
+        self._ltoggles = Label(self, bg="yellow", fg="#00ff00", font=("Courier New", 16), text="Toggles phase: ")
         # row span was made bigger to allow for question and choices
         self._ltoggles.grid(row=2, column=0, columnspan=3, rowspan=5, sticky=NW)
 
