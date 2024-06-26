@@ -478,7 +478,7 @@ class Toggles(PhaseThread):
         # Give a random decimal number
         self._decimal = randint(20000000, 500000000)
         # Taking the random decimal number and move it into binary
-        self._correct_answer = bin(self._decimal)[2:]
+        self._correct_answer = bin(self._decimal)[2:]#Remove the 0b prefix
         # All answers
         self._all_answers = self.incorrect_answers(self._decimal)
         self._all_answers.append(self._correct_answer)
