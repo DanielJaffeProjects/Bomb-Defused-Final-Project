@@ -296,6 +296,7 @@ class Keypad(PhaseThread):
             # Displays the initial target binary code
             self._update_callback(self._binary_code, self._value)  
             # process keys when keypad key(s) are pressed
+            # this will handle when the first key is presed, also handles case when no key is pressed
             if self._keypad.pressed_keys:
                 # debounce
                 while self._keypad.pressed_keys:
@@ -304,13 +305,14 @@ class Keypad(PhaseThread):
                     except IndexError:
                         key = ""
                     sleep(0.1)
+                # if the STAR key is pressed, then it will clear the input
                 if key == "*" and STAR_CLEARS_PASS:
                     self._value = ""
                 else:
                     hex_char = self.map_key_to_hex(key)
                     if len(self._value) < MAX_PASS_LEN and hex_char != "":
                         self._value += hex_char
-
+                # Here we check if the input matches the target hexadecilas code
                 if self._value.upper() == self._hex_target:
                     self._update_callback(self._binary_code, "Defused")
                     self._defused = True
@@ -325,6 +327,7 @@ class Keypad(PhaseThread):
             sleep(0.1)
         self._running = False
 
+    # Returns proper string if defused, failed to defuse, or neither 
     def __str__(self):
         if self._defused:
             return "Defused"
@@ -333,7 +336,7 @@ class Keypad(PhaseThread):
         else:
             return (f"Current input value: {self._value}")
 
-    # Setter for update callback
+    # Setter for update callback (updates the display)
     def set_update_callback(self, callback):
         self._update_callback = callback
 
@@ -343,9 +346,12 @@ class Wires(PhaseThread):
     def __init__(self, component, target, letter, name="Wires"):
         super().__init__(name, component, target)
         self._display_binary_numbers = ""
+        # This tracks the state of the previous wires
         self.previous_state = None
-        self._strikes = 0  # Tracking number of strikes
-        self._letter = letter  # Store the letter corresponding to the target
+        # Tracks the number of strikes
+        self._strikes = 0  
+        # This stores the letters that match the corresponding target 
+        self._letter = letter  
 
     def run(self):
         self._running = True
@@ -359,7 +365,8 @@ class Wires(PhaseThread):
             if self.wire_state == self._target:
                 self._defused = True
             else:
-                if self.previous_state is not None:  # Ensure this isn't the first check
+                 # Ensure this isn't the first check
+                if self.previous_state is not None:  
                     if not self._check_wire_removal_correctness(self.previous_state, self.wire_state):
                         self._failed = True
 
@@ -370,7 +377,7 @@ class Wires(PhaseThread):
         # Check if removing a wire was correct (only one wire should be considered at a time for simplicity)
         # Incorrect removal if new_state has a 0 where target has a 1 at the same position
         return (old_state & ~new_state) & self._target == 0
-
+    
     def __str__(self):
         if self._defused:
             return "DEFUSED"
