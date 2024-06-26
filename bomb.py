@@ -108,6 +108,7 @@ def check_phases():
             pygame.mixer.music.load("wires defused sound.mp3")
             pygame.mixer.music.set_volume(1)
             pygame.mixer.music.play(1)
+            music()
         # the phase has failed -> strike
         elif (wires._failed):
             strike()
