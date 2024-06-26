@@ -519,10 +519,10 @@ class Toggles(PhaseThread):
         self._options = [self._all_answers[0], self._all_answers[1], self._all_answers[2], self._all_answers[3]]
         # Display text
         self._display_text_toggle = (f"{self._question} \n"+
-                                     "A) {self._options[0]} \n"+
-                                     "B) {self._options[1]} \n"+
-                                     "C) {self._options[2]} \n"+
-                                     "D) {self._options[3]} ")
+                                     f"A) {self._options[0]} \n"+
+                                     f"B) {self._options[1]} \n"+
+                                     f"C) {self._options[2]} \n"+
+                                     f"D) {self._options[3]} ")
 
         # Display the question and options together
         return self._display_text_toggle,  self._correct_answer
