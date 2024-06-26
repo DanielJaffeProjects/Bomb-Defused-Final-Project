@@ -10,11 +10,8 @@ import sys
 import tkinter
 from threading import Thread
 from time import sleep
-# other imports
 from tkinter import *
-
 import pygame
-
 from bomb_configs import *
 
 # got import chatgpt
@@ -22,17 +19,14 @@ from bomb_configs import *
 # classes
 #########
 # the LCD display GUI
-
 # Initializing pygame
 pygame.init()
-
 
 def music():
     # added music
     pygame.mixer.music.load("unstoppable.mp3")
     pygame.mixer.music.set_volume(.5)
     pygame.mixer.music.play(1)
-
 
 # Added voice over
 pygame.mixer.music.load("start of game voice.mp3")
@@ -100,6 +94,7 @@ class Lcd(Frame):
                                          anchor=CENTER, command=self.quit)
             self._bquit.grid(row=6, column=2, pady=40)
 
+    # This code updates the display for keypad phase with the current binary code and the user entry
     def update_keypad_display(self, binary_value, entry_value):
         self._lkeypad_binary.config(text=f"Keypad Binary code: {binary_value}")
         self._lkeypad_entry.config(text=f"Keypad Entry: {entry_value}")
@@ -257,21 +252,25 @@ class Timer(PhaseThread):
     def __str__(self):
         return f"{self._min}:{self._sec}"
 
-
+# the keypad phase
+# Used chatGPT to generate the binary code and binary-to-hex-code
 class Keypad(PhaseThread):
     def __init__(self, keypad, target, name="Keypad"):
         super().__init__(name, keypad, target)
         self._value = ""
-        self._keypad = keypad  # the keypad pins
+        # the keypad pins
+        self._keypad = keypad 
+        # this is the variable to generate binary code
         self._binary_code = self.generate_binary_code()
-        self._hex_target = self.binary_to_hex(self._binary_code)  # Target hexadecimal value for comparison
+        # this is the variable to converts the binary to hexadecimal
+        self._hex_target = self.binary_to_hex(self._binary_code)  
 
-    # generates 6 random 4-digit binary numbers
+    # this function generates a six 4-digit random binary number
     def generate_binary_code(self):
         binary_code = [format(randint(0, 9), '04b') for _ in range(6)]
         return " ".join(binary_code)
 
-    # converts binary code to hexadecimal
+    # this funtion converts binary code to hexadecimal
     def binary_to_hex(self, binary_code):
         binary_code = binary_code.replace(" ", "")
         hex_code = ""
@@ -280,7 +279,7 @@ class Keypad(PhaseThread):
             hex_code += format(int(hex_digit, 2), 'X')
         return hex_code
 
-    # map keypad input to hexadecimal characters
+    # this function is used to map keypad input to hexadecimal characters
     def map_key_to_hex(self, key):
         key_to_hex_map = {
             0: '0', 1: '1', 2: '2', 3: '3',
@@ -294,7 +293,8 @@ class Keypad(PhaseThread):
         self._running = True
         self._value = ""
         while self._running:
-            self._update_callback(self._binary_code, self._value)  # Display the initial target binary code
+            # Displays the initial target binary code
+            self._update_callback(self._binary_code, self._value)  
             # process keys when keypad key(s) are pressed
             if self._keypad.pressed_keys:
                 # debounce
