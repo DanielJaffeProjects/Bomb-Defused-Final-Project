@@ -266,6 +266,7 @@ class Keypad(PhaseThread):
     # generates 6 random 4-digit binary numbers
     def generate_binary_code(self):
         binary_code = [format(randint(0, 9), '04b') for _ in range(6)]
+        print(binary_code)
         return " ".join(binary_code)
 
     # converts binary code to hexadecimal
