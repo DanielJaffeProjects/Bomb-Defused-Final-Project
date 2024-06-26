@@ -59,28 +59,13 @@ class Lcd(Frame):
     # sets up the LCD GUI
     def setup(self):
         # the timer
-        self._ltimer = Label(self, bg="yellow", fg="#00ff00", font=("Courier New", 16), text="Time left: ")
+        self._ltimer = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16), text="Time left: ")
         self._ltimer.grid(row=1, column=0, columnspan=3, sticky=W)
         # the toggle switches status
-        self._ltoggles = Label(self, bg="yellow", fg="#00ff00", font=("Courier New", 16), text="Toggles phase: ")
+        self._ltoggles = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16), text="Toggles phase: ")
         # row span was made bigger to allow for question and choices
         self._ltoggles.grid(row=2, column=0, columnspan=3, rowspan=5, sticky=NW)
-        #
-        # self._ltoggles2 = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16))
-        # # row span was made bigger to allow for question and choices
-        # self._ltoggles2.grid(row=3, column=0, columnspan=3, sticky=W)
-        #
-        # self._ltoggles3 = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16))
-        # # row span was made bigger to allow for question and choices
-        # self._ltoggles3.grid(row=4, column=1, sticky=W)
-        #
-        # self._ltoggles4 = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16))
-        # # row span was made bigger to allow for question and choices
-        # self._ltoggles4.grid(row=5, column=1, sticky=W)
-        #
-        # self._ltoggles5 = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16))
-        # # row span was made bigger to allow for question and choices
-        # self._ltoggles5.grid(row=6, column=1, sticky=W)
+
         
         self._lkeypad_binary = Label(self, bg="black", fg="#00ff00", font=("Courier New", 12), text="Keypad Binary code: ")
         self._lkeypad_binary.grid(row=7, column=0, columnspan=3, sticky=W)
