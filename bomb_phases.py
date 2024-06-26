@@ -12,27 +12,35 @@ from threading import Thread
 from time import sleep
 # other imports
 from tkinter import *
-from bomb_configs import *
+
 import pygame
-#got import chatgpt
+
+from bomb_configs import *
+
+# got import chatgpt
 #########
 # classes
 #########
 # the LCD display GUI
 
-#Initializing pygame
+# Initializing pygame
 pygame.init()
+
+
 def music():
     # added music
     pygame.mixer.music.load("unstoppable.mp3")
     pygame.mixer.music.set_volume(.5)
     pygame.mixer.music.play(1)
 
+
 # Added voice over
 pygame.mixer.music.load("start of game voice.mp3")
 pygame.mixer.music.set_volume(1)
 pygame.mixer.music.play(1)
 sleep(50)
+
+
 class Lcd(Frame):
     def __init__(self, window):
         super().__init__(window, bg="black")
@@ -66,16 +74,16 @@ class Lcd(Frame):
         # row span was made bigger to allow for question and choices
         self._ltoggles.grid(row=2, column=0, columnspan=3, rowspan=5, sticky=NW)
 
-        
-        self._lkeypad_binary = Label(self, bg="black", fg="#00ff00", font=("Courier New", 12), text="Keypad Binary code: ")
+        self._lkeypad_binary = Label(self, bg="black", fg="#00ff00", font=("Courier New", 12),
+                                     text="Keypad Binary code: ")
         self._lkeypad_binary.grid(row=7, column=0, columnspan=3, sticky=W)
         self._lkeypad_entry = Label(self, bg="black", fg="#00ff00", font=("Courier New", 12), text="Keypad Entry: ")
         self._lkeypad_entry.grid(row=8, column=0, columnspan=3, sticky=W)
-        
+
         # the jumper wires status
         self._lwires = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16), text="Wires phase: ")
         self._lwires.grid(row=9, column=0, columnspan=3, sticky=W)
-        
+
         # the pushbutton status
         self._lbutton = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16), text="Button phase: ")
         self._lbutton.grid(row=10, column=0, columnspan=3, sticky=W)
@@ -83,7 +91,6 @@ class Lcd(Frame):
         self._lstrikes = Label(self, bg="black", fg="#00ff00", font=("Courier New", 16), text="Strikes left: ")
         self._lstrikes.grid(row=11, column=0, sticky=W)
         if (SHOW_BUTTONS):
-            
             # the pause button (pauses the timer)
             self._bpause = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 16), text="Pause",
                                           anchor=CENTER, command=self.pause)
@@ -96,7 +103,7 @@ class Lcd(Frame):
     def update_keypad_display(self, binary_value, entry_value):
         self._lkeypad_binary.config(text=f"Keypad Binary code: {binary_value}")
         self._lkeypad_entry.config(text=f"Keypad Entry: {entry_value}")
-        
+
     # lets us pause/unpause the timer (7-segment display)
     def setTimer(self, timer):
         self._timer = timer
@@ -109,9 +116,9 @@ class Lcd(Frame):
     def pause(self):
         if (RPi):
             self._timer.pause()
-            
+
     # setup the conclusion GUI (explosion/defusion)
-    def conclusion(self, strikes_left,active_phases):
+    def conclusion(self, strikes_left, active_phases):
         # destroy/clear widgets that are no longer needed
         self._lscroll["text"] = ""
         self._ltimer.destroy()
@@ -121,7 +128,7 @@ class Lcd(Frame):
         self._lbutton.destroy()
         self._ltoggles.destroy()
         self._lstrikes.destroy()
-        
+
         # added voice over
         pygame.mixer.music.load("mission failed.mp3")
         pygame.mixer.music.set_volume(1)
@@ -139,7 +146,6 @@ class Lcd(Frame):
         self._bquit = tkinter.Button(self, bg="red", fg="white", font=("Courier New", 16), text="Quit", anchor=CENTER,
                                      command=self.quit)
         self._bquit.grid(row=1, column=2, pady=40)
-
 
         # Used chatgpt to help me addwith creating a image and resizing it
         # Displaying the image if you lose
@@ -211,7 +217,6 @@ class Timer(PhaseThread):
         # by default, each tick is 1 second
         self._interval = 1
 
-
     # runs the thread
     def run(self):
         self._running = True
@@ -247,6 +252,7 @@ class Timer(PhaseThread):
     def __str__(self):
         return f"{self._min}:{self._sec}"
 
+
 class Keypad(PhaseThread):
     def __init__(self, keypad, target, name="Keypad"):
         super().__init__(name, keypad, target)
@@ -265,7 +271,7 @@ class Keypad(PhaseThread):
         binary_code = binary_code.replace(" ", "")
         hex_code = ""
         for i in range(0, len(binary_code), 4):
-            hex_digit = binary_code[i:i+4]
+            hex_digit = binary_code[i:i + 4]
             hex_code += format(int(hex_digit, 2), 'X')
         return hex_code
 
@@ -306,7 +312,7 @@ class Keypad(PhaseThread):
                     sleep(4)
                     self._update_callback(self._binary_code, "Defused")
                     self._running = False
-                elif len(self._value) == MAX_PASS_LEN and self._value.upper()!=self._hex_target:
+                elif len(self._value) == MAX_PASS_LEN and self._value.upper() != self._hex_target:
                     self._failed = True
                     self._update_callback(self._binary_code, "One strike added")
                 else:
@@ -367,7 +373,6 @@ class Wires(PhaseThread):
             return "Strike added! Incorrect wire removed."
         else:
             return f"Letter: {self._letter} | Current State: {bin(self.wire_state)[2:].zfill(5)}"
-
 
 
 # the pushbutton phase
@@ -488,22 +493,23 @@ class Button(PhaseThread):
 
 # the toggle switches phase
 class Toggles(PhaseThread):
-    def __init__(self, component, target,timer, name="Toggles"):
+    def __init__(self, component, target, timer, name="Toggles"):
         super().__init__(name, component, target)
         self._timer = timer
+
     # Give the incorrect possible answer
     # Incorrect answers are chosen at random but are close to the real answer
     def incorrect_answers(self, decimal):
         incorrect_list = []
         for i in range(0, 3):
-            incorrect_list.append(bin(decimal + 2**(randint(10, 20)))[2:])
+            incorrect_list.append(bin(decimal + 2 ** (randint(10, 20)))[2:])
         return incorrect_list
 
     def update_question(self):
         # Give a random decimal number
         self._decimal = randint(20000000, 500000000)
         # Taking the random decimal number and move it into binary
-        self._correct_answer = bin(self._decimal)[2:]#Remove the 0b prefix
+        self._correct_answer = bin(self._decimal)[2:]  # Remove the 0b prefix
         # All answers
         self._all_answers = self.incorrect_answers(self._decimal)
         self._all_answers.append(self._correct_answer)
@@ -513,20 +519,20 @@ class Toggles(PhaseThread):
         self._question = f"Convert the decimal {self._decimal} to binary!"
         self._options = [self._all_answers[0], self._all_answers[1], self._all_answers[2], self._all_answers[3]]
         # Display text
-        self._display_text_toggle = (f"{self._question} \n"+
-                                     f"A) {self._options[0]} \n"+
-                                     f"B) {self._options[1]} \n"+
-                                     f"C) {self._options[2]} \n"+
+        self._display_text_toggle = (f"{self._question} \n" +
+                                     f"A) {self._options[0]} \n" +
+                                     f"B) {self._options[1]} \n" +
+                                     f"C) {self._options[2]} \n" +
                                      f"D) {self._options[3]} ")
 
         # Display the question and options together
-        return self._display_text_toggle,  self._correct_answer
+        return self._display_text_toggle, self._correct_answer
 
     def run(self):
         self._running = True
         self.update_question()
         while self._running:
-            #Answer the user selected
+            # Answer the user selected
             self.answer_selected = self.get_selected_answer()
             # Check if the selected answer is correct
             # If answer is correct you have won the game
@@ -540,6 +546,7 @@ class Toggles(PhaseThread):
             else:
                 self._failed = True
             sleep(1)
+
     def get_selected_answer(self):
         # Put the toggles in a list
         toggle_list = []
