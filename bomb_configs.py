@@ -18,7 +18,6 @@ STAR_CLEARS_PASS = True  # Define if the star key clears the passphrase (add thi
 # imports
 from random import randint, shuffle, choice
 from string import ascii_uppercase
-import string
 
 if (RPi):
     import board
