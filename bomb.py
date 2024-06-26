@@ -49,7 +49,7 @@ def setup_phases():
     keypad.set_update_callback(gui.update_keypad_display)
 
     # setup the jumper wires thread
-    wires = Wires(component_wires, wires_target, wires_letter, wires_number)
+    wires = Wires(component_wires, wires_target, wires_letter)
     # setup the pushbutton thread
     button = Button(component_button_state, component_button_RGB, button_target, button_color, timer)
     # bind the pushbutton to the LCD GUI so that its LED can be turned off when we quit
