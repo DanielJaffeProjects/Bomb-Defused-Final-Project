@@ -100,7 +100,7 @@ def check_phases():
             wires._running = False
             active_phases -= 1
             # added voice over
-            pygame.mixer.music.load("wires defuse sound.mp3")
+            pygame.mixer.music.load("wires defused sound.mp3")
             pygame.mixer.music.set_volume(1)
             pygame.mixer.music.play(1)
             sleep(2)
