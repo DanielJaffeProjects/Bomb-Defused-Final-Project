@@ -67,7 +67,11 @@ def setup_phases():
 # checks the phase threads
 def check_phases():
     global active_phases
-
+    def music():
+        #added music
+        pygame.mixer.music.load("unstoppable.mp3")
+        pygame.mixer.music.set_volume(.5)
+        pygame.mixer.music.play(1)
     # check the timer
     if (timer._running):
         # update the GUI
@@ -89,6 +93,7 @@ def check_phases():
         pygame.mixer.music.load("Keypad defuse sound.mp3")
         pygame.mixer.music.set_volume(1)
         pygame.mixer.music.play(1)
+        music()
     elif keypad_phase._failed:
         strike()
         keypad_phase._failed = False
@@ -103,7 +108,6 @@ def check_phases():
             pygame.mixer.music.load("wires defused sound.mp3")
             pygame.mixer.music.set_volume(1)
             pygame.mixer.music.play(1)
-            sleep(2)
         # the phase has failed -> strike
         elif (wires._failed):
             strike()
