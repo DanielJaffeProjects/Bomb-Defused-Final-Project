@@ -141,6 +141,10 @@ class Lcd(Frame):
         self._ltoggles4.destroy()
         self._ltoggles5.destroy()
         
+        # added voice over
+        pygame.mixer.music.load("mission failed.mp3")
+        pygame.mixer.music.set_volume(1)
+        pygame.mixer.music.play(1)
 
         if (SHOW_BUTTONS):
             self._bpause.destroy()
@@ -164,10 +168,6 @@ class Lcd(Frame):
             self.image1 = Label(self, bg="black", image=img1)
             self.image1.image = img1  # Keep a reference to the image to prevent garbage collection
             self.image1.grid(row=2, column=1, columnspan=3, sticky=W)
-            # added voice over
-            pygame.mixer.music.load("mission failed.mp3")
-            pygame.mixer.music.set_volume(1)
-            pygame.mixer.music.play(1)
 
         # Displaying the image if you win
         if active_phases == 0:
@@ -176,10 +176,7 @@ class Lcd(Frame):
             self.image1 = Label(self, bg="black", image=img1)
             self.image1.image = img1  # Keep a reference to the image to prevent garbage collection
             self.image1.grid(row=2, column=1, columnspan=3, sticky=W)
-            # added voice over
-            pygame.mixer.music.load("Bomb defuse sound.mp3")
-            pygame.mixer.music.set_volume(1)
-            pygame.mixer.music.play(1)
+
     # re-attempts the bomb (after an explosion or a successful defusion)
     def retry(self):
         # re-launch the program (and exit this one)
@@ -268,7 +265,7 @@ class Timer(PhaseThread):
     # returns the timer as a string (mm:ss)
     def __str__(self):
         return f"{self._min}:{self._sec}"
-        
+
 class Keypad(PhaseThread):
     def __init__(self, keypad, target, name="Keypad"):
         super().__init__(name, keypad, target)
@@ -353,7 +350,7 @@ class Keypad(PhaseThread):
     def set_update_callback(self, callback):
         self._update_callback = callback
 
-        
+
 # Wires phase class
 class Wires(PhaseThread):
     def __init__(self, component, target, letter, name="Wires"):
@@ -458,13 +455,13 @@ class Button(PhaseThread):
                     self._rgb[2].value = False
                     # Freezes time for 10 seconds
                     self._timer.pause()
-                    sleep(self._time_frozen)
                     if button_voice_choice == 1:
                         # added voice over
                         pygame.mixer.music.load("button sound 1.mp3")
                         pygame.mixer.music.set_volume(1)
                         pygame.mixer.music.play(1)
                         sleep(4)
+                        sleep(self._time_frozen-4)
                         music()
                     elif button_voice_choice == 2:
                         # added voice over
@@ -472,6 +469,7 @@ class Button(PhaseThread):
                         pygame.mixer.music.set_volume(1)
                         pygame.mixer.music.play(1)
                         sleep(4)
+                        sleep(self._time_frozen-4)
                         music()
                     elif button_voice_choice == 3:
                         # added voice over
@@ -479,6 +477,7 @@ class Button(PhaseThread):
                         pygame.mixer.music.set_volume(1)
                         pygame.mixer.music.play(1)
                         sleep(4)
+                        sleep(self._time_frozen-4)
                         music()
                     elif button_voice_choice == 4:
                         # added voice over
@@ -486,14 +485,17 @@ class Button(PhaseThread):
                         pygame.mixer.music.set_volume(1)
                         pygame.mixer.music.play(1)
                         sleep(4)
+                        sleep(self._time_frozen-4)
                         music()
                     elif button_voice_choice == 5:
                         # added voice over
                         pygame.mixer.music.load("button sound 5.mp3")
                         pygame.mixer.music.set_volume(1)
                         pygame.mixer.music.play(1)
+                        sleep(self._time_frozen-4)
                         sleep(4)
                         music()
+                    sleep(self._time_frozen)
                     # resumes the timer
                     self._timer.pause()
                     # Timer button is under cooldown for 60 seconds and color changes to red
@@ -548,8 +550,6 @@ class Toggles(PhaseThread):
         self._running = True
         self.update_question()
         while self._running:
-            if str(self._timer) == "02:30":
-                self.update_question()
             #Answer the user selected
             self.answer_selected = self.get_selected_answer()
             # Check if the selected answer is correct
