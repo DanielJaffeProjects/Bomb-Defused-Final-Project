@@ -86,8 +86,6 @@ def check_phases():
         return
     # check the keypad
     if keypad_phase._running:
-        gui.update_keypad_display(keypad_phase._binary_code, keypad_phase._value)
-    if keypad_phase._defused:
         keypad_phase._running = False
         active_phases -= 1
         #added voice over
