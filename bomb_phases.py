@@ -27,6 +27,12 @@ def music():
     pygame.mixer.music.load("unstoppable.mp3")
     pygame.mixer.music.set_volume(.5)
     pygame.mixer.music.play(1)
+
+#Added voice over
+pygame.mixer.music.load("start of game voice.mp3")
+pygame.mixer.music.set_volume(1)
+pygame.mixer.music.play(1)
+sleep(50)
 class Lcd(Frame):
     def __init__(self, window):
         super().__init__(window, bg="black")
@@ -226,11 +232,7 @@ class Timer(PhaseThread):
     # runs the thread
     def run(self):
         self._running = True
-        # added voice over
-        pygame.mixer.music.load("start of game voice.mp3")
-        pygame.mixer.music.set_volume(1)
-        pygame.mixer.music.play(1)
-        sleep(50)
+        # added music
         music()
         while (self._running):
             if (not self._paused):
@@ -352,7 +354,8 @@ class Wires(PhaseThread):
         self._number = number
         self.previous_state = None
         self._strikes = 0  # Tracking number of strikes
-
+        self._letter = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S',
+                        'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA', 'AB', 'AC', 'AD', 'AE']
     def run(self):
         self._running = True
         while self._running:
