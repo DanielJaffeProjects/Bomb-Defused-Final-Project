@@ -1,1 +1,1 @@
-#Final Bomb project for CSC 102
+#For my final project in CSC 102, I worked on a team and developed a bomb defusal game using Python. This project incorporated threading and object-oriented programming concepts. The game challenged players to defuse a bomb by completing various tasks, such as toggling switches, operating a button, using a keypad, and connecting wires, all within a time limit.
